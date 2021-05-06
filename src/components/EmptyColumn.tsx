@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button, Col } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { blue } from "@ant-design/colors";
 
 interface IProps {
   span?: number;
@@ -13,6 +14,10 @@ const InnerContainer = styled.div`
   text-align: center;
   width: 100%;
   cursor: pointer;
+  border: 1px solid transparent;
+  :hover {
+    border: 1px solid ${blue.primary};
+  }
 `;
 
 const EmptyColumn = ({ span }: IProps) => (
