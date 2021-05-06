@@ -6,10 +6,12 @@ interface IProps {
 }
 
 const SectionContainer = styled.div`
-  background: #fff;
-  padding: 30px 20px;
-  border-radius: 2px;
   text-align: center;
+  padding: 30px 0;
+  border-bottom: 1px solid #f7f7f7;
+  &:first-child {
+    font-weight: bold;
+  }
 `;
 
 const Section = ({ children, ...props }: IProps) => (
