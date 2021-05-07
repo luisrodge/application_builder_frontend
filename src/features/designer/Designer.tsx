@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 
 import Drawer from "../../components/Drawer";
-import SectionPicker from "./SectionPicker";
 import Sections from "./Sections";
 import ElementPicker from "../../components/ElementPicker";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { addSection, selectSections } from "./designerSlice";
+import { showDrawer, hideDrawer } from "../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../shared/constants";
 
 const Container = styled.div`
   background: #fff;
@@ -22,22 +23,7 @@ const Designer = () => {
   const sections = useAppSelector(selectSections);
   const dispatch = useAppDispatch();
 
-  const [openDrawer, setOpenDrawer] = useState(false);
   const [openElementDrawer, setOpenElementDrawer] = useState(false);
-
-  const showDrawer = () => {
-    setOpenDrawer(true);
-  };
-
-  const closeDrawer = () => {
-    setOpenDrawer(false);
-  };
-
-  const handleAddSection = (sectionId: string, numOfCols: number) => {
-    const newSection = { id: sectionId, numOfCols };
-    dispatch(addSection(newSection));
-    closeDrawer();
-  };
 
   const selectElement = (type: string) => {};
 
@@ -60,7 +46,14 @@ const Designer = () => {
             padding: "18px 20px",
           }}
         >
-          <Button onClick={showDrawer} style={{ marginRight: 24 }}>
+          <Button
+            onClick={() =>
+              dispatch(
+                showDrawer({ drawerType: DRAWER_TYPES.SECTION_PICKER_DRAWER })
+              )
+            }
+            style={{ marginRight: 24 }}
+          >
             Add Section
           </Button>
           <Button type="text">Cancel</Button>
@@ -72,14 +65,7 @@ const Designer = () => {
           sections={sections}
           setOpenElementDrawer={() => setOpenElementDrawer(true)}
         />
-        <Drawer
-          isOpen={openDrawer}
-          closeDrawer={closeDrawer}
-          title="Add new section"
-          width="500"
-        >
-          <SectionPicker selectSection={handleAddSection} />
-        </Drawer>
+
         <Drawer
           isOpen={openElementDrawer}
           closeDrawer={() => setOpenElementDrawer(false)}

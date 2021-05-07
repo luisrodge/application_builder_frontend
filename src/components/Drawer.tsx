@@ -1,9 +1,7 @@
 import React, { ReactNode } from "react";
 import { Drawer as AntdDrawer } from "antd";
 
-declare type EventType =
-  | React.KeyboardEvent<HTMLDivElement>
-  | React.MouseEvent<HTMLDivElement | HTMLButtonElement>;
+import { EventType } from "../shared/types";
 
 interface IProps {
   children: ReactNode;

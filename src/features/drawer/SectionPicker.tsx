@@ -5,6 +5,11 @@ import { blue, grey } from "@ant-design/colors";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
+import DrawerContainer from "./DrawerContainer";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { selectDrawer, hideDrawer } from "./drawerSlice";
+import { addSection } from "../designer/designerSlice";
+
 const SectionCard = styled(Card)`
   width: 100%;
   text-align: center;
@@ -14,21 +19,31 @@ const SectionCard = styled(Card)`
   }
 `;
 
-interface IProps {
-  selectSection: (sectionId: string, numberOfCols: number) => void;
-}
+const SectionPicker = () => {
+  const { isOpen } = useAppSelector(selectDrawer);
+  const dispatch = useAppDispatch();
 
-const SectionPicker = ({ selectSection }: IProps) => {
+  const pickSection = (sectionId: string, numOfCols: number) => {
+    const newSection = { id: sectionId, numOfCols };
+    dispatch(addSection(newSection));
+    dispatch(hideDrawer());
+  };
+
   return (
-    <>
+    <DrawerContainer
+      width={500}
+      isOpen={isOpen}
+      title="Add new section"
+      closeDrawer={() => dispatch(hideDrawer())}
+    >
       <Row>
-        <SectionCard onClick={() => selectSection(uuidv4(), 1)}>
+        <SectionCard onClick={() => pickSection(uuidv4(), 1)}>
           <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
         </SectionCard>
       </Row>
       <br />
       <Row>
-        <SectionCard onClick={() => selectSection(uuidv4(), 2)}>
+        <SectionCard onClick={() => pickSection(uuidv4(), 2)}>
           <AlignCenterOutlined
             style={{ fontSize: 80, marginRight: 8, color: grey.primary }}
           />
@@ -39,7 +54,7 @@ const SectionPicker = ({ selectSection }: IProps) => {
       </Row>
       <br />
       <Row>
-        <SectionCard onClick={() => selectSection(uuidv4(), 3)}>
+        <SectionCard onClick={() => pickSection(uuidv4(), 3)}>
           <AlignCenterOutlined
             style={{ fontSize: 80, color: grey.primary }}
             color={blue.primary}
@@ -55,7 +70,7 @@ const SectionPicker = ({ selectSection }: IProps) => {
           <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
         </SectionCard>
       </Row>
-    </>
+    </DrawerContainer>
   );
 };
 
