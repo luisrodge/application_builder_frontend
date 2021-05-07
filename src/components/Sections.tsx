@@ -13,6 +13,7 @@ interface ISection {
 
 interface ISections {
   sections: ISection[];
+  setOpenElementDrawer: (columnId: number) => void;
 }
 
 const Container = styled.div`
@@ -22,7 +23,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Sections = ({ sections }: ISections) => {
+const Sections = ({ sections, setOpenElementDrawer }: ISections) => {
   return (
     <>
       {sections.length > 0 && <div style={{ marginTop: 30 }}></div>}
@@ -30,7 +31,10 @@ const Sections = ({ sections }: ISections) => {
         <Section>
           <Row gutter={GUTTER.lg}>
             {[...Array(section.numOfCols)].map((e, i) => (
-              <EmptyColumn span={24 / section.numOfCols} />
+              <EmptyColumn
+                span={24 / section.numOfCols}
+                setOpenElementDrawer={setOpenElementDrawer}
+              />
             ))}
           </Row>
         </Section>

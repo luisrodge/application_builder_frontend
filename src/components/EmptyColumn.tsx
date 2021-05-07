@@ -5,6 +5,7 @@ import { blue } from "@ant-design/colors";
 
 interface IProps {
   span?: number;
+  setOpenElementDrawer: (columnId: number) => void;
 }
 
 const InnerContainer = styled.div`
@@ -20,9 +21,9 @@ const InnerContainer = styled.div`
   }
 `;
 
-const EmptyColumn = ({ span }: IProps) => (
+const EmptyColumn = ({ span, setOpenElementDrawer }: IProps) => (
   <Col span={span}>
-    <InnerContainer>
+    <InnerContainer onClick={() => setOpenElementDrawer(1)}>
       <Button icon={<PlusOutlined />} type="primary" ghost></Button>
     </InnerContainer>
   </Col>

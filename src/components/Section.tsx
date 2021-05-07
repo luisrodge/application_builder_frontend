@@ -15,7 +15,7 @@ const SectionContainer = styled.div`
   cursor: pointer;
   :hover {
     border-bottom: 0;
-    border: 1px dashed #f0f0f0;
+    border: 1px dashed ${blue.primary};
   }
 `;
 

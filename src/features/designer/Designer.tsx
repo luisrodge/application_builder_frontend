@@ -3,13 +3,24 @@ import { Button } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 
-import Drawer from "./components/Drawer";
-import SectionPicker from "./components/SectionPicker";
-import Sections from "./components/Sections";
+import Drawer from "../../components/Drawer";
+import SectionPicker from "../../components/SectionPicker";
+import Sections from "../../components/Sections";
+import ElementPicker from "../../components/ElementPicker";
 
 interface ISection {
   id: number;
   numOfCols: number;
+}
+
+interface IRow {
+  id: number;
+  sectionId: number;
+}
+
+interface IColumn {
+  id: number;
+  rowId: number;
 }
 
 const Container = styled.div`
@@ -19,8 +30,9 @@ const Container = styled.div`
   text-align: center;
 `;
 
-function App() {
+const Designer = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openElementDrawer, setOpenElementDrawer] = useState(false);
   const [sections, setSections] = useState<ISection[]>([]);
 
   const showDrawer = () => {
@@ -36,6 +48,8 @@ function App() {
     setSections(newSection);
     closeDrawer();
   };
+
+  const selectElement = (type: string) => {};
 
   return (
     <>
@@ -64,8 +78,10 @@ function App() {
       </header>
       {sections.length > 0 && <div style={{ marginTop: 50 }}></div>}
       <Container>
-        <Sections sections={sections} />
-
+        <Sections
+          sections={sections}
+          setOpenElementDrawer={() => setOpenElementDrawer(true)}
+        />
         <Drawer
           isOpen={openDrawer}
           closeDrawer={closeDrawer}
@@ -74,9 +90,17 @@ function App() {
         >
           <SectionPicker selectSection={selectSection} />
         </Drawer>
+        <Drawer
+          isOpen={openElementDrawer}
+          closeDrawer={() => setOpenElementDrawer(false)}
+          title="Add new element"
+          width="500"
+        >
+          <ElementPicker selectElement={selectElement} />
+        </Drawer>
       </Container>
     </>
   );
-}
+};
 
-export default App;
+export default Designer;
