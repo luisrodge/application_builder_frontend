@@ -3,10 +3,7 @@ import { Card, Row } from "antd";
 import { AlignCenterOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 import styled from "styled-components";
-
-interface IProps {
-  selectSection: (sectionId: number, numberOfCols: number) => void;
-}
+import { v4 as uuidv4 } from "uuid";
 
 const SectionCard = styled(Card)`
   width: 100%;
@@ -17,17 +14,21 @@ const SectionCard = styled(Card)`
   }
 `;
 
+interface IProps {
+  selectSection: (sectionId: string, numberOfCols: number) => void;
+}
+
 const SectionPicker = ({ selectSection }: IProps) => {
   return (
     <>
       <Row>
-        <SectionCard onClick={() => selectSection(1, 1)}>
+        <SectionCard onClick={() => selectSection(uuidv4(), 1)}>
           <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
         </SectionCard>
       </Row>
       <br />
       <Row>
-        <SectionCard onClick={() => selectSection(2, 2)}>
+        <SectionCard onClick={() => selectSection(uuidv4(), 2)}>
           <AlignCenterOutlined
             style={{ fontSize: 80, marginRight: 8, color: grey.primary }}
           />
@@ -38,7 +39,7 @@ const SectionPicker = ({ selectSection }: IProps) => {
       </Row>
       <br />
       <Row>
-        <SectionCard onClick={() => selectSection(3, 3)}>
+        <SectionCard onClick={() => selectSection(uuidv4(), 3)}>
           <AlignCenterOutlined
             style={{ fontSize: 80, color: grey.primary }}
             color={blue.primary}
