@@ -1,12 +1,14 @@
-import { Tooltip } from "antd";
+import { Tooltip, Button } from "antd";
 import styled from "styled-components";
 import { blue, grey } from "@ant-design/colors";
 import { CloseSquareOutlined } from "@ant-design/icons";
 
 import Rows from "./Rows";
 import { useAppDispatch } from "../../app/hooks";
-import { removeSection } from "./designerSlice";
+import { removeSection, setActiveSection } from "./designerSlice";
 import { ISection } from "./designer.interface";
+import { showDrawer } from "../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../shared/constants";
 
 const RemoveIcon = styled(CloseSquareOutlined)`
   position: absolute;
@@ -44,6 +46,12 @@ interface ISections {
 
 const Sections = ({ sections, setOpenElementDrawer }: ISections) => {
   const dispatch = useAppDispatch();
+
+  const addSectionRow = (section: ISection) => {
+    dispatch(setActiveSection(section));
+    dispatch(showDrawer({ drawerType: DRAWER_TYPES.ROW_PICKER_DRAWER }));
+  };
+
   return (
     <>
       {sections.map((section) => (
@@ -52,6 +60,13 @@ const Sections = ({ sections, setOpenElementDrawer }: ISections) => {
             <RemoveIcon onClick={() => dispatch(removeSection(section))} />
           </Tooltip>
           <Rows sectionId={section.id} />
+          <Button
+            size="small"
+            style={{ marginTop: 8 }}
+            onClick={() => addSectionRow(section)}
+          >
+            Add Row
+          </Button>
         </SectionContainer>
       ))}
     </>

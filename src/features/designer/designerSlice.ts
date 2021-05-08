@@ -8,6 +8,7 @@ interface DesignerState {
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
+  activeSection?: ISection;
 }
 
 // Define the initial state using that type
@@ -21,6 +22,9 @@ export const designerSlice = createSlice({
   name: "designer",
   initialState,
   reducers: {
+    setActiveSection: (state, action: PayloadAction<ISection>) => {
+      state.activeSection = action.payload;
+    },
     addSection: (state, action: PayloadAction<ISection>) => {
       const section = action.payload;
       const row = { id: uuidv4(), sectionId: section.id } as IRow;
@@ -32,6 +36,18 @@ export const designerSlice = createSlice({
       }));
 
       state.sections.push(section);
+      state.rows.push(row);
+      state.columns.push(...columns);
+    },
+    addRow: (state, action: PayloadAction<IRow>) => {
+      const row = action.payload;
+
+      const columns = [...Array(row.numOfCols)].map(() => ({
+        id: uuidv4(),
+        rowId: row.id,
+        sectionId: row.sectionId,
+      }));
+
       state.rows.push(row);
       state.columns.push(...columns);
     },
@@ -88,15 +104,19 @@ export const designerSlice = createSlice({
 
 export const {
   addSection,
+  addRow,
   removeSection,
   removeRow,
   removeColumn,
+  setActiveSection,
 } = designerSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSections = (state: RootState) => state.designer.sections;
 export const selectRows = (state: RootState) => state.designer.rows;
 export const selectColumns = (state: RootState) => state.designer.columns;
+export const selectActiveSection = (state: RootState) =>
+  state.designer.activeSection;
 
 type Selector<S> = (state: RootState) => S;
 
