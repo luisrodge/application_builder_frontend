@@ -1,4 +1,4 @@
-import EmptyColumn from "../../components/EmptyColumn";
+import EmptyColumn from "./EmptyColumn";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectRowColumns, selectSection } from "./designerSlice";
@@ -15,12 +15,11 @@ const Columns = ({ rowId, sectionId }: IProps) => {
 
   return (
     <>
-      {" "}
       {rowColumns?.map((column) => (
         <EmptyColumn
           key={column.id}
-          span={24 / section!.numOfCols}
-          // setOpenElementDrawer={setOpenElementDrawer}
+          span={24 / rowColumns.length}
+          column={column}
         />
       ))}
     </>

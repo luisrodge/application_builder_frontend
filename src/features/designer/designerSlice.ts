@@ -35,10 +35,63 @@ export const designerSlice = createSlice({
       state.rows.push(row);
       state.columns.push(...columns);
     },
+    removeSection: (state, action: PayloadAction<ISection>) => {
+      const { id } = action.payload;
+
+      const newSections = state.sections.filter((section) => section.id != id);
+      const newRows = state.rows.filter((row) => row.sectionId != id);
+      const newColumns = state.columns.filter(
+        (column) => column.sectionId != id
+      );
+
+      state.sections = newSections;
+      state.rows = newRows;
+      state.columns = newColumns;
+    },
+    removeRow: (state, action: PayloadAction<IRow>) => {
+      const { id, sectionId } = action.payload;
+
+      if (state.rows.filter((row) => row.sectionId == sectionId).length == 1) {
+        const newSections = state.sections.filter(
+          (section) => section.id != sectionId
+        );
+        state.sections = newSections;
+      }
+
+      const newRows = state.rows.filter((row) => row.id != id);
+      const newColumns = state.columns.filter((column) => column.rowId != id);
+
+      state.rows = newRows;
+      state.columns = newColumns;
+    },
+    removeColumn: (state, action: PayloadAction<IColumn>) => {
+      const { id, rowId, sectionId } = action.payload;
+
+      if (state.columns.filter((column) => column.rowId == rowId).length == 1) {
+        const newRows = state.rows.filter((row) => row.id != rowId);
+        state.rows = newRows;
+        if (
+          state.rows.filter((row) => row.sectionId == sectionId).length == 0
+        ) {
+          const newSections = state.sections.filter(
+            (section) => section.id != sectionId
+          );
+          state.sections = newSections;
+        }
+      }
+
+      const newColumns = state.columns.filter((column) => column.id != id);
+      state.columns = newColumns;
+    },
   },
 });
 
-export const { addSection } = designerSlice.actions;
+export const {
+  addSection,
+  removeSection,
+  removeRow,
+  removeColumn,
+} = designerSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSections = (state: RootState) => state.designer.sections;
