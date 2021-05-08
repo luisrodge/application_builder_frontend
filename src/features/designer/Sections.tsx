@@ -1,4 +1,4 @@
-import { Tooltip, Button } from "antd";
+import { Tooltip } from "antd";
 import styled from "styled-components";
 import { blue, grey } from "@ant-design/colors";
 import { CloseSquareOutlined } from "@ant-design/icons";
@@ -7,8 +7,7 @@ import Rows from "./Rows";
 import { useAppDispatch } from "../../app/hooks";
 import { removeSection, setActiveSection } from "./designerSlice";
 import { ISection } from "./designer.interface";
-import { showDrawer } from "../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
+import { useHistory } from "react-router";
 
 const RemoveIcon = styled(CloseSquareOutlined)`
   position: absolute;
@@ -20,6 +19,10 @@ const RemoveIcon = styled(CloseSquareOutlined)`
   text-align: center;
   color: ${grey.primary};
   display: none;
+  width: 20px;
+  :hover {
+    color: ${blue.primary};
+  }
 `;
 
 const SectionContainer = styled.div`
@@ -46,27 +49,24 @@ interface ISections {
 
 const Sections = ({ sections, setOpenElementDrawer }: ISections) => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
-  const addSectionRow = (section: ISection) => {
+  const navigateToSection = (section: ISection) => {
     dispatch(setActiveSection(section));
-    dispatch(showDrawer({ drawerType: DRAWER_TYPES.ROW_PICKER_DRAWER }));
+    history.push(`/sections/${section.id}`);
   };
 
   return (
     <>
       {sections.map((section) => (
-        <SectionContainer key={section.id}>
+        <SectionContainer
+          key={section.id}
+          onClick={() => navigateToSection(section)}
+        >
           <Tooltip title="Remove section">
             <RemoveIcon onClick={() => dispatch(removeSection(section))} />
           </Tooltip>
           <Rows sectionId={section.id} />
-          <Button
-            size="small"
-            style={{ marginTop: 8 }}
-            onClick={() => addSectionRow(section)}
-          >
-            Add Row
-          </Button>
         </SectionContainer>
       ))}
     </>

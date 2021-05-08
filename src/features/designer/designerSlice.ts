@@ -38,6 +38,7 @@ export const designerSlice = createSlice({
       state.sections.push(section);
       state.rows.push(row);
       state.columns.push(...columns);
+      state.activeSection = section;
     },
     addRow: (state, action: PayloadAction<IRow>) => {
       const row = action.payload;

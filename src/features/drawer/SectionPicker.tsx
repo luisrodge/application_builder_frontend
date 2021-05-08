@@ -1,9 +1,9 @@
-import React from "react";
 import { Card, Row } from "antd";
 import { AlignCenterOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory } from "react-router-dom";
 
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -22,11 +22,13 @@ const SectionCard = styled(Card)`
 const SectionPicker = () => {
   const { isOpen } = useAppSelector(selectDrawer);
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
   const pickSection = (sectionId: string, numOfCols: number) => {
     const newSection = { id: sectionId, numOfCols };
     dispatch(addSection(newSection));
     dispatch(hideDrawer());
+    history.push(`/sections/${sectionId}`);
   };
 
   return (

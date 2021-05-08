@@ -8,7 +8,7 @@ const Routes = () => (
     <Route path="/" exact>
       <Designer />
     </Route>
-    <Route path="/section" exact>
+    <Route path="/sections/:sectionId" exact>
       <SectionDesigner />
     </Route>
   </Switch>
