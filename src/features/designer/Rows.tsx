@@ -50,7 +50,7 @@ const Rows = ({ sectionId }: IProps) => {
           </Tooltip>
 
           <Row gutter={GUTTER.lg}>
-            <Columns rowId={row.id} sectionId={sectionId} />
+            <Columns row={row} sectionId={sectionId} />
           </Row>
         </RowContainer>
       ))}

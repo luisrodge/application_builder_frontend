@@ -1,19 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button, Col, Tooltip } from "antd";
 import { PlusOutlined, CloseSquareOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 
-import { useAppDispatch } from "../../app/hooks";
-import { removeColumn } from "./designerSlice";
-import { IColumn } from "./designer.interface";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  removeColumn,
+  selectActiveColumn,
+  setActiveColumn,
+  setActiveRow,
+} from "./designerSlice";
+import { IColumn, IRow } from "./designer.interface";
 import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-
-interface IProps {
-  column: IColumn;
-  span?: number;
-  setOpenElementDrawer?: (columnId: number) => void;
-}
 
 const RemoveIcon = styled(CloseSquareOutlined)`
   position: absolute;
@@ -27,7 +26,11 @@ const RemoveIcon = styled(CloseSquareOutlined)`
   display: none;
 `;
 
-const InnerContainer = styled.div`
+interface IInnerContainerProps {
+  $active: boolean;
+}
+
+const InnerContainer = styled.div<IInnerContainerProps>`
   position: relative;
   background: #fafafa;
   padding: 16px 20px;
@@ -42,30 +45,48 @@ const InnerContainer = styled.div`
   &:hover ${RemoveIcon} {
     display: inherit;
   }
+  ${(props) =>
+    props.$active &&
+    css`
+      border: 1px solid ${blue.primary};
+    `}
 `;
 
-const EmptyColumn = ({ span, setOpenElementDrawer, column }: IProps) => {
+interface IProps {
+  column: IColumn;
+  span?: number;
+  row: IRow;
+}
+
+const Column = ({ span, column, row }: IProps) => {
   const dispatch = useAppDispatch();
+  const activeColumn = useAppSelector(selectActiveColumn);
 
   const onClick = () => {
+    dispatch(setActiveRow(row));
+    dispatch(setActiveColumn(column));
     dispatch(showDrawer({ drawerType: DRAWER_TYPES.ELEMENT_PICKER_DRAWER }));
   };
 
+  const isEmpty = true;
+
   return (
     <Col span={span}>
-      <InnerContainer>
+      <InnerContainer $active={activeColumn! && activeColumn.id == column.id}>
         <Tooltip title="Remove column">
           <RemoveIcon onClick={() => dispatch(removeColumn(column))} />
         </Tooltip>
-        <Button
-          icon={<PlusOutlined />}
-          type="primary"
-          ghost
-          onClick={onClick}
-        ></Button>
+        {isEmpty && (
+          <Button
+            icon={<PlusOutlined />}
+            type="primary"
+            ghost
+            onClick={onClick}
+          ></Button>
+        )}
       </InnerContainer>
     </Col>
   );
 };
 
-export default EmptyColumn;
+export default Column;

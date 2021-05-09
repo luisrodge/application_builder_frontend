@@ -16,3 +16,11 @@ export interface IColumn {
   rowId: string;
   sectionId: string;
 }
+
+export interface IElement {
+  id: string;
+  sectionId: string;
+  rowId: string;
+  columnId: string;
+  type: string;
+}
