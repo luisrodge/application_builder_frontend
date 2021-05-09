@@ -5,8 +5,13 @@ import RowLayoutPicker from "./RowLayoutPicker";
 import { useAppSelector } from "../../app/hooks";
 import { selectDrawer } from "./drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
+import ElementPicker from "./ElementPicker";
 
-const { SECTION_LAYOUT_PICKER_DRAWER, ROW_LAYOUT_PICKER_DRAWER } = DRAWER_TYPES;
+const {
+  SECTION_LAYOUT_PICKER_DRAWER,
+  ROW_LAYOUT_PICKER_DRAWER,
+  ELEMENT_PICKER_DRAWER,
+} = DRAWER_TYPES;
 
 interface IDrawerComponents {
   [key: string]: ReactNode;
@@ -15,6 +20,7 @@ interface IDrawerComponents {
 const DRAWER_COMPONENTS = {
   [SECTION_LAYOUT_PICKER_DRAWER]: SectionLayoutPicker,
   [ROW_LAYOUT_PICKER_DRAWER]: RowLayoutPicker,
+  [ELEMENT_PICKER_DRAWER]: ElementPicker,
 } as IDrawerComponents;
 
 export const DrawerTypes = Object.keys(DRAWER_COMPONENTS);

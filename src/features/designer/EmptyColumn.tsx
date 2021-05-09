@@ -6,6 +6,8 @@ import { blue, grey } from "@ant-design/colors";
 import { useAppDispatch } from "../../app/hooks";
 import { removeColumn } from "./designerSlice";
 import { IColumn } from "./designer.interface";
+import { showDrawer } from "../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../shared/constants";
 
 interface IProps {
   column: IColumn;
@@ -45,13 +47,22 @@ const InnerContainer = styled.div`
 const EmptyColumn = ({ span, setOpenElementDrawer, column }: IProps) => {
   const dispatch = useAppDispatch();
 
+  const onClick = () => {
+    dispatch(showDrawer({ drawerType: DRAWER_TYPES.ELEMENT_PICKER_DRAWER }));
+  };
+
   return (
     <Col span={span}>
       <InnerContainer>
         <Tooltip title="Remove column">
           <RemoveIcon onClick={() => dispatch(removeColumn(column))} />
         </Tooltip>
-        <Button icon={<PlusOutlined />} type="primary" ghost></Button>
+        <Button
+          icon={<PlusOutlined />}
+          type="primary"
+          ghost
+          onClick={onClick}
+        ></Button>
       </InnerContainer>
     </Col>
   );
