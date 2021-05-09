@@ -42,7 +42,7 @@ const Header = ({ drawerType, btnTitle }: IProps) => {
         >
           {btnTitle}
         </Button>
-        {drawerType == DRAWER_TYPES.ROW_PICKER_DRAWER && (
+        {drawerType == DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER && (
           <Button
             icon={<CheckOutlined />}
             style={{ marginRight: 24 }}

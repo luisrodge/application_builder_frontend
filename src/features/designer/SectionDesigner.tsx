@@ -29,7 +29,7 @@ const SectionDesigner = () => {
   return (
     <>
       <Header
-        drawerType={DRAWER_TYPES.ROW_PICKER_DRAWER}
+        drawerType={DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER}
         btnTitle="Add row to section"
       />
       {sectionRows!.length > 0 && <div style={{ marginTop: 70 }}></div>}
