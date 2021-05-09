@@ -7,10 +7,10 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   removeColumn,
   selectActiveColumn,
-  selectActiveRow,
   selectElement,
   setActiveColumn,
   setActiveRow,
+  removeElement,
 } from "./designerSlice";
 import { IColumn, IRow } from "./designer.interface";
 import { showDrawer } from "../drawer/drawerSlice";
@@ -29,6 +29,16 @@ const RemoveIcon = styled(CloseSquareOutlined)`
   display: none;
 `;
 
+const RemoveElementIcon = styled(CloseSquareOutlined)`
+  position: absolute;
+  right: -15px;
+  top: 0;
+  text-align: center;
+  color: ${grey.primary};
+  z-index: 999;
+  display: none;
+`;
+
 interface IInnerContainerProps {
   $active: boolean;
 }
@@ -36,7 +46,7 @@ interface IInnerContainerProps {
 const InnerContainer = styled.div<IInnerContainerProps>`
   position: relative;
   background: #fafafa;
-  padding: 16px 20px;
+  padding: 30px 20px;
   border-radius: 2px;
   text-align: center;
   width: 100%;
@@ -53,6 +63,13 @@ const InnerContainer = styled.div<IInnerContainerProps>`
     css`
       border: 1px solid ${blue.primary};
     `}
+`;
+
+const ElementContainer = styled.div`
+  position: relative;
+  &:hover ${RemoveElementIcon} {
+    display: inherit;
+  }
 `;
 
 interface IProps {
@@ -89,7 +106,14 @@ const Column = ({ span, column, row }: IProps) => {
             onClick={onClick}
           ></Button>
         ) : (
-          <ElementRoot column={column} />
+          <ElementContainer>
+            <Tooltip title="Remove element">
+              <RemoveElementIcon
+                onClick={() => dispatch(removeElement(element!))}
+              />
+            </Tooltip>
+            <ElementRoot column={column} />
+          </ElementContainer>
         )}
       </InnerContainer>
     </Col>

@@ -23,7 +23,7 @@ const NumberInput = () => (
       <ElementLabel />
     </LabelCol>
     <InputCol>
-      <InputNumber style={{ width: "100%" }} />
+      <InputNumber style={{ width: "100%" }} disabled />
     </InputCol>
   </InputContainer>
 );

@@ -38,10 +38,14 @@ const ElementPicker = () => {
 
   const dispatch = useAppDispatch();
 
-  const onClose = () => {
+  const reset = () => {
     dispatch(setActiveRow());
     dispatch(setActiveColumn());
     dispatch(hideDrawer());
+  };
+
+  const onClose = () => {
+    reset();
   };
 
   const pickElement = (type: string) => {
@@ -52,6 +56,7 @@ const ElementPicker = () => {
       type,
     } as IElement;
     dispatch(addElement(newElement));
+    reset();
   };
 
   return (

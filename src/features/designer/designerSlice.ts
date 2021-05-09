@@ -115,6 +115,15 @@ export const designerSlice = createSlice({
 
       state.elements.push(element);
     },
+    removeElement: (state, action: PayloadAction<IElement>) => {
+      const element = action.payload;
+
+      const elements = state.elements.filter(
+        (e) => e.columnId != element.columnId
+      );
+
+      state.elements = elements;
+    },
   },
 });
 
@@ -128,6 +137,7 @@ export const {
   setActiveRow,
   setActiveColumn,
   addElement,
+  removeElement,
 } = designerSlice.actions;
 
 export const selectSections = (state: RootState) => state.designer.sections;
