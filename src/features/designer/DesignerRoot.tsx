@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 
 import Header from "./Header";
 import Drawer from "../../components/Drawer";
@@ -8,15 +7,10 @@ import ElementPicker from "../../components/ElementPicker";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectSections } from "./designerSlice";
+import { DRAWER_TYPES } from "../../shared/constants";
+import { Container } from "./style";
 
-const Container = styled.div`
-  background: #fff;
-  padding: 30px 20px;
-  border-radius: 2px;
-  text-align: center;
-`;
-
-const Designer = () => {
+const DesignerRoot = () => {
   const sections = useAppSelector(selectSections);
 
   const [openElementDrawer, setOpenElementDrawer] = useState(false);
@@ -25,7 +19,10 @@ const Designer = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        drawerType={DRAWER_TYPES.SECTION_LAYOUT_PICKER_DRAWER}
+        btnTitle="Add section"
+      />
       {sections.length > 0 && <div style={{ marginTop: 70 }}></div>}
       <Container>
         <Sections
@@ -46,4 +43,4 @@ const Designer = () => {
   );
 };
 
-export default Designer;
+export default DesignerRoot;

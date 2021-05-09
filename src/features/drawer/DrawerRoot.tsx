@@ -1,19 +1,19 @@
 import { ReactNode } from "react";
 
-import SectionPicker from "./SectionPicker";
+import SectionLayoutPicker from "./SectionLayoutPicker";
 import RowPicker from "./RowPicker";
 import { useAppSelector } from "../../app/hooks";
 import { selectDrawer } from "./drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 
-const { SECTION_PICKER_DRAWER, ROW_PICKER_DRAWER } = DRAWER_TYPES;
+const { SECTION_LAYOUT_PICKER_DRAWER, ROW_PICKER_DRAWER } = DRAWER_TYPES;
 
 interface IDrawerComponents {
   [key: string]: ReactNode;
 }
 
 const DRAWER_COMPONENTS = {
-  [SECTION_PICKER_DRAWER]: SectionPicker,
+  [SECTION_LAYOUT_PICKER_DRAWER]: SectionLayoutPicker,
   [ROW_PICKER_DRAWER]: RowPicker,
 } as IDrawerComponents;
 

@@ -21,7 +21,7 @@ const RemoveIcon = styled(CloseSquareOutlined)`
 `;
 
 const RowContainer = styled.div`
-  padding: 16px 0;
+  padding: 28px 0;
   position: relative;
   :hover {
     border-bottom: 0;

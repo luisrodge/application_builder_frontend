@@ -1,10 +1,12 @@
 import { Button } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
+import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { useAppDispatch } from "../../app/hooks";
 import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
+import { useHistory } from "react-router";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -21,22 +23,35 @@ const HeaderContent = styled.div`
   padding: 18px 20px;
 `;
 
-const Header = () => {
+interface IProps {
+  drawerType: string;
+  btnTitle: string;
+}
+
+const Header = ({ drawerType, btnTitle }: IProps) => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
 
   return (
     <HeaderContainer>
       <HeaderContent>
         <Button
-          onClick={() =>
-            dispatch(
-              showDrawer({ drawerType: DRAWER_TYPES.SECTION_PICKER_DRAWER })
-            )
-          }
+          onClick={() => dispatch(showDrawer({ drawerType }))}
           style={{ marginRight: 24 }}
+          icon={<PlusOutlined />}
         >
-          Add Section
+          {btnTitle}
         </Button>
+        {drawerType == DRAWER_TYPES.ROW_PICKER_DRAWER && (
+          <Button
+            icon={<CheckOutlined />}
+            style={{ marginRight: 24 }}
+            onClick={() => history.push("/")}
+          >
+            Done
+          </Button>
+        )}
+
         <Button type="text">Cancel</Button>
       </HeaderContent>
     </HeaderContainer>
