@@ -1,12 +1,12 @@
 import { Switch, Route } from "react-router-dom";
 
-import Designer from "../features/designer/Designer";
+import DesignerRoot from "../features/designer/DesignerRoot";
 import SectionDesigner from "../features/designer/SectionDesigner";
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact>
-      <Designer />
+      <DesignerRoot />
     </Route>
     <Route path="/sections/:sectionId" exact>
       <SectionDesigner />

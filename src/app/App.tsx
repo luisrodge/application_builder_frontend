@@ -1,4 +1,4 @@
-import Designer from "../features/designer/Designer";
+import Designer from "../features/designer/DesignerRoot";
 import DrawerRoot from "../features/drawer/DrawerRoot";
 import Routes from "./routes";
 

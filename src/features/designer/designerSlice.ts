@@ -2,6 +2,7 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 import type { RootState } from "../../app/store";
+import { Selector } from "../../shared/types";
 import { ISection, IColumn, IRow } from "./designer.interface";
 
 interface DesignerState {
@@ -11,7 +12,6 @@ interface DesignerState {
   activeSection?: ISection;
 }
 
-// Define the initial state using that type
 const initialState: DesignerState = {
   sections: [],
   rows: [],
@@ -118,8 +118,6 @@ export const selectRows = (state: RootState) => state.designer.rows;
 export const selectColumns = (state: RootState) => state.designer.columns;
 export const selectActiveSection = (state: RootState) =>
   state.designer.activeSection;
-
-type Selector<S> = (state: RootState) => S;
 
 export const selectSection = (
   sectionId: string

@@ -10,7 +10,7 @@ import { selectSections } from "./designerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import { Container } from "./style";
 
-const Designer = () => {
+const DesignerRoot = () => {
   const sections = useAppSelector(selectSections);
 
   const [openElementDrawer, setOpenElementDrawer] = useState(false);
@@ -20,7 +20,7 @@ const Designer = () => {
   return (
     <>
       <Header
-        drawerType={DRAWER_TYPES.SECTION_PICKER_DRAWER}
+        drawerType={DRAWER_TYPES.SECTION_LAYOUT_PICKER_DRAWER}
         btnTitle="Add section"
       />
       {sections.length > 0 && <div style={{ marginTop: 70 }}></div>}
@@ -43,4 +43,4 @@ const Designer = () => {
   );
 };
 
-export default Designer;
+export default DesignerRoot;

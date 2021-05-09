@@ -1,6 +1,7 @@
 export interface ISection {
   id: string;
   title?: string;
+  details?: string;
   numOfCols: number;
 }
 
