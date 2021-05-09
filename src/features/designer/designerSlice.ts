@@ -110,6 +110,11 @@ export const designerSlice = createSlice({
       const newColumns = state.columns.filter((column) => column.id != id);
       state.columns = newColumns;
     },
+    addElement: (state, action: PayloadAction<IElement>) => {
+      const element = action.payload;
+
+      state.elements.push(element);
+    },
   },
 });
 
@@ -122,6 +127,7 @@ export const {
   setActiveSection,
   setActiveRow,
   setActiveColumn,
+  addElement,
 } = designerSlice.actions;
 
 export const selectSections = (state: RootState) => state.designer.sections;
@@ -155,6 +161,15 @@ export const selectRowColumns = (
   createSelector(
     [(state: RootState) => state.designer.columns],
     (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
+  );
+
+export const selectElement = (
+  columnId: string | undefined
+): Selector<IElement | undefined> =>
+  createSelector(
+    [(state: RootState) => state.designer.elements],
+    (elements: IElement[]) =>
+      elements.find((element) => element.columnId === columnId)
   );
 
 export default designerSlice.reducer;

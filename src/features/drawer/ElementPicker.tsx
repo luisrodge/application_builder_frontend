@@ -1,4 +1,4 @@
-import { Card, Row } from "antd";
+import { Row } from "antd";
 import { blue, grey } from "@ant-design/colors";
 import styled from "styled-components";
 
@@ -6,10 +6,14 @@ import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectDrawer, hideDrawer } from "./drawerSlice";
 import {
-  selectActiveSection,
+  addElement,
+  selectActiveColumn,
+  selectActiveRow,
   setActiveColumn,
   setActiveRow,
 } from "../designer/designerSlice";
+import { ELEMENT_TYPES } from "../../shared/constants";
+import { IElement } from "../designer/designer.interface";
 
 const ElementCard = styled.div`
   width: 100%;
@@ -23,9 +27,14 @@ const ElementCard = styled.div`
   }
 `;
 
+const elements = [
+  { name: "Number Input", type: ELEMENT_TYPES.NUMBER_INPUT_ELEMENT },
+];
+
 const ElementPicker = () => {
   const { isOpen } = useAppSelector(selectDrawer);
-  const section = useAppSelector(selectActiveSection);
+  const activeRow = useAppSelector(selectActiveRow);
+  const activeColumn = useAppSelector(selectActiveColumn);
 
   const dispatch = useAppDispatch();
 
@@ -33,6 +42,16 @@ const ElementPicker = () => {
     dispatch(setActiveRow());
     dispatch(setActiveColumn());
     dispatch(hideDrawer());
+  };
+
+  const pickElement = (type: string) => {
+    const newElement = {
+      sectionId: activeRow?.sectionId,
+      rowId: activeRow?.id,
+      columnId: activeColumn?.id,
+      type,
+    } as IElement;
+    dispatch(addElement(newElement));
   };
 
   return (
@@ -43,11 +62,13 @@ const ElementPicker = () => {
       closeDrawer={onClose}
     >
       <br />
-      <Row>
-        <ElementCard>
-          <h4 style={{ margin: 0 }}>Number Input</h4>
-        </ElementCard>
-      </Row>
+      {elements.map((element, index) => (
+        <Row key={index}>
+          <ElementCard onClick={() => pickElement(element.type)}>
+            <h4 style={{ margin: 0 }}>{element.name}</h4>
+          </ElementCard>
+        </Row>
+      ))}
     </DrawerContainer>
   );
 };

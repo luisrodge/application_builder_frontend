@@ -18,7 +18,6 @@ export interface IColumn {
 }
 
 export interface IElement {
-  id: string;
   sectionId: string;
   rowId: string;
   columnId: string;

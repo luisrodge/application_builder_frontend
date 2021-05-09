@@ -7,12 +7,15 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   removeColumn,
   selectActiveColumn,
+  selectActiveRow,
+  selectElement,
   setActiveColumn,
   setActiveRow,
 } from "./designerSlice";
 import { IColumn, IRow } from "./designer.interface";
 import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
+import ElementRoot from "./ElementRoot";
 
 const RemoveIcon = styled(CloseSquareOutlined)`
   position: absolute;
@@ -61,6 +64,9 @@ interface IProps {
 const Column = ({ span, column, row }: IProps) => {
   const dispatch = useAppDispatch();
   const activeColumn = useAppSelector(selectActiveColumn);
+  const element = useAppSelector(selectElement(column?.id));
+
+  const isEmpty = element == undefined;
 
   const onClick = () => {
     dispatch(setActiveRow(row));
@@ -68,21 +74,22 @@ const Column = ({ span, column, row }: IProps) => {
     dispatch(showDrawer({ drawerType: DRAWER_TYPES.ELEMENT_PICKER_DRAWER }));
   };
 
-  const isEmpty = true;
-
   return (
     <Col span={span}>
       <InnerContainer $active={activeColumn! && activeColumn.id == column.id}>
         <Tooltip title="Remove column">
           <RemoveIcon onClick={() => dispatch(removeColumn(column))} />
         </Tooltip>
-        {isEmpty && (
+
+        {isEmpty ? (
           <Button
             icon={<PlusOutlined />}
             type="primary"
             ghost
             onClick={onClick}
           ></Button>
+        ) : (
+          <ElementRoot column={column} />
         )}
       </InnerContainer>
     </Col>
