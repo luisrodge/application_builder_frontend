@@ -6,8 +6,13 @@ import NumberInput from "../../components/elements/NumberInput";
 import TextInput from "../../components/elements/TextInput";
 import { IColumn } from "./designer.interface";
 import { selectElement } from "./designerSlice";
+import DatePickerInput from "../../components/elements/DatePickerInput";
 
-const { NUMBER_INPUT_ELEMENT, TEXT_INPUT_ELEMENT } = ELEMENT_TYPES;
+const {
+  NUMBER_INPUT_ELEMENT,
+  TEXT_INPUT_ELEMENT,
+  DATE_PICKER_INPUT_ELEMENT,
+} = ELEMENT_TYPES;
 
 interface IElementComponents {
   [key: string]: ReactNode;
@@ -16,6 +21,7 @@ interface IElementComponents {
 const ELEMENT_COMPONENTS = {
   [NUMBER_INPUT_ELEMENT]: NumberInput,
   [TEXT_INPUT_ELEMENT]: TextInput,
+  [DATE_PICKER_INPUT_ELEMENT]: DatePickerInput,
 } as IElementComponents;
 
 export const ElementTypes = Object.keys(ELEMENT_COMPONENTS);

@@ -31,6 +31,7 @@ const ElementCard = styled.div`
 const elements = [
   { name: "Number Input", type: ELEMENT_TYPES.NUMBER_INPUT_ELEMENT },
   { name: "Text Input", type: ELEMENT_TYPES.TEXT_INPUT_ELEMENT },
+  { name: "Date Picker", type: ELEMENT_TYPES.DATE_PICKER_INPUT_ELEMENT },
 ];
 
 const ElementPicker = () => {
