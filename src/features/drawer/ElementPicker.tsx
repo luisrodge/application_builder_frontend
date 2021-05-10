@@ -22,6 +22,7 @@ const ElementCard = styled.div`
   border: 1px solid ${grey.primary};
   border-radius: 2px;
   padding: 10px;
+  margin-bottom: 20px;
   :hover {
     border: 1px solid ${blue.primary};
   }
@@ -29,6 +30,7 @@ const ElementCard = styled.div`
 
 const elements = [
   { name: "Number Input", type: ELEMENT_TYPES.NUMBER_INPUT_ELEMENT },
+  { name: "Text Input", type: ELEMENT_TYPES.TEXT_INPUT_ELEMENT },
 ];
 
 const ElementPicker = () => {

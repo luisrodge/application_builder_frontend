@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { InputNumber } from "antd";
+import { Input } from "antd";
 
 import ElementLabel from "./ElementLabel";
 
@@ -17,15 +17,15 @@ const InputCol = styled.div`
   flex: 1;
 `;
 
-const NumberInput = () => (
+const TextInput = () => (
   <InputContainer>
     <LabelCol>
       <ElementLabel />
     </LabelCol>
     <InputCol>
-      <InputNumber style={{ width: "100%" }} />
+      <Input style={{ width: "100%" }} />
     </InputCol>
   </InputContainer>
 );
 
-export default NumberInput;
+export default TextInput;
