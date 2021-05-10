@@ -92,7 +92,7 @@ const Column = ({ span, column, row }: IProps) => {
   };
 
   return (
-    <Col span={span}>
+    <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
       <InnerContainer $active={activeColumn! && activeColumn.id == column.id}>
         <Tooltip title="Remove column">
           <RemoveIcon onClick={() => dispatch(removeColumn(column))} />
