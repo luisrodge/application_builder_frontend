@@ -89,9 +89,10 @@ interface IProps {
   column: IColumn;
   span?: number;
   row: IRow;
+  disabled?: boolean;
 }
 
-const Column = ({ span, column, row }: IProps) => {
+const Column = ({ span, column, row, disabled }: IProps) => {
   const dispatch = useAppDispatch();
   const activeColumn = useAppSelector(selectActiveColumn);
   const element = useAppSelector(selectElement(column?.id));
@@ -108,13 +109,15 @@ const Column = ({ span, column, row }: IProps) => {
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
       <Container $active={activeColumn! && activeColumn.id == column.id}>
         <InnerContainer>
-          <RemoveColumnIconContainer
-            onClick={() => dispatch(removeColumn(column))}
-          >
-            <Tooltip title="Remove column">
-              <CloseSquareOutlined style={{ color: "#fff" }} />
-            </Tooltip>
-          </RemoveColumnIconContainer>
+          {!disabled && (
+            <RemoveColumnIconContainer
+              onClick={() => dispatch(removeColumn(column))}
+            >
+              <Tooltip title="Remove column">
+                <CloseSquareOutlined style={{ color: "#fff" }} />
+              </Tooltip>
+            </RemoveColumnIconContainer>
+          )}
 
           {isEmpty ? (
             <div
@@ -127,16 +130,19 @@ const Column = ({ span, column, row }: IProps) => {
                 type="primary"
                 ghost
                 onClick={onClick}
+                disabled={disabled}
               ></Button>
             </div>
           ) : (
             <ElementContainer>
-              <Tooltip title="Remove element">
-                <RemoveElementIcon
-                  onClick={() => dispatch(removeElement(element!))}
-                />
-              </Tooltip>
-              <ElementRoot column={column} />
+              {!disabled && (
+                <Tooltip title="Remove element">
+                  <RemoveElementIcon
+                    onClick={() => dispatch(removeElement(element!))}
+                  />
+                </Tooltip>
+              )}
+              <ElementRoot column={column} disabled={disabled} />
             </ElementContainer>
           )}
         </InnerContainer>

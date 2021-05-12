@@ -1,37 +1,40 @@
-import { Tooltip } from "antd";
+import { Button, Tooltip, Typography } from "antd";
 import styled from "styled-components";
 import { blue, grey } from "@ant-design/colors";
-import { CloseSquareOutlined } from "@ant-design/icons";
+import { CloseSquareOutlined, PlusOutlined } from "@ant-design/icons";
 
 import Rows from "./Rows";
 import { useAppDispatch } from "../../app/hooks";
 import { removeSection, setActiveSection } from "./designerSlice";
 import { ISection } from "./designer.interface";
 import { useHistory } from "react-router";
+import { showDrawer } from "../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../shared/constants";
+
+const { Title } = Typography;
 
 const RemoveIcon = styled(CloseSquareOutlined)`
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  left: 0;
-  right: 0;
+  background: ${blue.primary};
+  padding: 6px;
+  left: 50%;
   top: 0;
   text-align: center;
-  color: ${grey.primary};
+  color: #fff;
   display: none;
-  width: 20px;
   :hover {
     color: ${blue.primary};
   }
 `;
 
 const SectionContainer = styled.div`
+  background: #fff;
   position: relative;
-  text-align: center;
-  padding: 30px 0;
+  padding: 30px 20px;
   border: 1px solid transparent;
   border-bottom: 1px solid #f0f0f0;
-  border-radius: 2px;
   cursor: pointer;
   :hover {
     border-bottom: 0;
@@ -44,9 +47,10 @@ const SectionContainer = styled.div`
 
 interface ISections {
   sections: ISection[];
+  disabled: boolean;
 }
 
-const Sections = ({ sections }: ISections) => {
+const Sections = ({ sections, disabled }: ISections) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -61,13 +65,31 @@ const Sections = ({ sections }: ISections) => {
         <SectionContainer
           key={section.id}
           onClick={() => navigateToSection(section)}
+          style={{ marginBottom: 20 }}
         >
           <Tooltip title="Remove section">
             <RemoveIcon onClick={() => dispatch(removeSection(section))} />
           </Tooltip>
-          <Rows sectionId={section.id} />
+          <Title level={4}>{section.title}</Title>
+          <div style={{ textAlign: "center" }}>
+            <Rows sectionId={section.id} disabled={disabled} />
+          </div>
         </SectionContainer>
       ))}
+      <div style={{ textAlign: "center", marginTop: 50 }}>
+        <Button
+          onClick={() =>
+            dispatch(
+              showDrawer({
+                drawerType: DRAWER_TYPES.SECTION_LAYOUT_PICKER_DRAWER,
+              })
+            )
+          }
+          icon={<PlusOutlined />}
+        >
+          Add Section
+        </Button>
+      </div>
     </>
   );
 };
