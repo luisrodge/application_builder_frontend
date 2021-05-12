@@ -17,45 +17,66 @@ import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import ElementRoot from "./ElementRoot";
 
-const RemoveIcon = styled(CloseSquareOutlined)`
+const RemoveColumnIconContainer = styled.div`
   position: absolute;
-  margin-left: auto;
-  margin-right: auto;
   left: 0;
-  right: 0;
   top: 0;
+  padding: 4px;
   text-align: center;
-  color: ${grey.primary};
+  background: ${blue.primary};
+  cursor: pointer;
+  z-index: 9999;
   display: none;
 `;
 
 const RemoveElementIcon = styled(CloseSquareOutlined)`
   position: absolute;
-  right: -15px;
+  right: 0;
   top: 0;
   text-align: center;
   color: ${grey.primary};
   z-index: 999;
   display: none;
+  background: ${blue.primary};
+  padding: 4px;
+  color: #fff;
 `;
 
 interface IInnerContainerProps {
   $active: boolean;
 }
 
-const InnerContainer = styled.div<IInnerContainerProps>`
+const InnerContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const ElementContainer = styled.div`
+  border: 1px solid transparent;
+  width: 100%;
+  position: relative;
+  padding: 24px 0;
+  &:hover ${RemoveElementIcon} {
+    display: inherit;
+  }
+  &:hover {
+    border: 1px dashed ${grey.primary};
+  }
+`;
+
+const Container = styled.div<IInnerContainerProps>`
+  width: 100%;
   position: relative;
   background: #fafafa;
-  padding: 30px 20px;
-  border-radius: 2px;
-  text-align: center;
+  padding: 20px;
   width: 100%;
   cursor: pointer;
   border: 1px solid transparent;
   :hover {
     border: 1px solid ${blue.primary};
   }
-  &:hover ${RemoveIcon} {
+  &:hover ${RemoveColumnIconContainer} {
     display: inherit;
   }
   ${(props) =>
@@ -63,13 +84,6 @@ const InnerContainer = styled.div<IInnerContainerProps>`
     css`
       border: 1px solid ${blue.primary};
     `}
-`;
-
-const ElementContainer = styled.div`
-  position: relative;
-  &:hover ${RemoveElementIcon} {
-    display: inherit;
-  }
 `;
 
 interface IProps {
@@ -93,29 +107,44 @@ const Column = ({ span, column, row }: IProps) => {
 
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
-      <InnerContainer $active={activeColumn! && activeColumn.id == column.id}>
-        <Tooltip title="Remove column">
-          <RemoveIcon onClick={() => dispatch(removeColumn(column))} />
-        </Tooltip>
-
-        {isEmpty ? (
-          <Button
-            icon={<PlusOutlined />}
-            type="primary"
-            ghost
-            onClick={onClick}
-          ></Button>
-        ) : (
-          <ElementContainer>
-            <Tooltip title="Remove element">
-              <RemoveElementIcon
-                onClick={() => dispatch(removeElement(element!))}
-              />
+      <Container $active={activeColumn! && activeColumn.id == column.id}>
+        <InnerContainer>
+          <RemoveColumnIconContainer
+            onClick={() => dispatch(removeColumn(column))}
+          >
+            <Tooltip title="Remove column">
+              <CloseSquareOutlined style={{ color: "#fff" }} />
             </Tooltip>
-            <ElementRoot column={column} />
-          </ElementContainer>
-        )}
-      </InnerContainer>
+          </RemoveColumnIconContainer>
+
+          {isEmpty ? (
+            <div
+              style={{
+                textAlign: "center",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                icon={<PlusOutlined />}
+                type="primary"
+                ghost
+                onClick={onClick}
+              ></Button>
+            </div>
+          ) : (
+            <ElementContainer>
+              <Tooltip title="Remove element">
+                <RemoveElementIcon
+                  onClick={() => dispatch(removeElement(element!))}
+                />
+              </Tooltip>
+              <ElementRoot column={column} />
+            </ElementContainer>
+          )}
+        </InnerContainer>
+      </Container>
     </Col>
   );
 };

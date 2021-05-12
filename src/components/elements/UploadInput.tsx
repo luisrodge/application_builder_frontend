@@ -1,34 +1,18 @@
 import styled from "styled-components";
-import { Upload, Button } from "antd";
+import { Upload, Button, Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
-import ElementLabel from "./ElementLabel";
+import { IElementProps } from "./elements.interface";
 
-const InputContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-`;
-
-const LabelCol = styled.div`
-  flex: 0 1 auto;
-  padding-right: 20px;
-`;
-
-const InputCol = styled.div`
-  flex: 1;
-`;
-
-const UploadInput = () => (
-  <InputContainer>
-    <LabelCol>
-      <ElementLabel />
-    </LabelCol>
-    <InputCol>
-      <Upload>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
-      </Upload>
-    </InputCol>
-  </InputContainer>
+const UploadInput = ({ element }: IElementProps) => (
+  <Form.Item
+    label={element.label}
+    style={{ fontWeight: "bold", marginBottom: 0 }}
+  >
+    <Upload>
+      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+    </Upload>
+  </Form.Item>
 );
 
 export default UploadInput;

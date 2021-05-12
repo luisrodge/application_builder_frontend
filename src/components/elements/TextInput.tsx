@@ -1,31 +1,14 @@
-import styled from "styled-components";
-import { Input } from "antd";
+import { Form, Input } from "antd";
 
-import ElementLabel from "./ElementLabel";
+import { IElementProps } from "./elements.interface";
 
-const InputContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-`;
-
-const LabelCol = styled.div`
-  flex: 0 1 auto;
-  padding-right: 20px;
-`;
-
-const InputCol = styled.div`
-  flex: 1;
-`;
-
-const TextInput = () => (
-  <InputContainer>
-    <LabelCol>
-      <ElementLabel />
-    </LabelCol>
-    <InputCol>
-      <Input style={{ width: "100%" }} />
-    </InputCol>
-  </InputContainer>
+const TextInput = ({ element }: IElementProps) => (
+  <Form.Item
+    label={element.label}
+    style={{ fontWeight: "bold", marginBottom: 0 }}
+  >
+    <Input style={{ width: "100%" }} />
+  </Form.Item>
 );
 
 export default TextInput;

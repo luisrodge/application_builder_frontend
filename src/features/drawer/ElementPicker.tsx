@@ -4,16 +4,16 @@ import styled from "styled-components";
 
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectDrawer, hideDrawer } from "./drawerSlice";
+import { selectDrawer, showChildDrawer } from "./drawerSlice";
 import {
-  addElement,
+  resetActive,
   selectActiveColumn,
   selectActiveRow,
-  setActiveColumn,
-  setActiveRow,
+  setActiveElement,
 } from "../designer/designerSlice";
-import { ELEMENT_TYPES } from "../../shared/constants";
+import { DRAWER_TYPES, ELEMENT_TYPES } from "../../shared/constants";
 import { IElement } from "../designer/designer.interface";
+import ElementOptions from "./ElementOptions";
 
 const ElementCard = styled.div`
   width: 100%;
@@ -43,25 +43,18 @@ const ElementPicker = () => {
 
   const dispatch = useAppDispatch();
 
-  const reset = () => {
-    dispatch(setActiveRow());
-    dispatch(setActiveColumn());
-    dispatch(hideDrawer());
-  };
-
-  const onClose = () => {
-    reset();
-  };
-
   const pickElement = (type: string) => {
-    const newElement = {
+    const unsavedElement = {
       sectionId: activeRow?.sectionId,
       rowId: activeRow?.id,
       columnId: activeColumn?.id,
       type,
+      label: "",
     } as IElement;
-    dispatch(addElement(newElement));
-    reset();
+    dispatch(setActiveElement(unsavedElement));
+    dispatch(
+      showChildDrawer({ drawerType: DRAWER_TYPES.ELEMENT_OPTIONS_DRAWER })
+    );
   };
 
   return (
@@ -69,7 +62,7 @@ const ElementPicker = () => {
       width={400}
       isOpen={isOpen}
       title="Add element"
-      closeDrawer={onClose}
+      closeDrawer={() => dispatch(resetActive())}
     >
       <br />
       {elements.map((element, index) => (
@@ -79,6 +72,7 @@ const ElementPicker = () => {
           </ElementCard>
         </Row>
       ))}
+      <ElementOptions />
     </DrawerContainer>
   );
 };

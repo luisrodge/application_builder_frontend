@@ -12,6 +12,7 @@ interface DesignerState {
   activeSection?: ISection;
   activeRow?: IRow;
   activeColumn?: IColumn;
+  activeElement?: IElement;
   elements: IElement[];
 }
 
@@ -34,6 +35,9 @@ export const designerSlice = createSlice({
     },
     setActiveColumn: (state, action: PayloadAction<IColumn | undefined>) => {
       state.activeColumn = action.payload;
+    },
+    setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
+      state.activeElement = action.payload;
     },
     addSection: (state, action: PayloadAction<ISection>) => {
       const section = action.payload;
@@ -124,6 +128,12 @@ export const designerSlice = createSlice({
 
       state.elements = elements;
     },
+    resetActive: (state) => {
+      state.activeSection = undefined;
+      state.activeRow = undefined;
+      state.activeColumn = undefined;
+      state.activeElement = undefined;
+    },
   },
 });
 
@@ -138,6 +148,8 @@ export const {
   setActiveColumn,
   addElement,
   removeElement,
+  setActiveElement,
+  resetActive,
 } = designerSlice.actions;
 
 export const selectSections = (state: RootState) => state.designer.sections;
@@ -148,6 +160,8 @@ export const selectActiveSection = (state: RootState) =>
 export const selectActiveRow = (state: RootState) => state.designer.activeRow;
 export const selectActiveColumn = (state: RootState) =>
   state.designer.activeColumn;
+export const selectActiveElement = (state: RootState) =>
+  state.designer.activeElement;
 
 export const selectSection = (
   sectionId: string

@@ -6,11 +6,13 @@ import { useAppSelector } from "../../app/hooks";
 import { selectDrawer } from "./drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import ElementPicker from "./ElementPicker";
+import ElementOptions from "./ElementOptions";
 
 const {
   SECTION_LAYOUT_PICKER_DRAWER,
   ROW_LAYOUT_PICKER_DRAWER,
   ELEMENT_PICKER_DRAWER,
+  ELEMENT_OPTIONS_DRAWER,
 } = DRAWER_TYPES;
 
 interface IDrawerComponents {
@@ -21,6 +23,7 @@ const DRAWER_COMPONENTS = {
   [SECTION_LAYOUT_PICKER_DRAWER]: SectionLayoutPicker,
   [ROW_LAYOUT_PICKER_DRAWER]: RowLayoutPicker,
   [ELEMENT_PICKER_DRAWER]: ElementPicker,
+  [ELEMENT_OPTIONS_DRAWER]: ElementOptions,
 } as IDrawerComponents;
 
 export const DrawerTypes = Object.keys(DRAWER_COMPONENTS);

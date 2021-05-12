@@ -42,7 +42,7 @@ const ElementRoot = ({ column }: IProps) => {
   if (!element) return null;
 
   const SpecificElement = ELEMENT_COMPONENTS[element.type] as React.ElementType;
-  return <SpecificElement />;
+  return <SpecificElement element={element} />;
 };
 
 export default ElementRoot;

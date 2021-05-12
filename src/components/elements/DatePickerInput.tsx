@@ -1,31 +1,14 @@
-import styled from "styled-components";
-import { DatePicker } from "antd";
+import { DatePicker, Form } from "antd";
 
-import ElementLabel from "./ElementLabel";
+import { IElementProps } from "./elements.interface";
 
-const InputContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-`;
-
-const LabelCol = styled.div`
-  flex: 0 1 auto;
-  padding-right: 20px;
-`;
-
-const InputCol = styled.div`
-  flex: 1;
-`;
-
-const DatePickerInput = () => (
-  <InputContainer>
-    <LabelCol>
-      <ElementLabel />
-    </LabelCol>
-    <InputCol>
-      <DatePicker style={{ width: "100%" }} />
-    </InputCol>
-  </InputContainer>
+const DatePickerInput = ({ element }: IElementProps) => (
+  <Form.Item
+    label={element.label}
+    style={{ fontWeight: "bold", marginBottom: 0 }}
+  >
+    <DatePicker style={{ width: "100%" }} />
+  </Form.Item>
 );
 
 export default DatePickerInput;

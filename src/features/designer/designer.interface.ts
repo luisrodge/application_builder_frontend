@@ -22,4 +22,5 @@ export interface IElement {
   rowId: string;
   columnId: string;
   type: string;
+  label: string;
 }

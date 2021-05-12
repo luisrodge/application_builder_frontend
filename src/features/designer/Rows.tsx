@@ -8,27 +8,33 @@ import { GUTTER } from "../../utils/theme";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectSectionRows, removeRow } from "./designerSlice";
 
-const RemoveIcon = styled(CloseSquareOutlined)`
+const IconContainer = styled.div`
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
-  top: 0;
+  top: -22px;
+  width: 50px;
   text-align: center;
-  color: ${grey.primary};
+  background: ${blue.primary};
+  cursor: pointer;
+  z-index: 9999;
   display: none;
 `;
 
 const RowContainer = styled.div`
-  padding: 28px 0;
+  padding: 20px 0;
+  border: 1px solid transparent;
+`;
+
+const Container = styled.div`
   position: relative;
-  :hover {
-    border-bottom: 0;
-    border: 1px solid ${blue.primary};
-  }
-  &:hover ${RemoveIcon} {
+  &:hover ${IconContainer} {
     display: inherit;
+  }
+  &:hover ${RowContainer} {
+    border: 1px solid ${blue.primary};
   }
 `;
 
@@ -44,15 +50,20 @@ const Rows = ({ sectionId }: IProps) => {
   return (
     <>
       {sectionRows?.map((row) => (
-        <RowContainer key={row.id}>
-          <Tooltip title="Remove row">
-            <RemoveIcon onClick={() => dispatch(removeRow(row))} />
-          </Tooltip>
-
-          <Row gutter={GUTTER.lg}>
-            <Columns row={row} sectionId={sectionId} />
-          </Row>
-        </RowContainer>
+        <div>
+          <Container>
+            <IconContainer onClick={() => dispatch(removeRow(row))}>
+              <Tooltip title="Remove row">
+                <CloseSquareOutlined style={{ color: "#fff" }} />
+              </Tooltip>
+            </IconContainer>
+            <RowContainer key={row.id}>
+              <Row gutter={GUTTER.lg}>
+                <Columns row={row} sectionId={sectionId} />
+              </Row>
+            </RowContainer>
+          </Container>
+        </div>
       ))}
     </>
   );
