@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { IElement } from "../designer/designer.interface";
 import {
   addElement,
-  resetActive,
   selectActiveElement,
   setActiveColumn,
   setActiveElement,
@@ -24,6 +23,7 @@ const ElementOptions = () => {
     dispatch(addElement(newElement));
     dispatch(setActiveRow());
     dispatch(setActiveColumn());
+    dispatch(setActiveElement());
     dispatch(hideDrawers());
   };
 

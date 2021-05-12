@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Upload, Button, Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 

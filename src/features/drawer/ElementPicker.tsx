@@ -1,6 +1,6 @@
 import { Row } from "antd";
 import { blue, grey } from "@ant-design/colors";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -8,6 +8,7 @@ import { selectDrawer, showChildDrawer } from "./drawerSlice";
 import {
   resetActive,
   selectActiveColumn,
+  selectActiveElement,
   selectActiveRow,
   setActiveElement,
 } from "../designer/designerSlice";
@@ -15,7 +16,11 @@ import { DRAWER_TYPES, ELEMENT_TYPES } from "../../shared/constants";
 import { IElement } from "../designer/designer.interface";
 import ElementOptions from "./ElementOptions";
 
-const ElementCard = styled.div`
+interface IElementCardProps {
+  $active: boolean;
+}
+
+const ElementCard = styled.div<IElementCardProps>`
   width: 100%;
   text-align: center;
   cursor: pointer;
@@ -26,6 +31,11 @@ const ElementCard = styled.div`
   :hover {
     border: 1px solid ${blue.primary};
   }
+  ${(props) =>
+    props.$active &&
+    css`
+      border: 1px solid ${blue.primary};
+    `}
 `;
 
 const elements = [
@@ -40,6 +50,7 @@ const ElementPicker = () => {
   const { isOpen } = useAppSelector(selectDrawer);
   const activeRow = useAppSelector(selectActiveRow);
   const activeColumn = useAppSelector(selectActiveColumn);
+  const activeElement = useAppSelector(selectActiveElement);
 
   const dispatch = useAppDispatch();
 
@@ -67,7 +78,12 @@ const ElementPicker = () => {
       <br />
       {elements.map((element, index) => (
         <Row key={index}>
-          <ElementCard onClick={() => pickElement(element.type)}>
+          <ElementCard
+            onClick={() => pickElement(element.type)}
+            $active={
+              activeElement != undefined && activeElement.type == element.type
+            }
+          >
             <h4 style={{ margin: 0 }}>{element.name}</h4>
           </ElementCard>
         </Row>
