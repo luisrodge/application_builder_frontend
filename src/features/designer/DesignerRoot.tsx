@@ -1,9 +1,5 @@
-import { useState } from "react";
-
 import Header from "./Header";
-import Drawer from "../../components/Drawer";
 import Sections from "./Sections";
-import ElementPicker from "../../components/ElementPicker";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectSections } from "./designerSlice";
@@ -13,10 +9,6 @@ import { Container } from "./style";
 const DesignerRoot = () => {
   const sections = useAppSelector(selectSections);
 
-  const [openElementDrawer, setOpenElementDrawer] = useState(false);
-
-  const selectElement = (type: string) => {};
-
   return (
     <>
       <Header
@@ -25,19 +17,7 @@ const DesignerRoot = () => {
       />
       {sections.length > 0 && <div style={{ marginTop: 70 }}></div>}
       <Container>
-        <Sections
-          sections={sections}
-          setOpenElementDrawer={() => setOpenElementDrawer(true)}
-        />
-
-        <Drawer
-          isOpen={openElementDrawer}
-          closeDrawer={() => setOpenElementDrawer(false)}
-          title="Add new element"
-          width="500"
-        >
-          <ElementPicker selectElement={selectElement} />
-        </Drawer>
+        <Sections sections={sections} />
       </Container>
     </>
   );

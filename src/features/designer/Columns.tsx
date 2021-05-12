@@ -1,25 +1,25 @@
-import EmptyColumn from "./EmptyColumn";
-
+import Column from "./Column";
 import { useAppSelector } from "../../app/hooks";
-import { selectRowColumns, selectSection } from "./designerSlice";
+import { selectRowColumns } from "./designerSlice";
+import { IRow } from "./designer.interface";
 
 interface IProps {
-  rowId: string;
+  row: IRow;
   sectionId: string;
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-const Columns = ({ rowId, sectionId }: IProps) => {
-  const rowColumns = useAppSelector(selectRowColumns(rowId));
-  const section = useAppSelector(selectSection(sectionId));
+const Columns = ({ row, sectionId }: IProps) => {
+  const rowColumns = useAppSelector(selectRowColumns(row.id));
 
   return (
     <>
       {rowColumns?.map((column) => (
-        <EmptyColumn
+        <Column
           key={column.id}
           span={24 / rowColumns.length}
           column={column}
+          row={row}
         />
       ))}
     </>

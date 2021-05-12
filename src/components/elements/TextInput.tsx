@@ -1,14 +1,14 @@
-import { Form, InputNumber } from "antd";
+import { Form, Input } from "antd";
 
 import { IElementProps } from "./elements.interface";
 
-const NumberInput = ({ element }: IElementProps) => (
+const TextInput = ({ element }: IElementProps) => (
   <Form.Item
     label={element.label}
     style={{ fontWeight: "bold", marginBottom: 0 }}
   >
-    <InputNumber style={{ width: "100%" }} />
+    <Input style={{ width: "100%" }} />
   </Form.Item>
 );
 
-export default NumberInput;
+export default TextInput;

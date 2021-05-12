@@ -3,27 +3,41 @@ import { v4 as uuidv4 } from "uuid";
 
 import type { RootState } from "../../app/store";
 import { Selector } from "../../shared/types";
-import { ISection, IColumn, IRow } from "./designer.interface";
+import { ISection, IColumn, IRow, IElement } from "./designer.interface";
 
 interface DesignerState {
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
   activeSection?: ISection;
+  activeRow?: IRow;
+  activeColumn?: IColumn;
+  activeElement?: IElement;
+  elements: IElement[];
 }
 
 const initialState: DesignerState = {
   sections: [],
   rows: [],
   columns: [],
+  elements: [],
 };
 
 export const designerSlice = createSlice({
   name: "designer",
   initialState,
   reducers: {
-    setActiveSection: (state, action: PayloadAction<ISection>) => {
+    setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
       state.activeSection = action.payload;
+    },
+    setActiveRow: (state, action: PayloadAction<IRow | undefined>) => {
+      state.activeRow = action.payload;
+    },
+    setActiveColumn: (state, action: PayloadAction<IColumn | undefined>) => {
+      state.activeColumn = action.payload;
+    },
+    setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
+      state.activeElement = action.payload;
     },
     addSection: (state, action: PayloadAction<ISection>) => {
       const section = action.payload;
@@ -100,6 +114,26 @@ export const designerSlice = createSlice({
       const newColumns = state.columns.filter((column) => column.id != id);
       state.columns = newColumns;
     },
+    addElement: (state, action: PayloadAction<IElement>) => {
+      const element = action.payload;
+
+      state.elements.push(element);
+    },
+    removeElement: (state, action: PayloadAction<IElement>) => {
+      const element = action.payload;
+
+      const elements = state.elements.filter(
+        (e) => e.columnId != element.columnId
+      );
+
+      state.elements = elements;
+    },
+    resetActive: (state) => {
+      state.activeSection = undefined;
+      state.activeRow = undefined;
+      state.activeColumn = undefined;
+      state.activeElement = undefined;
+    },
   },
 });
 
@@ -110,14 +144,24 @@ export const {
   removeRow,
   removeColumn,
   setActiveSection,
+  setActiveRow,
+  setActiveColumn,
+  addElement,
+  removeElement,
+  setActiveElement,
+  resetActive,
 } = designerSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
 export const selectSections = (state: RootState) => state.designer.sections;
 export const selectRows = (state: RootState) => state.designer.rows;
 export const selectColumns = (state: RootState) => state.designer.columns;
 export const selectActiveSection = (state: RootState) =>
   state.designer.activeSection;
+export const selectActiveRow = (state: RootState) => state.designer.activeRow;
+export const selectActiveColumn = (state: RootState) =>
+  state.designer.activeColumn;
+export const selectActiveElement = (state: RootState) =>
+  state.designer.activeElement;
 
 export const selectSection = (
   sectionId: string
@@ -141,6 +185,15 @@ export const selectRowColumns = (
   createSelector(
     [(state: RootState) => state.designer.columns],
     (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
+  );
+
+export const selectElement = (
+  columnId: string | undefined
+): Selector<IElement | undefined> =>
+  createSelector(
+    [(state: RootState) => state.designer.elements],
+    (elements: IElement[]) =>
+      elements.find((element) => element.columnId === columnId)
   );
 
 export default designerSlice.reducer;

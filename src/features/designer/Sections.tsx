@@ -44,10 +44,9 @@ const SectionContainer = styled.div`
 
 interface ISections {
   sections: ISection[];
-  setOpenElementDrawer: (columnId: number) => void;
 }
 
-const Sections = ({ sections, setOpenElementDrawer }: ISections) => {
+const Sections = ({ sections }: ISections) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
