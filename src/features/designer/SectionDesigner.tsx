@@ -27,19 +27,19 @@ const SectionDesigner = () => {
     );
 
   return (
-    <>
+    <div style={{ background: "#f0f2f5" }}>
       <Header
         drawerType={DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER}
         btnTitle="Add row to section"
       />
       {sectionRows!.length > 0 && <div style={{ marginTop: 70 }}></div>}
       <Container>
-        <Title level={3}>{section.title}</Title>
+        <Title level={4}>{section.title}</Title>
         <Text>{section.details}</Text>
 
         <Rows sectionId={sectionId} />
       </Container>
-    </>
+    </div>
   );
 };
 

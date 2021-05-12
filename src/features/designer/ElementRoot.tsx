@@ -34,15 +34,16 @@ export const ElementTypes = Object.keys(ELEMENT_COMPONENTS);
 
 interface IProps {
   column?: IColumn;
+  disabled?: boolean;
 }
 
-const ElementRoot = ({ column }: IProps) => {
+const ElementRoot = ({ column, disabled }: IProps) => {
   const element = useAppSelector(selectElement(column!.id))!;
 
   if (!element) return null;
 
   const SpecificElement = ELEMENT_COMPONENTS[element.type] as React.ElementType;
-  return <SpecificElement element={element} />;
+  return <SpecificElement element={element} disabled={disabled} />;
 };
 
 export default ElementRoot;

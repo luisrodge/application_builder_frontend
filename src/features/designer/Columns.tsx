@@ -6,10 +6,11 @@ import { IRow } from "./designer.interface";
 interface IProps {
   row: IRow;
   sectionId: string;
+  disabled?: boolean;
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-const Columns = ({ row, sectionId }: IProps) => {
+const Columns = ({ row, sectionId, disabled }: IProps) => {
   const rowColumns = useAppSelector(selectRowColumns(row.id));
 
   return (
@@ -20,6 +21,7 @@ const Columns = ({ row, sectionId }: IProps) => {
           span={24 / rowColumns.length}
           column={column}
           row={row}
+          disabled={disabled}
         />
       ))}
     </>

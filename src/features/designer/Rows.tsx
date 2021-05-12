@@ -19,7 +19,6 @@ const IconContainer = styled.div`
   text-align: center;
   background: ${blue.primary};
   cursor: pointer;
-  z-index: 9999;
   display: none;
 `;
 
@@ -40,10 +39,11 @@ const Container = styled.div`
 
 interface IProps {
   sectionId: string;
+  disabled?: boolean;
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-const Rows = ({ sectionId }: IProps) => {
+const Rows = ({ sectionId, disabled }: IProps) => {
   const sectionRows = useAppSelector(selectSectionRows(sectionId));
   const dispatch = useAppDispatch();
 
@@ -53,13 +53,15 @@ const Rows = ({ sectionId }: IProps) => {
         <div>
           <Container>
             <IconContainer onClick={() => dispatch(removeRow(row))}>
-              <Tooltip title="Remove row">
-                <CloseSquareOutlined style={{ color: "#fff" }} />
-              </Tooltip>
+              {!disabled && (
+                <Tooltip title="Remove row">
+                  <CloseSquareOutlined style={{ color: "#fff" }} />
+                </Tooltip>
+              )}
             </IconContainer>
             <RowContainer key={row.id}>
               <Row gutter={GUTTER.lg}>
-                <Columns row={row} sectionId={sectionId} />
+                <Columns row={row} sectionId={sectionId} disabled={disabled} />
               </Row>
             </RowContainer>
           </Container>

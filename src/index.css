@@ -10,3 +10,10 @@
 .ant-col:last-child {
   padding-right: 0 !important;
 }
+
+.logo {
+  padding: 0 24px;
+  color: #fff;
+  height: 64px;
+  line-height: 64px;
+}

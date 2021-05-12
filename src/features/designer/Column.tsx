@@ -40,10 +40,6 @@ const RemoveElementIcon = styled(CloseSquareOutlined)`
   color: #fff;
 `;
 
-interface IInnerContainerProps {
-  $active: boolean;
-}
-
 const InnerContainer = styled.div`
   width: 100%;
   display: flex;
@@ -63,11 +59,16 @@ const ElementContainer = styled.div`
   }
 `;
 
-const Container = styled.div<IInnerContainerProps>`
+interface IContainerProps {
+  $active: boolean;
+  $disabled: boolean;
+}
+
+const Container = styled.div<IContainerProps>`
   width: 100%;
   position: relative;
   display: flex;
-  background: #fafafa;
+  background: ${(props) => (props.$disabled ? "#fafafa" : "#fff")};
   padding: 20px;
   width: 100%;
   cursor: pointer;
@@ -89,9 +90,10 @@ interface IProps {
   column: IColumn;
   span?: number;
   row: IRow;
+  disabled?: boolean;
 }
 
-const Column = ({ span, column, row }: IProps) => {
+const Column = ({ span, column, row, disabled }: IProps) => {
   const dispatch = useAppDispatch();
   const activeColumn = useAppSelector(selectActiveColumn);
   const element = useAppSelector(selectElement(column?.id));
@@ -106,15 +108,20 @@ const Column = ({ span, column, row }: IProps) => {
 
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
-      <Container $active={activeColumn! && activeColumn.id == column.id}>
+      <Container
+        $active={activeColumn! && activeColumn.id == column.id}
+        $disabled={disabled!}
+      >
         <InnerContainer>
-          <RemoveColumnIconContainer
-            onClick={() => dispatch(removeColumn(column))}
-          >
-            <Tooltip title="Remove column">
-              <CloseSquareOutlined style={{ color: "#fff" }} />
-            </Tooltip>
-          </RemoveColumnIconContainer>
+          {!disabled && (
+            <RemoveColumnIconContainer
+              onClick={() => dispatch(removeColumn(column))}
+            >
+              <Tooltip title="Remove column">
+                <CloseSquareOutlined style={{ color: "#fff" }} />
+              </Tooltip>
+            </RemoveColumnIconContainer>
+          )}
 
           {isEmpty ? (
             <div
@@ -127,16 +134,19 @@ const Column = ({ span, column, row }: IProps) => {
                 type="primary"
                 ghost
                 onClick={onClick}
+                disabled={disabled}
               ></Button>
             </div>
           ) : (
             <ElementContainer>
-              <Tooltip title="Remove element">
-                <RemoveElementIcon
-                  onClick={() => dispatch(removeElement(element!))}
-                />
-              </Tooltip>
-              <ElementRoot column={column} />
+              {!disabled && (
+                <Tooltip title="Remove element">
+                  <RemoveElementIcon
+                    onClick={() => dispatch(removeElement(element!))}
+                  />
+                </Tooltip>
+              )}
+              <ElementRoot column={column} disabled={disabled} />
             </ElementContainer>
           )}
         </InnerContainer>
