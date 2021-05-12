@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectDrawer, showChildDrawer } from "./drawerSlice";
+import { hideDrawer, selectDrawer, showChildDrawer } from "./drawerSlice";
 import {
   resetActive,
   selectActiveColumn,
@@ -68,12 +68,16 @@ const ElementPicker = () => {
     );
   };
 
+  const closeDrawer = () => {
+    dispatch(hideDrawer());
+  };
+
   return (
     <DrawerContainer
       width={400}
       isOpen={isOpen}
       title="Add element"
-      closeDrawer={() => dispatch(resetActive())}
+      closeDrawer={closeDrawer}
     >
       <br />
       {elements.map((element, index) => (
