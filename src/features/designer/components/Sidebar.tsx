@@ -1,5 +1,5 @@
 import { Layout, Menu, Button } from "antd";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 
 import { ISection } from "../designer.interface";
@@ -25,9 +25,13 @@ const Sidebar = ({ sections }: IProps) => {
         position: "fixed",
         right: 0,
         background: blue.primary,
+        borderLeft: `1px solid ${blue[6]}`,
       }}
     >
-      <div className="logo">Sections</div>
+      <div className="logo">
+        <UnorderedListOutlined style={{ marginRight: 6 }} />
+        Sections
+      </div>
 
       <Menu theme="light" mode="inline" defaultSelectedKeys={["4"]}>
         {sections.map((section) => (
