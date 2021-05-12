@@ -68,6 +68,7 @@ const ElementContainer = styled.div`
 const Container = styled.div<IInnerContainerProps>`
   width: 100%;
   position: relative;
+  display: flex;
   background: #fafafa;
   padding: 20px;
   width: 100%;
@@ -122,8 +123,6 @@ const Column = ({ span, column, row }: IProps) => {
               style={{
                 textAlign: "center",
                 width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
               }}
             >
               <Button
