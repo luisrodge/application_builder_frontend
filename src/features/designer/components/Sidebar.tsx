@@ -1,12 +1,9 @@
-import { Layout, Menu, Button } from "antd";
+import { Layout, Menu } from "antd";
 import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
-import { blue, grey } from "@ant-design/colors";
+import { blue } from "@ant-design/colors";
+import { Link } from "react-router-dom";
 
 import { ISection } from "../designer.interface";
-import { useAppDispatch } from "../../../app/hooks";
-import { showDrawer } from "../../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../../shared/constants";
-import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -15,7 +12,6 @@ interface IProps {
 }
 
 const Sidebar = ({ sections }: IProps) => {
-  const dispatch = useAppDispatch();
   return (
     <Sider
       theme="light"
@@ -25,7 +21,6 @@ const Sidebar = ({ sections }: IProps) => {
         position: "fixed",
         right: 0,
         background: blue.primary,
-        borderLeft: `1px solid ${blue[6]}`,
       }}
     >
       <div className="logo">

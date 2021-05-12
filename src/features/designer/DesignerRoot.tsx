@@ -1,8 +1,7 @@
 import { Layout, Button, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { grey, blue } from "@ant-design/colors";
+import { blue } from "@ant-design/colors";
 
-// import Header from "./Header";
 import Sections from "./Sections";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -31,7 +30,7 @@ const DesignerRoot = () => {
           }}
         >
           <div style={{ display: "flex" }}>
-            <div style={{ flex: "1", fontWeight: "bold", color: "#fff" }}>
+            <div style={{ flex: "1", color: "#fff" }}>
               Your Application Name
             </div>
             <div>

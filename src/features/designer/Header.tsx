@@ -52,7 +52,9 @@ const Header = ({ drawerType, btnTitle }: IProps) => {
           </Button>
         )}
 
-        <Button type="text">Cancel</Button>
+        <Button type="text" onClick={() => history.push("/")}>
+          Cancel
+        </Button>
       </HeaderContent>
     </HeaderContainer>
   );

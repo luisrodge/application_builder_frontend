@@ -1,6 +1,6 @@
 import { Button, Tooltip, Typography } from "antd";
 import styled from "styled-components";
-import { blue, grey } from "@ant-design/colors";
+import { blue } from "@ant-design/colors";
 import { CloseSquareOutlined, PlusOutlined } from "@ant-design/icons";
 
 import Rows from "./Rows";
@@ -34,7 +34,6 @@ const SectionContainer = styled.div`
   position: relative;
   padding: 30px 20px;
   border: 1px solid transparent;
-  border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
   :hover {
     border-bottom: 0;

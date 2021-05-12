@@ -40,10 +40,6 @@ const RemoveElementIcon = styled(CloseSquareOutlined)`
   color: #fff;
 `;
 
-interface IInnerContainerProps {
-  $active: boolean;
-}
-
 const InnerContainer = styled.div`
   width: 100%;
   display: flex;
@@ -63,11 +59,16 @@ const ElementContainer = styled.div`
   }
 `;
 
-const Container = styled.div<IInnerContainerProps>`
+interface IContainerProps {
+  $active: boolean;
+  $disabled: boolean;
+}
+
+const Container = styled.div<IContainerProps>`
   width: 100%;
   position: relative;
   display: flex;
-  background: #fafafa;
+  background: ${(props) => (props.$disabled ? "#fafafa" : "#fff")};
   padding: 20px;
   width: 100%;
   cursor: pointer;
@@ -107,7 +108,10 @@ const Column = ({ span, column, row, disabled }: IProps) => {
 
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
-      <Container $active={activeColumn! && activeColumn.id == column.id}>
+      <Container
+        $active={activeColumn! && activeColumn.id == column.id}
+        $disabled={disabled!}
+      >
         <InnerContainer>
           {!disabled && (
             <RemoveColumnIconContainer

@@ -19,7 +19,6 @@ const IconContainer = styled.div`
   text-align: center;
   background: ${blue.primary};
   cursor: pointer;
-  z-index: 9999;
   display: none;
 `;
 

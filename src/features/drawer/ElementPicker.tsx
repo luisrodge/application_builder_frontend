@@ -6,11 +6,12 @@ import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { hideDrawer, selectDrawer, showChildDrawer } from "./drawerSlice";
 import {
-  resetActive,
   selectActiveColumn,
   selectActiveElement,
   selectActiveRow,
+  setActiveColumn,
   setActiveElement,
+  setActiveRow,
 } from "../designer/designerSlice";
 import { DRAWER_TYPES, ELEMENT_TYPES } from "../../shared/constants";
 import { IElement } from "../designer/designer.interface";
@@ -70,6 +71,8 @@ const ElementPicker = () => {
 
   const closeDrawer = () => {
     dispatch(hideDrawer());
+    dispatch(setActiveRow());
+    dispatch(setActiveColumn());
   };
 
   return (
