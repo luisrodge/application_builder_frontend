@@ -5,7 +5,9 @@ import {
   addElement,
   resetActive,
   selectActiveElement,
+  setActiveColumn,
   setActiveElement,
+  setActiveRow,
 } from "../designer/designerSlice";
 
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
@@ -20,7 +22,8 @@ const ElementOptions = () => {
   const onFinish = (values: any) => {
     const newElement = { ...unsavedElement, ...values } as IElement;
     dispatch(addElement(newElement));
-    dispatch(resetActive());
+    dispatch(setActiveRow());
+    dispatch(setActiveColumn());
     dispatch(hideDrawers());
   };
 
