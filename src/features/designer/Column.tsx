@@ -22,7 +22,6 @@ const RemoveColumnIconContainer = styled.div`
   left: 0;
   top: 0;
   padding: 4px;
-  text-align: center;
   background: ${blue.primary};
   cursor: pointer;
   z-index: 9999;
@@ -33,7 +32,6 @@ const RemoveElementIcon = styled(CloseSquareOutlined)`
   position: absolute;
   right: 0;
   top: 0;
-  text-align: center;
   color: ${grey.primary};
   z-index: 999;
   display: none;
@@ -121,7 +119,6 @@ const Column = ({ span, column, row }: IProps) => {
           {isEmpty ? (
             <div
               style={{
-                textAlign: "center",
                 width: "100%",
               }}
             >
