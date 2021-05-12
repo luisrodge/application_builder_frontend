@@ -1,5 +1,9 @@
 import { Checkbox } from "antd";
 
-const CheckboxInput = () => <Checkbox>Label</Checkbox>;
+import { IElementProps } from "./elements.interface";
+
+const CheckboxInput = ({ element }: IElementProps) => (
+  <Checkbox>{element.label}</Checkbox>
+);
 
 export default CheckboxInput;
