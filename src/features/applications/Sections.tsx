@@ -13,20 +13,18 @@ import { DRAWER_TYPES } from "../../shared/constants";
 
 const { Title } = Typography;
 
-const RemoveIcon = styled(CloseSquareOutlined)`
+const RemoveIconContainer = styled.div`
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  background: ${blue.primary};
-  padding: 6px;
-  left: 50%;
-  top: 0;
+  left: 0;
+  right: 0;
+  top: -22px;
+  width: 50px;
   text-align: center;
-  color: #fff;
+  background: ${blue.primary};
+  cursor: pointer;
   display: none;
-  :hover {
-    color: ${blue.primary};
-  }
 `;
 
 const SectionContainer = styled.div`
@@ -39,8 +37,15 @@ const SectionContainer = styled.div`
     border-bottom: 0;
     border: 1px dashed ${blue.primary};
   }
-  &:hover ${RemoveIcon} {
+`;
+
+const ParentContainer = styled.div`
+  position: relative;
+  &:hover ${RemoveIconContainer} {
     display: inherit;
+  }
+  &:hover ${SectionContainer} {
+    border: 1px solid ${blue.primary};
   }
 `;
 
@@ -55,25 +60,31 @@ const Sections = ({ sections, disabled }: ISections) => {
 
   const navigateToSection = (section: ISection) => {
     dispatch(setActiveSection(section));
-    history.push(`/sections/${section.id}`);
+    history.push(
+      `/applications/${section.applicationId}/sections/${section.id}`
+    );
   };
 
   return (
     <>
       {sections.map((section) => (
-        <SectionContainer
-          key={section.id}
-          onClick={() => navigateToSection(section)}
-          style={{ marginBottom: 20 }}
-        >
-          <Tooltip title="Remove section">
-            <RemoveIcon onClick={() => dispatch(removeSection(section))} />
-          </Tooltip>
-          <Title level={4}>{section.title}</Title>
-          <div style={{ textAlign: "center" }}>
-            <Rows sectionId={section.id} disabled={disabled} />
-          </div>
-        </SectionContainer>
+        <ParentContainer>
+          <RemoveIconContainer onClick={() => dispatch(removeSection(section))}>
+            <Tooltip title="Remove section">
+              <CloseSquareOutlined style={{ color: "#fff" }} />
+            </Tooltip>
+          </RemoveIconContainer>
+          <SectionContainer
+            key={section.id}
+            onClick={() => navigateToSection(section)}
+            style={{ marginBottom: 20 }}
+          >
+            <Title level={4}>{section.title}</Title>
+            <div style={{ textAlign: "center" }}>
+              <Rows sectionId={section.id} disabled={disabled} />
+            </div>
+          </SectionContainer>
+        </ParentContainer>
       ))}
       <div style={{ textAlign: "center", marginTop: 50 }}>
         <Button

@@ -1,7 +1,7 @@
 import { Row, Tooltip } from "antd";
 import styled from "styled-components";
 import { CloseSquareOutlined } from "@ant-design/icons";
-import { grey, blue } from "@ant-design/colors";
+import { blue } from "@ant-design/colors";
 
 import Columns from "./Columns";
 import { GUTTER } from "../../utils/theme";

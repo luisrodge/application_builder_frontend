@@ -12,7 +12,8 @@ import { DRAWER_TYPES } from "../../shared/constants";
 const { Title, Text } = Typography;
 
 const SectionDesigner = () => {
-  const { sectionId } = useParams<{ sectionId: string }>();
+  const { sectionId, applicationId } =
+    useParams<{ sectionId: string; applicationId: string }>();
 
   const section = useAppSelector(selectSection(sectionId));
   const sectionRows = useAppSelector(selectSectionRows(sectionId));
@@ -21,7 +22,7 @@ const SectionDesigner = () => {
     return (
       <Redirect
         to={{
-          pathname: "/",
+          pathname: `/applications/${applicationId}`,
         }}
       />
     );

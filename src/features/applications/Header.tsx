@@ -2,9 +2,9 @@ import { Button } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch } from "../../app/hooks";
 import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 

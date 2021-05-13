@@ -12,7 +12,7 @@ const Routes = () => (
     <Route path="/applications/:applicationId" exact>
       <DesignerRoot />
     </Route>
-    <Route path="/sections/:sectionId" exact>
+    <Route path="/applications/:applicationId/sections/:sectionId" exact>
       <SectionDesigner />
     </Route>
   </Switch>

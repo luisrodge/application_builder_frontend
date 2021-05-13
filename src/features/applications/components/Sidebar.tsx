@@ -31,7 +31,9 @@ const Sidebar = ({ sections }: IProps) => {
       <Menu theme="light" mode="inline" defaultSelectedKeys={["4"]}>
         {sections.map((section) => (
           <Menu.Item key={section.id}>
-            <Link to={`/sections/${section.id}`}>
+            <Link
+              to={`applications/${section.applicationId}/sections/${section.id}`}
+            >
               <EditOutlined />
               <span>{section.title}</span>
             </Link>

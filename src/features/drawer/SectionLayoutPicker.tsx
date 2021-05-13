@@ -21,7 +21,7 @@ import {
   selectActiveApplication,
 } from "../applications/applicationsSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-import { ISection } from "../applications/applications.interface";
+import { IApplication, ISection } from "../applications/applications.interface";
 
 const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };
 
@@ -56,10 +56,12 @@ export const EnterSectionInfo = ({
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    const newSection = { ...unsavedSection, ...values };
+    const newSection = { ...unsavedSection, ...values } as ISection;
     dispatch(addSection(newSection));
     dispatch(hideDrawers());
-    history.push(`/sections/${newSection.id}`);
+    history.push(
+      `/applications/${newSection.applicationId}/sections/${newSection.id}`
+    );
   };
 
   const onClose = () => {
