@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import type { RootState } from "../../app/store";
 import { Selector } from "../../shared/types";
-import { ISection, IColumn, IRow, IElement } from "./designer.interface";
+import { ISection, IColumn, IRow, IElement } from "./application.interface";
 
-interface DesignerState {
+interface ApplicationState {
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
@@ -16,15 +16,15 @@ interface DesignerState {
   elements: IElement[];
 }
 
-const initialState: DesignerState = {
+const initialState: ApplicationState = {
   sections: [],
   rows: [],
   columns: [],
   elements: [],
 };
 
-export const designerSlice = createSlice({
-  name: "designer",
+export const applicationSlice = createSlice({
+  name: "application",
   initialState,
   reducers: {
     setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
@@ -150,24 +150,25 @@ export const {
   removeElement,
   setActiveElement,
   resetActive,
-} = designerSlice.actions;
+} = applicationSlice.actions;
 
-export const selectSections = (state: RootState) => state.designer.sections;
-export const selectRows = (state: RootState) => state.designer.rows;
-export const selectColumns = (state: RootState) => state.designer.columns;
+export const selectSections = (state: RootState) => state.application.sections;
+export const selectRows = (state: RootState) => state.application.rows;
+export const selectColumns = (state: RootState) => state.application.columns;
 export const selectActiveSection = (state: RootState) =>
-  state.designer.activeSection;
-export const selectActiveRow = (state: RootState) => state.designer.activeRow;
+  state.application.activeSection;
+export const selectActiveRow = (state: RootState) =>
+  state.application.activeRow;
 export const selectActiveColumn = (state: RootState) =>
-  state.designer.activeColumn;
+  state.application.activeColumn;
 export const selectActiveElement = (state: RootState) =>
-  state.designer.activeElement;
+  state.application.activeElement;
 
 export const selectSection = (
   sectionId: string
 ): Selector<ISection | undefined> =>
   createSelector(
-    [(state: RootState) => state.designer.sections],
+    [(state: RootState) => state.application.sections],
     (sections: ISection[]) =>
       sections.find((section) => section.id == sectionId)
   );
@@ -175,15 +176,16 @@ export const selectSection = (
 export const selectSectionRows = (
   sectionId: string
 ): Selector<IRow[] | undefined> =>
-  createSelector([(state: RootState) => state.designer.rows], (rows: IRow[]) =>
-    rows.filter((row) => row.sectionId == sectionId)
+  createSelector(
+    [(state: RootState) => state.application.rows],
+    (rows: IRow[]) => rows.filter((row) => row.sectionId == sectionId)
   );
 
 export const selectRowColumns = (
   rowId: string
 ): Selector<IColumn[] | undefined> =>
   createSelector(
-    [(state: RootState) => state.designer.columns],
+    [(state: RootState) => state.application.columns],
     (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
   );
 
@@ -191,9 +193,9 @@ export const selectElement = (
   columnId: string | undefined
 ): Selector<IElement | undefined> =>
   createSelector(
-    [(state: RootState) => state.designer.elements],
+    [(state: RootState) => state.application.elements],
     (elements: IElement[]) =>
       elements.find((element) => element.columnId === columnId)
   );
 
-export default designerSlice.reducer;
+export default applicationSlice.reducer;

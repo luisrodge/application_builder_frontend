@@ -5,7 +5,7 @@ import { blue } from "@ant-design/colors";
 import Sections from "./Sections";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectSections } from "./designerSlice";
+import { selectSections } from "./applicationSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import { Container } from "./style";
 import Sidebar from "./components/Sidebar";

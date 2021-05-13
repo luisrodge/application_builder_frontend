@@ -12,9 +12,9 @@ import {
   setActiveColumn,
   setActiveElement,
   setActiveRow,
-} from "../designer/designerSlice";
+} from "../application/applicationSlice";
 import { DRAWER_TYPES, ELEMENT_TYPES } from "../../shared/constants";
-import { IElement } from "../designer/designer.interface";
+import { IElement } from "../application/application.interface";
 import ElementOptions from "./ElementOptions";
 
 interface IElementCardProps {

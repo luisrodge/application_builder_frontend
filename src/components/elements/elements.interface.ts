@@ -1,4 +1,4 @@
-import { IElement } from "../../features/designer/designer.interface";
+import { IElement } from "../../features/application/application.interface";
 
 export interface IElementProps {
   element: IElement;

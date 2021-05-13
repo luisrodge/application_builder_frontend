@@ -1,13 +1,13 @@
 import { Button, Drawer, Form, Input } from "antd";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IElement } from "../designer/designer.interface";
+import { IElement } from "../application/application.interface";
 import {
   addElement,
   selectActiveElement,
   setActiveColumn,
   setActiveElement,
   setActiveRow,
-} from "../designer/designerSlice";
+} from "../application/applicationSlice";
 
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 

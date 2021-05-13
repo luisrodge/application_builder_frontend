@@ -3,7 +3,7 @@ import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 import { Link } from "react-router-dom";
 
-import { ISection } from "../designer.interface";
+import { ISection } from "../application.interface";
 
 const { Sider } = Layout;
 

@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectDrawer, hideDrawer } from "./drawerSlice";
-import { addRow, selectActiveSection } from "../designer/designerSlice";
+import { addRow, selectActiveSection } from "../application/applicationSlice";
 
 const SectionCard = styled(Card)`
   width: 100%;

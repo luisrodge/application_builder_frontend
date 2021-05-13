@@ -16,9 +16,9 @@ import {
   selectChildDrawer,
   hideDrawers,
 } from "./drawerSlice";
-import { addSection } from "../designer/designerSlice";
+import { addSection } from "../application/applicationSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-import { ISection } from "../designer/designer.interface";
+import { ISection } from "../application/application.interface";
 
 const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };
 
