@@ -3,9 +3,16 @@ import { v4 as uuidv4 } from "uuid";
 
 import type { RootState } from "../../app/store";
 import { Selector } from "../../shared/types";
-import { ISection, IColumn, IRow, IElement } from "./application.interface";
+import {
+  ISection,
+  IColumn,
+  IRow,
+  IElement,
+  IApplication,
+} from "./application.interface";
 
 interface ApplicationState {
+  applications: IApplication[];
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
@@ -17,6 +24,7 @@ interface ApplicationState {
 }
 
 const initialState: ApplicationState = {
+  applications: [],
   sections: [],
   rows: [],
   columns: [],

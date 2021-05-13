@@ -1,3 +1,9 @@
+export interface IApplication {
+  id: string;
+  title?: string;
+  details?: string;
+}
+
 export interface ISection {
   id: string;
   title?: string;
