@@ -2,7 +2,7 @@ import { Redirect, useParams } from "react-router-dom";
 import { Typography } from "antd";
 
 import { useAppSelector } from "../../app/hooks";
-import { selectSection, selectSectionRows } from "./applicationSlice";
+import { selectSection, selectSectionRows } from "./applicationsSlice";
 
 import Rows from "./Rows";
 import Header from "./Header";

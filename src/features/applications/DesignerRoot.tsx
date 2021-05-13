@@ -9,7 +9,7 @@ import {
   selectApplication,
   selectSections,
   setActiveApplication,
-} from "./applicationSlice";
+} from "./applicationsSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import Sidebar from "./components/Sidebar";
 import { showDrawer } from "../drawer/drawerSlice";

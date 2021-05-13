@@ -9,7 +9,7 @@ import {
   IRow,
   IElement,
   IApplication,
-} from "./application.interface";
+} from "./applications.interface";
 
 interface ApplicationState {
   applications: IApplication[];
@@ -32,8 +32,8 @@ const initialState: ApplicationState = {
   elements: [],
 };
 
-export const applicationSlice = createSlice({
-  name: "application",
+export const applicationsSlice = createSlice({
+  name: "applications",
   initialState,
   reducers: {
     setActiveApplication: (
@@ -171,28 +171,28 @@ export const {
   setActiveElement,
   setActiveApplication,
   resetActive,
-} = applicationSlice.actions;
+} = applicationsSlice.actions;
 
-export const selectSections = (state: RootState) => state.application.sections;
-export const selectRows = (state: RootState) => state.application.rows;
-export const selectColumns = (state: RootState) => state.application.columns;
+export const selectSections = (state: RootState) => state.applications.sections;
+export const selectRows = (state: RootState) => state.applications.rows;
+export const selectColumns = (state: RootState) => state.applications.columns;
 
 export const selectActiveApplication = (state: RootState) =>
-  state.application.activeApplication;
+  state.applications.activeApplication;
 export const selectActiveSection = (state: RootState) =>
-  state.application.activeSection;
+  state.applications.activeSection;
 export const selectActiveRow = (state: RootState) =>
-  state.application.activeRow;
+  state.applications.activeRow;
 export const selectActiveColumn = (state: RootState) =>
-  state.application.activeColumn;
+  state.applications.activeColumn;
 export const selectActiveElement = (state: RootState) =>
-  state.application.activeElement;
+  state.applications.activeElement;
 
 export const selectApplication = (
   applicationId: string
 ): Selector<IApplication | undefined> =>
   createSelector(
-    [(state: RootState) => state.application.applications],
+    [(state: RootState) => state.applications.applications],
     (applications: IApplication[]) =>
       applications.find((application) => application.id === applicationId)
   );
@@ -201,7 +201,7 @@ export const selectSection = (
   sectionId: string
 ): Selector<ISection | undefined> =>
   createSelector(
-    [(state: RootState) => state.application.sections],
+    [(state: RootState) => state.applications.sections],
     (sections: ISection[]) =>
       sections.find((section) => section.id == sectionId)
   );
@@ -210,7 +210,7 @@ export const selectSectionRows = (
   sectionId: string
 ): Selector<IRow[] | undefined> =>
   createSelector(
-    [(state: RootState) => state.application.rows],
+    [(state: RootState) => state.applications.rows],
     (rows: IRow[]) => rows.filter((row) => row.sectionId == sectionId)
   );
 
@@ -218,7 +218,7 @@ export const selectRowColumns = (
   rowId: string
 ): Selector<IColumn[] | undefined> =>
   createSelector(
-    [(state: RootState) => state.application.columns],
+    [(state: RootState) => state.applications.columns],
     (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
   );
 
@@ -226,9 +226,9 @@ export const selectElement = (
   columnId: string | undefined
 ): Selector<IElement | undefined> =>
   createSelector(
-    [(state: RootState) => state.application.elements],
+    [(state: RootState) => state.applications.elements],
     (elements: IElement[]) =>
       elements.find((element) => element.columnId === columnId)
   );
 
-export default applicationSlice.reducer;
+export default applicationsSlice.reducer;

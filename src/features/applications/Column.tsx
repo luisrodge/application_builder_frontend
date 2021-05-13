@@ -11,8 +11,8 @@ import {
   setActiveColumn,
   setActiveRow,
   removeElement,
-} from "./applicationSlice";
-import { IColumn, IRow } from "./application.interface";
+} from "./applicationsSlice";
+import { IColumn, IRow } from "./applications.interface";
 import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import ElementRoot from "./ElementRoot";

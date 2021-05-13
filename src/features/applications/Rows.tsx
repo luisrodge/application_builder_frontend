@@ -6,7 +6,7 @@ import { grey, blue } from "@ant-design/colors";
 import Columns from "./Columns";
 import { GUTTER } from "../../utils/theme";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectSectionRows, removeRow } from "./applicationSlice";
+import { selectSectionRows, removeRow } from "./applicationsSlice";
 
 const IconContainer = styled.div`
   position: absolute;

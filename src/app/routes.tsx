@@ -1,8 +1,8 @@
 import { Switch, Route } from "react-router-dom";
 
-import Applications from "../features/application/Applications";
-import DesignerRoot from "../features/application/DesignerRoot";
-import SectionDesigner from "../features/application/SectionDesigner";
+import Applications from "../features/applications/Applications";
+import DesignerRoot from "../features/applications/DesignerRoot";
+import SectionDesigner from "../features/applications/SectionDesigner";
 
 const Routes = () => (
   <Switch>

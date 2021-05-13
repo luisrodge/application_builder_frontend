@@ -1,7 +1,7 @@
 import Column from "./Column";
 import { useAppSelector } from "../../app/hooks";
-import { selectRowColumns } from "./applicationSlice";
-import { IRow } from "./application.interface";
+import { selectRowColumns } from "./applicationsSlice";
+import { IRow } from "./applications.interface";
 
 interface IProps {
   row: IRow;

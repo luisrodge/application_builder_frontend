@@ -19,9 +19,9 @@ import {
 import {
   addSection,
   selectActiveApplication,
-} from "../application/applicationSlice";
+} from "../applications/applicationsSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-import { ISection } from "../application/application.interface";
+import { ISection } from "../applications/applications.interface";
 
 const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };
 

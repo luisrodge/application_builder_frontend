@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IApplication } from "../application/application.interface";
-import { addApplication } from "../application/applicationSlice";
+import { IApplication } from "../applications/applications.interface";
+import { addApplication } from "../applications/applicationsSlice";
 
 import { hideDrawer, selectDrawer } from "./drawerSlice";
 

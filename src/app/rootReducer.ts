@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import applicationReducer from "../features/application/applicationSlice";
+import applicationsReducer from "../features/applications/applicationsSlice";
 import drawerReducer from "../features/drawer/drawerSlice";
 
 const rootReducer = combineReducers({
-  application: applicationReducer,
+  applications: applicationsReducer,
   drawer: drawerReducer,
 });
 

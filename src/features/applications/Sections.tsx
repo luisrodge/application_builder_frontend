@@ -5,8 +5,8 @@ import { CloseSquareOutlined, PlusOutlined } from "@ant-design/icons";
 
 import Rows from "./Rows";
 import { useAppDispatch } from "../../app/hooks";
-import { removeSection, setActiveSection } from "./applicationSlice";
-import { ISection } from "./application.interface";
+import { removeSection, setActiveSection } from "./applicationsSlice";
+import { ISection } from "./applications.interface";
 import { useHistory } from "react-router";
 import { showDrawer } from "../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
