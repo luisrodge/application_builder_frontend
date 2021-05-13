@@ -1,13 +1,16 @@
 import { Layout, Button, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
+import { Redirect, useParams } from "react-router";
 
 import Sections from "./Sections";
-
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectSections } from "./applicationSlice";
+import {
+  selectApplication,
+  selectSections,
+  setActiveApplication,
+} from "./applicationSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-import { Container } from "./style";
 import Sidebar from "./components/Sidebar";
 import { showDrawer } from "../drawer/drawerSlice";
 
@@ -15,8 +18,22 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const DesignerRoot = () => {
-  const sections = useAppSelector(selectSections);
   const dispatch = useAppDispatch();
+
+  const { applicationId } = useParams<{ applicationId: string }>();
+
+  const application = useAppSelector(selectApplication(applicationId));
+  const sections = useAppSelector(selectSections);
+  dispatch(setActiveApplication(application));
+
+  if (!application)
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
 
   return (
     <Layout>
@@ -30,9 +47,7 @@ const DesignerRoot = () => {
           }}
         >
           <div style={{ display: "flex" }}>
-            <div style={{ flex: "1", color: "#fff" }}>
-              Your Application Name
-            </div>
+            <div style={{ flex: "1", color: "#fff" }}>{application?.title}</div>
             <div>
               <Button
                 icon={<PlusOutlined />}

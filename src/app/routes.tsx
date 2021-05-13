@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import Applications from "../features/application/Applications";
 import DesignerRoot from "../features/application/DesignerRoot";
 import SectionDesigner from "../features/application/SectionDesigner";
-import ApplyRoot from "../features/apply/ApplyRoot";
 
 const Routes = () => (
   <Switch>
@@ -15,9 +14,6 @@ const Routes = () => (
     </Route>
     <Route path="/sections/:sectionId" exact>
       <SectionDesigner />
-    </Route>
-    <Route path="/:applicationId/apply" exact>
-      <ApplyRoot />
     </Route>
   </Switch>
 );

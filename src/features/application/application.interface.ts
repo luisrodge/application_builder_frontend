@@ -6,6 +6,7 @@ export interface IApplication {
 
 export interface ISection {
   id: string;
+  applicationId: string;
   title?: string;
   details?: string;
   numOfCols: number;

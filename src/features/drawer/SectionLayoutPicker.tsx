@@ -16,7 +16,10 @@ import {
   selectChildDrawer,
   hideDrawers,
 } from "./drawerSlice";
-import { addSection } from "../application/applicationSlice";
+import {
+  addSection,
+  selectActiveApplication,
+} from "../application/applicationSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import { ISection } from "../application/application.interface";
 
@@ -93,11 +96,16 @@ export const EnterSectionInfo = ({
 
 const SectionLayoutPicker = () => {
   const { isOpen } = useAppSelector(selectDrawer);
+  const activeApplication = useAppSelector(selectActiveApplication);
   const dispatch = useAppDispatch();
   const [unsavedSection, setUnsavedSection] = useState<ISection>();
 
   const pickSection = (sectionId: string, numOfCols: number) => {
-    setUnsavedSection({ id: sectionId, numOfCols });
+    setUnsavedSection({
+      id: sectionId,
+      numOfCols,
+      applicationId: activeApplication!.id,
+    });
     dispatch(
       showChildDrawer({ drawerType: DRAWER_TYPES.ENTER_SECTION_INFO_DRAWER })
     );

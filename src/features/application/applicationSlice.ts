@@ -16,6 +16,7 @@ interface ApplicationState {
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
+  activeApplication?: IApplication;
   activeSection?: ISection;
   activeRow?: IRow;
   activeColumn?: IColumn;
@@ -35,6 +36,12 @@ export const applicationSlice = createSlice({
   name: "application",
   initialState,
   reducers: {
+    setActiveApplication: (
+      state,
+      action: PayloadAction<IApplication | undefined>
+    ) => {
+      state.activeApplication = action.payload;
+    },
     setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
       state.activeSection = action.payload;
     },
@@ -46,6 +53,10 @@ export const applicationSlice = createSlice({
     },
     setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
       state.activeElement = action.payload;
+    },
+    addApplication: (state, action: PayloadAction<IApplication>) => {
+      const newApplication = action.payload;
+      state.applications.push(newApplication);
     },
     addSection: (state, action: PayloadAction<ISection>) => {
       const section = action.payload;
@@ -146,6 +157,7 @@ export const applicationSlice = createSlice({
 });
 
 export const {
+  addApplication,
   addSection,
   addRow,
   removeSection,
@@ -157,12 +169,16 @@ export const {
   addElement,
   removeElement,
   setActiveElement,
+  setActiveApplication,
   resetActive,
 } = applicationSlice.actions;
 
 export const selectSections = (state: RootState) => state.application.sections;
 export const selectRows = (state: RootState) => state.application.rows;
 export const selectColumns = (state: RootState) => state.application.columns;
+
+export const selectActiveApplication = (state: RootState) =>
+  state.application.activeApplication;
 export const selectActiveSection = (state: RootState) =>
   state.application.activeSection;
 export const selectActiveRow = (state: RootState) =>
@@ -171,6 +187,15 @@ export const selectActiveColumn = (state: RootState) =>
   state.application.activeColumn;
 export const selectActiveElement = (state: RootState) =>
   state.application.activeElement;
+
+export const selectApplication = (
+  applicationId: string
+): Selector<IApplication | undefined> =>
+  createSelector(
+    [(state: RootState) => state.application.applications],
+    (applications: IApplication[]) =>
+      applications.find((application) => application.id === applicationId)
+  );
 
 export const selectSection = (
   sectionId: string

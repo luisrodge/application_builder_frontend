@@ -31,6 +31,7 @@ const SectionDesigner = () => {
       <Header
         drawerType={DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER}
         btnTitle="Add row to section"
+        applicationId={section.applicationId}
       />
       {sectionRows!.length > 0 && <div style={{ marginTop: 70 }}></div>}
       <Container>
