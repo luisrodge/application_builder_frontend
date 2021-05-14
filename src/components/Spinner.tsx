@@ -8,7 +8,7 @@ const FullViewContainer = styled.div`
   width: 100%;
   height: 100%;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.24);
+  background-color: rgba(0, 0, 0, 0.45);
 `;
 
 const SpinnerContainer = styled.div`
