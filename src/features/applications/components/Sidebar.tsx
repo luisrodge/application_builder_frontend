@@ -32,7 +32,7 @@ const Sidebar = ({ sections }: IProps) => {
         {sections.map((section) => (
           <Menu.Item key={section.id}>
             <Link
-              to={`applications/${section.applicationId}/sections/${section.id}`}
+              to={`/applications/${section.applicationId}/sections/${section.id}`}
             >
               <EditOutlined />
               <span>{section.title}</span>
