@@ -1,6 +1,5 @@
 import { Spin } from "antd";
 import styled from "styled-components";
-import { blue } from "@ant-design/colors";
 
 const FullViewContainer = styled.div`
   position: absolute;

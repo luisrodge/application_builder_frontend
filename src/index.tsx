@@ -9,7 +9,6 @@ import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./app/store";
 import ScrollToTop from "./components/ScrollToTop";
-import { FullViewSpinner } from "./components/Spinner";
 
 ReactDOM.render(
   <React.StrictMode>
