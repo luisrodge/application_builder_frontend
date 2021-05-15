@@ -10,6 +10,7 @@ import {
   IElement,
   IApplication,
 } from "./applications.interface";
+import { GetApplications } from "./services";
 
 interface ApplicationState {
   applications: IApplication[];
@@ -22,6 +23,7 @@ interface ApplicationState {
   activeColumn?: IColumn;
   activeElement?: IElement;
   elements: IElement[];
+  loading: "idle" | "pending" | "succeeded" | "failed";
 }
 
 const initialState: ApplicationState = {
@@ -30,6 +32,7 @@ const initialState: ApplicationState = {
   rows: [],
   columns: [],
   elements: [],
+  loading: "idle",
 };
 
 export const applicationsSlice = createSlice({
@@ -154,6 +157,15 @@ export const applicationsSlice = createSlice({
       state.activeElement = undefined;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(GetApplications.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(GetApplications.fulfilled, (state, action) => {
+      state.applications = action.payload;
+      state.loading = "succeeded";
+    });
+  },
 });
 
 export const {
@@ -173,9 +185,12 @@ export const {
   resetActive,
 } = applicationsSlice.actions;
 
+export const selectApplications = (state: RootState) =>
+  state.applications.applications;
 export const selectSections = (state: RootState) => state.applications.sections;
 export const selectRows = (state: RootState) => state.applications.rows;
 export const selectColumns = (state: RootState) => state.applications.columns;
+export const selectLoading = (state: RootState) => state.applications.loading;
 
 export const selectActiveApplication = (state: RootState) =>
   state.applications.activeApplication;
