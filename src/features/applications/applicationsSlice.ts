@@ -10,7 +10,7 @@ import {
   IElement,
   IApplication,
 } from "./applications.interface";
-import { GetApplications } from "./services";
+import { CreateApplication, GetApplications, GetApplication } from "./services";
 
 interface ApplicationState {
   applications: IApplication[];
@@ -24,6 +24,7 @@ interface ApplicationState {
   activeElement?: IElement;
   elements: IElement[];
   loading: "idle" | "pending" | "succeeded" | "failed";
+  error: string | null;
 }
 
 const initialState: ApplicationState = {
@@ -33,6 +34,7 @@ const initialState: ApplicationState = {
   columns: [],
   elements: [],
   loading: "idle",
+  error: null,
 };
 
 export const applicationsSlice = createSlice({
@@ -57,10 +59,7 @@ export const applicationsSlice = createSlice({
     setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
       state.activeElement = action.payload;
     },
-    addApplication: (state, action: PayloadAction<IApplication>) => {
-      const newApplication = action.payload;
-      state.applications.push(newApplication);
-    },
+
     addSection: (state, action: PayloadAction<ISection>) => {
       const section = action.payload;
       const row = { id: uuidv4(), sectionId: section.id } as IRow;
@@ -165,11 +164,31 @@ export const applicationsSlice = createSlice({
       state.applications = action.payload;
       state.loading = "succeeded";
     });
+    builder.addCase(GetApplication.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(GetApplication.fulfilled, (state, action) => {
+      state.activeApplication = action.payload;
+      state.loading = "succeeded";
+    });
+    builder.addCase(GetApplications.rejected, (state, action) => {
+      // state.error = action.payload.message;
+      state.loading = "idle";
+    });
+    builder.addCase(CreateApplication.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(CreateApplication.fulfilled, (state) => {
+      state.loading = "succeeded";
+    });
+    builder.addCase(CreateApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+      state.loading = "idle";
+    });
   },
 });
 
 export const {
-  addApplication,
   addSection,
   addRow,
   removeSection,

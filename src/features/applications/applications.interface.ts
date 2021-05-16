@@ -1,3 +1,8 @@
+export interface IApplicationAttributes {
+  title: string;
+  details: string;
+}
+
 export interface IApplication {
   id: string;
   title?: string;
@@ -30,4 +35,8 @@ export interface IElement {
   columnId: string;
   type: string;
   label: string;
+}
+
+export interface IErrorMessage {
+  message: string;
 }

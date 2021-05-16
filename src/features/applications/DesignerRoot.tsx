@@ -1,18 +1,20 @@
+import { useEffect } from "react";
 import { Layout, Button, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
-import { Redirect, useParams } from "react-router";
+import { useParams } from "react-router";
 
 import Sections from "./Sections";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  selectApplication,
+  selectActiveApplication,
   selectSections,
   setActiveApplication,
 } from "./applicationsSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import Sidebar from "./components/Sidebar";
 import { showDrawer } from "../drawer/drawerSlice";
+import { GetApplication } from "./services";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -22,18 +24,13 @@ const DesignerRoot = () => {
 
   const { applicationId } = useParams<{ applicationId: string }>();
 
-  const application = useAppSelector(selectApplication(applicationId));
+  const application = useAppSelector(selectActiveApplication);
   const sections = useAppSelector(selectSections);
   dispatch(setActiveApplication(application));
 
-  if (!application)
-    return (
-      <Redirect
-        to={{
-          pathname: "/",
-        }}
-      />
-    );
+  useEffect(() => {
+    dispatch(GetApplication(applicationId));
+  }, []);
 
   return (
     <Layout>

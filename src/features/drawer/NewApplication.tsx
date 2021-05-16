@@ -1,12 +1,11 @@
-import { Button, Drawer, Form, Input } from "antd";
-import { v4 as uuidv4 } from "uuid";
+import { Button, Drawer, Form, Input, message } from "antd";
 import { useHistory } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IApplication } from "../applications/applications.interface";
-import { addApplication } from "../applications/applicationsSlice";
+import { IApplicationAttributes } from "../applications/applications.interface";
 
 import { hideDrawer, selectDrawer } from "./drawerSlice";
+import { CreateApplication } from "../applications/services";
 
 const NewApplication = () => {
   const dispatch = useAppDispatch();
@@ -15,11 +14,20 @@ const NewApplication = () => {
 
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    const newApplication = { ...values, id: uuidv4() } as IApplication;
-    dispatch(addApplication(newApplication));
-    dispatch(hideDrawer());
-    history.push(`/applications/${newApplication.id}`);
+  const onFinish = async (application: IApplicationAttributes) => {
+    const resultAction = await dispatch(CreateApplication(application));
+    if (CreateApplication.fulfilled.match(resultAction)) {
+      const createdApplication = resultAction.payload;
+      dispatch(hideDrawer());
+      message.success("Application created");
+      history.push(`/applications/${createdApplication.id}`);
+    } else {
+      if (resultAction.payload) {
+        message.error(`Create failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Create failed: ${resultAction.error.message}`);
+      }
+    }
   };
 
   const onClose = () => {
