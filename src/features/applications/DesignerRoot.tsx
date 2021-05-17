@@ -8,6 +8,7 @@ import Sections from "./Sections";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveApplication,
+  selectLoading,
   selectSections,
   setActiveApplication,
 } from "./applicationsSlice";
@@ -15,6 +16,7 @@ import { DRAWER_TYPES } from "../../shared/constants";
 import Sidebar from "./components/Sidebar";
 import { showDrawer } from "../drawer/drawerSlice";
 import { GetApplication } from "./services";
+import { Spinner } from "../../components/Spinner";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -24,6 +26,7 @@ const DesignerRoot = () => {
 
   const { applicationId } = useParams<{ applicationId: string }>();
 
+  const loading = useAppSelector(selectLoading);
   const application = useAppSelector(selectActiveApplication);
   const sections = useAppSelector(selectSections);
   dispatch(setActiveApplication(application));
@@ -61,6 +64,7 @@ const DesignerRoot = () => {
             </div>
           </div>
         </Header>
+
         <Content
           style={{
             marginLeft: 50,
@@ -68,7 +72,9 @@ const DesignerRoot = () => {
             marginBottom: 100,
           }}
         >
-          {sections.length ? (
+          {loading == "pending" ? (
+            <Spinner />
+          ) : sections.length ? (
             <div className="site-layout-background">
               <Sections sections={sections} disabled={true} />
             </div>

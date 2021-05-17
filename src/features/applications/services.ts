@@ -1,27 +1,76 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { normalize, schema } from "normalizr";
+
+import api from "../../utils/api";
 
 import {
   IApplication,
   IErrorMessage,
   IApplicationAttributes,
+  ISection,
+  IRow,
+  IColumn,
+  IApplicationWithChildren,
 } from "./applications.interface";
-
-const BASE_URL = "http://localhost:3000";
 
 export const GetApplications = createAsyncThunk(
   "applications/list",
   async () => {
-    const response = await axios.get(`${BASE_URL}/applications`);
+    const response = await api.get(`applications`);
     return (await response.data) as IApplication[];
   }
 );
 
+const columnSchema = new schema.Entity("columns");
+const rowSchema = new schema.Entity("rows", {
+  columns: [columnSchema],
+});
+const sectionSchema = new schema.Entity("sections", {
+  rows: [rowSchema],
+});
+const applicationSchema = new schema.Entity("applications", {
+  sections: [sectionSchema],
+});
+
 export const GetApplication = createAsyncThunk(
   "applications/get",
   async (id: string) => {
-    const response = await axios.get(`${BASE_URL}/applications/${id}`);
-    return (await response.data) as IApplication;
+    const { data } = await api.get(`applications/${id}`);
+    const normalizedData = normalize(data, applicationSchema);
+
+    const {
+      applications,
+      sections: normedSections,
+      rows: normedRows,
+      columns: normedColumns,
+    } = normalizedData.entities;
+
+    // console.log(normalizedData);
+
+    const application = applications![id];
+    const sections =
+      normedSections == undefined
+        ? []
+        : Object.keys(normedSections).map((id) => normedSections[id]);
+    const rows =
+      normedRows == undefined
+        ? []
+        : Object.keys(normedRows).map((id) => normedRows[id]);
+    const columns =
+      normedColumns == undefined
+        ? []
+        : Object.keys(normedColumns).map((id) => normedColumns[id]);
+
+    const applicationData = {
+      application: application as IApplication,
+      sections: sections as ISection[],
+      rows: rows as IRow[],
+      columns: columns as IColumn[],
+    };
+
+    console.log(applicationData);
+
+    return applicationData as IApplicationWithChildren;
   }
 );
 
@@ -35,10 +84,10 @@ export const CreateApplication = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("applications/create", async (application, thunkApi) => {
-  const response = await axios.post(`${BASE_URL}/applications`, application);
+  const response = await api.post(`applications`, application);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
-      message: "Failed to fetch applications.",
+      message: "Failed to fetch application.",
     } as IErrorMessage);
   }
   return (await response.data) as IApplication;

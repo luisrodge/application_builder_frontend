@@ -31,7 +31,7 @@ const FullViewInnerContainer = styled.div`
 
 export const Spinner = () => (
   <div style={{ textAlign: "center" }}>
-    <Spin size="large" style={{ marginTop: 50 }} />
+    <Spin size="large" style={{ marginTop: 50 }} delay={500} />
   </div>
 );
 

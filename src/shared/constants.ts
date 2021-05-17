@@ -14,3 +14,5 @@ export const ELEMENT_TYPES = {
   CHECKBOX_INPUT_ELEMENT: "CHECKBOX_INPUT_ELEMENT",
   UPLOAD_INPUT_ELEMENT: "UPLOAD_INPUT_ELEMENT",
 };
+
+export const GUTTER = { xs: 8, sm: 16, md: 24, lg: 32 };

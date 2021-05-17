@@ -55,7 +55,10 @@ const Applications = () => {
           <Spinner />
         ) : (
           applications.map((application) => (
-            <Card style={{ marginBottom: 10, cursor: "pointer" }}>
+            <Card
+              style={{ marginBottom: 10, cursor: "pointer" }}
+              key={application.id}
+            >
               <Link to={`/applications/${application.id}`}>
                 <p>{application.title}</p>
               </Link>

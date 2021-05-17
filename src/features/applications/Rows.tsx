@@ -4,7 +4,7 @@ import { CloseSquareOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 
 import Columns from "./Columns";
-import { GUTTER } from "../../utils/theme";
+import { GUTTER } from "../../shared/constants";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectSectionRows, removeRow } from "./applicationsSlice";
 
@@ -50,7 +50,7 @@ const Rows = ({ sectionId, disabled }: IProps) => {
   return (
     <>
       {sectionRows?.map((row) => (
-        <div>
+        <div key={row.id}>
           <Container>
             <IconContainer onClick={() => dispatch(removeRow(row))}>
               {!disabled && (

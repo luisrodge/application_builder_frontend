@@ -68,7 +68,7 @@ const Sections = ({ sections, disabled }: ISections) => {
   return (
     <>
       {sections.map((section) => (
-        <ParentContainer>
+        <ParentContainer key={section.id}>
           <RemoveIconContainer onClick={() => dispatch(removeSection(section))}>
             <Tooltip title="Remove section">
               <CloseSquareOutlined style={{ color: "#fff" }} />

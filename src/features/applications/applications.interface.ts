@@ -9,6 +9,14 @@ export interface IApplication {
   details?: string;
 }
 
+export interface IApplicationWithChildren {
+  application: IApplication;
+  sections: ISection[];
+  rows: IRow[];
+  columns: IColumn[];
+  elements: IElement[];
+}
+
 export interface ISection {
   id: string;
   applicationId: string;
