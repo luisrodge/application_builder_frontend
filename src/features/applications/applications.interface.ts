@@ -7,6 +7,7 @@ export interface IApplication {
   id: string;
   title?: string;
   details?: string;
+  sections?: number[];
 }
 
 export interface IApplicationWithChildren {
@@ -23,12 +24,14 @@ export interface ISection {
   title?: string;
   details?: string;
   numOfCols: number;
+  rows?: number[];
 }
 
 export interface IRow {
   id: string;
   sectionId: string;
   numOfCols?: number;
+  columns?: number[];
 }
 
 export interface IColumn {
