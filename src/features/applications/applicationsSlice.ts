@@ -19,9 +19,11 @@ import {
   GetSection,
 } from "./services";
 
+type LoadingType = "idle" | "pending" | "succeeded" | "failed";
+
 interface ILoadingState {
-  sectionLoading: "idle" | "pending" | "succeeded" | "failed";
-  applicationLoading: "idle" | "pending" | "succeeded" | "failed";
+  sectionLoading: LoadingType;
+  applicationLoading: LoadingType;
 }
 
 interface ApplicationState {
@@ -35,7 +37,6 @@ interface ApplicationState {
   activeColumn?: IColumn;
   activeElement?: IElement;
   elements: IElement[];
-  loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
   loadingStatuses: ILoadingState;
 }
@@ -51,7 +52,6 @@ const initialState: ApplicationState = {
   rows: [],
   columns: [],
   elements: [],
-  loading: "idle",
   error: null,
   loadingStatuses: initialLoadingState,
 };
@@ -180,15 +180,14 @@ export const applicationsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(GetApplications.pending, (state) => {
-      state.loading = "pending";
+      state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(GetApplications.fulfilled, (state, action) => {
       state.applications = action.payload;
-      state.loading = "succeeded";
-      state.loadingStatuses.sectionLoading = "idle";
+      state.loadingStatuses.applicationLoading = "succeeded";
     });
     builder.addCase(GetApplication.pending, (state) => {
-      state.loading = "pending";
+      state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(GetApplication.fulfilled, (state, action) => {
       const { application, sections, rows, columns, elements } = action.payload;
@@ -197,21 +196,21 @@ export const applicationsSlice = createSlice({
       state.rows = rows;
       state.columns = columns;
       // state.elements = elements;
-      state.loading = "succeeded";
+      state.loadingStatuses.applicationLoading = "succeeded";
     });
     builder.addCase(GetApplications.rejected, (state, action) => {
       // state.error = action.payload.message;
-      state.loading = "idle";
+      state.loadingStatuses.applicationLoading = "idle";
     });
     builder.addCase(CreateApplication.pending, (state) => {
-      state.loading = "pending";
+      state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(CreateApplication.fulfilled, (state) => {
-      state.loading = "succeeded";
+      state.loadingStatuses.applicationLoading = "succeeded";
     });
     builder.addCase(CreateApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
-      state.loading = "idle";
+      state.loadingStatuses.applicationLoading = "idle";
     });
     builder.addCase(DeleteApplication.fulfilled, (state, action) => {
       const applicationId = action.payload;
@@ -222,16 +221,16 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(DeleteApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
-      state.loading = "idle";
+      state.loadingStatuses.applicationLoading = "idle";
     });
     builder.addCase(CreateSection.fulfilled, (state, action) => {
       const section = action.payload;
       state.sections.push(section);
-      state.loading = "succeeded";
+      state.loadingStatuses.sectionLoading = "succeeded";
     });
     builder.addCase(CreateSection.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
-      state.loading = "idle";
+      state.loadingStatuses.sectionLoading = "idle";
     });
     builder.addCase(GetSection.pending, (state) => {
       state.loadingStatuses.sectionLoading = "pending";
@@ -274,7 +273,6 @@ export const selectApplications = (state: RootState) =>
 export const selectSections = (state: RootState) => state.applications.sections;
 export const selectRows = (state: RootState) => state.applications.rows;
 export const selectColumns = (state: RootState) => state.applications.columns;
-export const selectLoading = (state: RootState) => state.applications.loading;
 export const selectLoadingStatuses = (state: RootState) =>
   state.applications.loadingStatuses;
 

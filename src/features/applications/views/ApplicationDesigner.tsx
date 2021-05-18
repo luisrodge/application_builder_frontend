@@ -8,7 +8,7 @@ import SectionList from "../components/SectionList";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   selectActiveApplication,
-  selectLoading,
+  selectLoadingStatuses,
   selectSections,
   setActiveApplication,
 } from "../applicationsSlice";
@@ -26,7 +26,7 @@ export default function ApplicationDesigner() {
 
   const { applicationId } = useParams<{ applicationId: string }>();
 
-  const loading = useAppSelector(selectLoading);
+  const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const application = useAppSelector(selectActiveApplication);
   const sections = useAppSelector(selectSections);
   dispatch(setActiveApplication(application));
@@ -72,7 +72,7 @@ export default function ApplicationDesigner() {
             marginBottom: 100,
           }}
         >
-          {loading == "pending" ? (
+          {loadingStatuses.applicationLoading == "pending" ? (
             <Spinner />
           ) : sections.length ? (
             <div className="site-layout-background">
