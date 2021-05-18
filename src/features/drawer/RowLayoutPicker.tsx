@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectDrawer, hideDrawer } from "./drawerSlice";
-import { addRow, selectActiveSection } from "../designer/designerSlice";
+import { addRow, selectActiveSection } from "../applications/applicationsSlice";
 
 const SectionCard = styled(Card)`
   width: 100%;
@@ -19,7 +19,7 @@ const SectionCard = styled(Card)`
   }
 `;
 
-const RowLayoutPicker = () => {
+export default function RowLayoutPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
   const section = useAppSelector(selectActiveSection);
 
@@ -74,6 +74,4 @@ const RowLayoutPicker = () => {
       </Row>
     </DrawerContainer>
   );
-};
-
-export default RowLayoutPicker;
+}

@@ -3,30 +3,55 @@ import { v4 as uuidv4 } from "uuid";
 
 import type { RootState } from "../../app/store";
 import { Selector } from "../../shared/types";
-import { ISection, IColumn, IRow, IElement } from "./designer.interface";
+import {
+  ISection,
+  IColumn,
+  IRow,
+  IElement,
+  IApplication,
+} from "./applications.interface";
+import {
+  CreateApplication,
+  GetApplications,
+  GetApplication,
+  DeleteApplication,
+} from "./services";
 
-interface DesignerState {
+interface ApplicationState {
+  applications: IApplication[];
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
+  activeApplication?: IApplication;
   activeSection?: ISection;
   activeRow?: IRow;
   activeColumn?: IColumn;
   activeElement?: IElement;
   elements: IElement[];
+  loading: "idle" | "pending" | "succeeded" | "failed";
+  error: string | null;
 }
 
-const initialState: DesignerState = {
+const initialState: ApplicationState = {
+  applications: [],
   sections: [],
   rows: [],
   columns: [],
   elements: [],
+  loading: "idle",
+  error: null,
 };
 
-export const designerSlice = createSlice({
-  name: "designer",
+export const applicationsSlice = createSlice({
+  name: "applications",
   initialState,
   reducers: {
+    setActiveApplication: (
+      state,
+      action: PayloadAction<IApplication | undefined>
+    ) => {
+      state.activeApplication = action.payload;
+    },
     setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
       state.activeSection = action.payload;
     },
@@ -39,6 +64,7 @@ export const designerSlice = createSlice({
     setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
       state.activeElement = action.payload;
     },
+
     addSection: (state, action: PayloadAction<ISection>) => {
       const section = action.payload;
       const row = { id: uuidv4(), sectionId: section.id } as IRow;
@@ -135,6 +161,52 @@ export const designerSlice = createSlice({
       state.activeElement = undefined;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(GetApplications.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(GetApplications.fulfilled, (state, action) => {
+      state.applications = action.payload;
+      state.loading = "succeeded";
+    });
+    builder.addCase(GetApplication.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(GetApplication.fulfilled, (state, action) => {
+      const { application, sections, rows, columns, elements } = action.payload;
+      state.activeApplication = action.payload.application;
+      state.sections = sections;
+      state.rows = rows;
+      state.columns = columns;
+      // state.elements = elements;
+      state.loading = "succeeded";
+    });
+    builder.addCase(GetApplications.rejected, (state, action) => {
+      // state.error = action.payload.message;
+      state.loading = "idle";
+    });
+    builder.addCase(CreateApplication.pending, (state) => {
+      state.loading = "pending";
+    });
+    builder.addCase(CreateApplication.fulfilled, (state) => {
+      state.loading = "succeeded";
+    });
+    builder.addCase(CreateApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+      state.loading = "idle";
+    });
+    builder.addCase(DeleteApplication.fulfilled, (state, action) => {
+      const applicationId = action.payload;
+      const applications = state.applications.filter(
+        (application) => application.id != applicationId
+      );
+      state.applications = applications;
+    });
+    builder.addCase(DeleteApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+      state.loading = "idle";
+    });
+  },
 });
 
 export const {
@@ -149,25 +221,42 @@ export const {
   addElement,
   removeElement,
   setActiveElement,
+  setActiveApplication,
   resetActive,
-} = designerSlice.actions;
+} = applicationsSlice.actions;
 
-export const selectSections = (state: RootState) => state.designer.sections;
-export const selectRows = (state: RootState) => state.designer.rows;
-export const selectColumns = (state: RootState) => state.designer.columns;
+export const selectApplications = (state: RootState) =>
+  state.applications.applications;
+export const selectSections = (state: RootState) => state.applications.sections;
+export const selectRows = (state: RootState) => state.applications.rows;
+export const selectColumns = (state: RootState) => state.applications.columns;
+export const selectLoading = (state: RootState) => state.applications.loading;
+
+export const selectActiveApplication = (state: RootState) =>
+  state.applications.activeApplication;
 export const selectActiveSection = (state: RootState) =>
-  state.designer.activeSection;
-export const selectActiveRow = (state: RootState) => state.designer.activeRow;
+  state.applications.activeSection;
+export const selectActiveRow = (state: RootState) =>
+  state.applications.activeRow;
 export const selectActiveColumn = (state: RootState) =>
-  state.designer.activeColumn;
+  state.applications.activeColumn;
 export const selectActiveElement = (state: RootState) =>
-  state.designer.activeElement;
+  state.applications.activeElement;
+
+export const selectApplication = (
+  applicationId: string
+): Selector<IApplication | undefined> =>
+  createSelector(
+    [(state: RootState) => state.applications.applications],
+    (applications: IApplication[]) =>
+      applications.find((application) => application.id === applicationId)
+  );
 
 export const selectSection = (
   sectionId: string
 ): Selector<ISection | undefined> =>
   createSelector(
-    [(state: RootState) => state.designer.sections],
+    [(state: RootState) => state.applications.sections],
     (sections: ISection[]) =>
       sections.find((section) => section.id == sectionId)
   );
@@ -175,15 +264,16 @@ export const selectSection = (
 export const selectSectionRows = (
   sectionId: string
 ): Selector<IRow[] | undefined> =>
-  createSelector([(state: RootState) => state.designer.rows], (rows: IRow[]) =>
-    rows.filter((row) => row.sectionId == sectionId)
+  createSelector(
+    [(state: RootState) => state.applications.rows],
+    (rows: IRow[]) => rows.filter((row) => row.sectionId == sectionId)
   );
 
 export const selectRowColumns = (
   rowId: string
 ): Selector<IColumn[] | undefined> =>
   createSelector(
-    [(state: RootState) => state.designer.columns],
+    [(state: RootState) => state.applications.columns],
     (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
   );
 
@@ -191,9 +281,9 @@ export const selectElement = (
   columnId: string | undefined
 ): Selector<IElement | undefined> =>
   createSelector(
-    [(state: RootState) => state.designer.elements],
+    [(state: RootState) => state.applications.elements],
     (elements: IElement[]) =>
       elements.find((element) => element.columnId === columnId)
   );
 
-export default designerSlice.reducer;
+export default applicationsSlice.reducer;

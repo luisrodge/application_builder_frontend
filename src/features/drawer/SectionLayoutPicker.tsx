@@ -16,9 +16,12 @@ import {
   selectChildDrawer,
   hideDrawers,
 } from "./drawerSlice";
-import { addSection } from "../designer/designerSlice";
+import {
+  addSection,
+  selectActiveApplication,
+} from "../applications/applicationsSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-import { ISection } from "../designer/designer.interface";
+import { IApplication, ISection } from "../applications/applications.interface";
 
 const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };
 
@@ -44,19 +47,19 @@ interface IEnterSectionInfoProps {
   unsavedSection: ISection;
 }
 
-export const EnterSectionInfo = ({
-  unsavedSection,
-}: IEnterSectionInfoProps) => {
+function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
   const { isOpen } = useAppSelector(selectChildDrawer);
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    const newSection = { ...unsavedSection, ...values };
+    const newSection = { ...unsavedSection, ...values } as ISection;
     dispatch(addSection(newSection));
     dispatch(hideDrawers());
-    history.push(`/sections/${newSection.id}`);
+    history.push(
+      `/applications/${newSection.applicationId}/sections/${newSection.id}`
+    );
   };
 
   const onClose = () => {
@@ -89,15 +92,20 @@ export const EnterSectionInfo = ({
       </Form>
     </Drawer>
   );
-};
+}
 
-const SectionLayoutPicker = () => {
+export default function SectionLayoutPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
+  const activeApplication = useAppSelector(selectActiveApplication);
   const dispatch = useAppDispatch();
   const [unsavedSection, setUnsavedSection] = useState<ISection>();
 
   const pickSection = (sectionId: string, numOfCols: number) => {
-    setUnsavedSection({ id: sectionId, numOfCols });
+    setUnsavedSection({
+      id: sectionId,
+      numOfCols,
+      applicationId: activeApplication!.id,
+    });
     dispatch(
       showChildDrawer({ drawerType: DRAWER_TYPES.ENTER_SECTION_INFO_DRAWER })
     );
@@ -162,6 +170,4 @@ const SectionLayoutPicker = () => {
       <EnterSectionInfo unsavedSection={unsavedSection!} />
     </DrawerContainer>
   );
-};
-
-export default SectionLayoutPicker;
+}

@@ -2,11 +2,11 @@ import { Button } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
-
-import { useAppDispatch } from "../../app/hooks";
-import { showDrawer } from "../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
 import { useHistory } from "react-router";
+
+import { useAppDispatch } from "../../../app/hooks";
+import { showDrawer } from "../../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../../shared/constants";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -26,9 +26,14 @@ const HeaderContent = styled.div`
 interface IProps {
   drawerType: string;
   btnTitle: string;
+  applicationId: string;
 }
 
-const Header = ({ drawerType, btnTitle }: IProps) => {
+export default function SectionDesignerHeader({
+  drawerType,
+  btnTitle,
+  applicationId,
+}: IProps) {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -46,18 +51,19 @@ const Header = ({ drawerType, btnTitle }: IProps) => {
           <Button
             icon={<CheckOutlined />}
             style={{ marginRight: 24 }}
-            onClick={() => history.push("/")}
+            onClick={() => history.push(`/applications/${applicationId}`)}
           >
             Done
           </Button>
         )}
 
-        <Button type="text" onClick={() => history.push("/")}>
+        <Button
+          type="text"
+          onClick={() => history.push(`/applications/${applicationId}`)}
+        >
           Cancel
         </Button>
       </HeaderContent>
     </HeaderContainer>
   );
-};
-
-export default Header;
+}

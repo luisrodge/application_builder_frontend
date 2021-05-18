@@ -3,7 +3,7 @@ import { Button, Col, Tooltip } from "antd";
 import { PlusOutlined, CloseSquareOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   removeColumn,
   selectActiveColumn,
@@ -11,10 +11,10 @@ import {
   setActiveColumn,
   setActiveRow,
   removeElement,
-} from "./designerSlice";
-import { IColumn, IRow } from "./designer.interface";
-import { showDrawer } from "../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
+} from "../applicationsSlice";
+import { IColumn, IRow } from "../applications.interface";
+import { showDrawer } from "../../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../../shared/constants";
 import ElementRoot from "./ElementRoot";
 
 const RemoveColumnIconContainer = styled.div`
@@ -93,7 +93,7 @@ interface IProps {
   disabled?: boolean;
 }
 
-const Column = ({ span, column, row, disabled }: IProps) => {
+export default function ColumnItem({ span, column, row, disabled }: IProps) {
   const dispatch = useAppDispatch();
   const activeColumn = useAppSelector(selectActiveColumn);
   const element = useAppSelector(selectElement(column?.id));
@@ -153,6 +153,4 @@ const Column = ({ span, column, row, disabled }: IProps) => {
       </Container>
     </Col>
   );
-};
-
-export default Column;
+}

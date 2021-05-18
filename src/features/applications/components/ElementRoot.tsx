@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 
-import { useAppSelector } from "../../app/hooks";
-import { ELEMENT_TYPES } from "../../shared/constants";
-import NumberInput from "../../components/elements/NumberInput";
-import TextInput from "../../components/elements/TextInput";
-import { IColumn } from "./designer.interface";
-import { selectElement } from "./designerSlice";
-import DatePickerInput from "../../components/elements/DatePickerInput";
-import CheckboxInput from "../../components/elements/CheckboxInput";
-import UploadInput from "../../components/elements/UploadInput";
+import { useAppSelector } from "../../../app/hooks";
+import { ELEMENT_TYPES } from "../../../shared/constants";
+import NumberInput from "../../../components/elements/NumberInput";
+import TextInput from "../../../components/elements/TextInput";
+import { IColumn } from "../applications.interface";
+import { selectElement } from "../applicationsSlice";
+import DatePickerInput from "../../../components/elements/DatePickerInput";
+import CheckboxInput from "../../../components/elements/CheckboxInput";
+import UploadInput from "../../../components/elements/UploadInput";
 
 const {
   NUMBER_INPUT_ELEMENT,
@@ -37,13 +37,11 @@ interface IProps {
   disabled?: boolean;
 }
 
-const ElementRoot = ({ column, disabled }: IProps) => {
+export default function ElementRoot({ column, disabled }: IProps) {
   const element = useAppSelector(selectElement(column!.id))!;
 
   if (!element) return null;
 
   const SpecificElement = ELEMENT_COMPONENTS[element.type] as React.ElementType;
   return <SpecificElement element={element} disabled={disabled} />;
-};
-
-export default ElementRoot;
+}

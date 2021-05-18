@@ -1,22 +1,39 @@
+import { useEffect } from "react";
 import { Layout, Button, Typography } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
+import { useParams } from "react-router";
 
-import Sections from "./Sections";
-
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectSections } from "./designerSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
-import { Container } from "./style";
-import Sidebar from "./components/Sidebar";
-import { showDrawer } from "../drawer/drawerSlice";
+import SectionList from "../components/SectionList";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {
+  selectActiveApplication,
+  selectLoading,
+  selectSections,
+  setActiveApplication,
+} from "../applicationsSlice";
+import { DRAWER_TYPES } from "../../../shared/constants";
+import Sidebar from "../components/ApplicationDesignerSidebar";
+import { showDrawer } from "../../drawer/drawerSlice";
+import { GetApplication } from "../services";
+import { Spinner } from "../../../components/Spinner";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const DesignerRoot = () => {
-  const sections = useAppSelector(selectSections);
+export default function ApplicationDesigner() {
   const dispatch = useAppDispatch();
+
+  const { applicationId } = useParams<{ applicationId: string }>();
+
+  const loading = useAppSelector(selectLoading);
+  const application = useAppSelector(selectActiveApplication);
+  const sections = useAppSelector(selectSections);
+  dispatch(setActiveApplication(application));
+
+  useEffect(() => {
+    dispatch(GetApplication(applicationId));
+  }, []);
 
   return (
     <Layout>
@@ -30,9 +47,7 @@ const DesignerRoot = () => {
           }}
         >
           <div style={{ display: "flex" }}>
-            <div style={{ flex: "1", color: "#fff" }}>
-              Your Application Name
-            </div>
+            <div style={{ flex: "1", color: "#fff" }}>{application?.title}</div>
             <div>
               <Button
                 icon={<PlusOutlined />}
@@ -49,6 +64,7 @@ const DesignerRoot = () => {
             </div>
           </div>
         </Header>
+
         <Content
           style={{
             marginLeft: 50,
@@ -56,9 +72,11 @@ const DesignerRoot = () => {
             marginBottom: 100,
           }}
         >
-          {sections.length ? (
+          {loading == "pending" ? (
+            <Spinner />
+          ) : sections.length ? (
             <div className="site-layout-background">
-              <Sections sections={sections} disabled={true} />
+              <SectionList sections={sections} disabled={true} />
             </div>
           ) : (
             <Title level={3} style={{ textAlign: "center" }}>
@@ -69,6 +87,4 @@ const DesignerRoot = () => {
       </Layout>
     </Layout>
   );
-};
-
-export default DesignerRoot;
+}

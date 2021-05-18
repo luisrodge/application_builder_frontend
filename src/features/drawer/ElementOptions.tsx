@@ -1,17 +1,17 @@
 import { Button, Drawer, Form, Input } from "antd";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IElement } from "../designer/designer.interface";
+import { IElement } from "../applications/applications.interface";
 import {
   addElement,
   selectActiveElement,
   setActiveColumn,
   setActiveElement,
   setActiveRow,
-} from "../designer/designerSlice";
+} from "../applications/applicationsSlice";
 
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 
-const ElementOptions = () => {
+export default function ElementOptions() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector(selectChildDrawer);
   const unsavedElement = useAppSelector(selectActiveElement);
@@ -58,6 +58,4 @@ const ElementOptions = () => {
       </Form>
     </Drawer>
   );
-};
-
-export default ElementOptions;
+}
