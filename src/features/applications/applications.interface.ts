@@ -1,6 +1,11 @@
 export interface ICreateApplicationAttributes {
   title: string;
-  details: string;
+  details?: string;
+}
+
+export interface ICreateSectionAttributes extends ICreateApplicationAttributes {
+  numOfCols: number;
+  applicationId: string;
 }
 
 export interface IApplication {

@@ -15,6 +15,7 @@ import {
   GetApplications,
   GetApplication,
   DeleteApplication,
+  CreateSection,
 } from "./services";
 
 interface ApplicationState {
@@ -203,6 +204,15 @@ export const applicationsSlice = createSlice({
       state.applications = applications;
     });
     builder.addCase(DeleteApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+      state.loading = "idle";
+    });
+    builder.addCase(CreateSection.fulfilled, (state, action) => {
+      const section = action.payload;
+      state.sections.push(section);
+      state.loading = "succeeded";
+    });
+    builder.addCase(CreateSection.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
       state.loading = "idle";
     });

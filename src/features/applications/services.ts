@@ -10,6 +10,7 @@ import {
   IRow,
   IColumn,
   IApplicationWithChildren,
+  ICreateSectionAttributes,
 } from "./applications.interface";
 
 export const GetApplications = createAsyncThunk(
@@ -75,11 +76,8 @@ export const GetApplication = createAsyncThunk(
 );
 
 export const CreateApplication = createAsyncThunk<
-  // Return type of the payload creator
   IApplication,
-  // First argument to the payload creator
   ICreateApplicationAttributes,
-  // Types for ThunkAPI
   {
     rejectValue: IErrorMessage;
   }
@@ -87,10 +85,10 @@ export const CreateApplication = createAsyncThunk<
   const response = await api.post(`applications`, application);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
-      message: "Failed to fetch application.",
+      message: "Failed to create application.",
     } as IErrorMessage);
   }
-  return (await response.data) as IApplication;
+  return response.data as IApplication;
 });
 
 export const DeleteApplication = createAsyncThunk<
@@ -107,4 +105,20 @@ export const DeleteApplication = createAsyncThunk<
     } as IErrorMessage);
   }
   return applicationId;
+});
+
+export const CreateSection = createAsyncThunk<
+  ISection,
+  ICreateSectionAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("sections/create", async (section, thunkApi) => {
+  const response = await api.post("sections", section);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to create section.",
+    } as IErrorMessage);
+  }
+  return response.data as ISection;
 });
