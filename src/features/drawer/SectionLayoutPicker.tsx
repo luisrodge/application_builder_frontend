@@ -47,9 +47,7 @@ interface IEnterSectionInfoProps {
   unsavedSection: ISection;
 }
 
-export const EnterSectionInfo = ({
-  unsavedSection,
-}: IEnterSectionInfoProps) => {
+function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
   const { isOpen } = useAppSelector(selectChildDrawer);
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -94,9 +92,9 @@ export const EnterSectionInfo = ({
       </Form>
     </Drawer>
   );
-};
+}
 
-const SectionLayoutPicker = () => {
+export default function SectionLayoutPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
   const activeApplication = useAppSelector(selectActiveApplication);
   const dispatch = useAppDispatch();
@@ -172,6 +170,4 @@ const SectionLayoutPicker = () => {
       <EnterSectionInfo unsavedSection={unsavedSection!} />
     </DrawerContainer>
   );
-};
-
-export default SectionLayoutPicker;
+}

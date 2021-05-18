@@ -1,4 +1,4 @@
-export interface IApplicationAttributes {
+export interface ICreateApplicationAttributes {
   title: string;
   details: string;
 }

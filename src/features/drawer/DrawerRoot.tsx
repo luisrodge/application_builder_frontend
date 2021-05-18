@@ -31,7 +31,7 @@ const DRAWER_COMPONENTS = {
 
 export const DrawerTypes = Object.keys(DRAWER_COMPONENTS);
 
-const DrawerRoot = () => {
+export default function DrawerRoot() {
   const { drawerType, drawerProps } = useAppSelector(selectDrawer);
 
   if (!drawerType) {
@@ -40,6 +40,4 @@ const DrawerRoot = () => {
 
   const SpecificDrawer = DRAWER_COMPONENTS[drawerType] as React.ElementType;
   return <SpecificDrawer {...drawerProps} />;
-};
-
-export default DrawerRoot;
+}

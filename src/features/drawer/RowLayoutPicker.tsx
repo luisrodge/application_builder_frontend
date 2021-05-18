@@ -19,7 +19,7 @@ const SectionCard = styled(Card)`
   }
 `;
 
-const RowLayoutPicker = () => {
+export default function RowLayoutPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
   const section = useAppSelector(selectActiveSection);
 
@@ -74,6 +74,4 @@ const RowLayoutPicker = () => {
       </Row>
     </DrawerContainer>
   );
-};
-
-export default RowLayoutPicker;
+}

@@ -11,7 +11,7 @@ import {
 
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 
-const ElementOptions = () => {
+export default function ElementOptions() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector(selectChildDrawer);
   const unsavedElement = useAppSelector(selectActiveElement);
@@ -58,6 +58,4 @@ const ElementOptions = () => {
       </Form>
     </Drawer>
   );
-};
-
-export default ElementOptions;
+}

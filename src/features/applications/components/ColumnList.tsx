@@ -1,7 +1,7 @@
-import Column from "./Column";
-import { useAppSelector } from "../../app/hooks";
-import { selectRowColumns } from "./applicationsSlice";
-import { IRow } from "./applications.interface";
+import ColumnItem from "./ColumnItem";
+import { useAppSelector } from "../../../app/hooks";
+import { selectRowColumns } from "../applicationsSlice";
+import { IRow } from "../applications.interface";
 
 interface IProps {
   row: IRow;
@@ -10,13 +10,13 @@ interface IProps {
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-const Columns = ({ row, sectionId, disabled }: IProps) => {
+export default function ColumnList({ row, sectionId, disabled }: IProps) {
   const rowColumns = useAppSelector(selectRowColumns(row.id));
 
   return (
     <>
       {rowColumns?.map((column) => (
-        <Column
+        <ColumnItem
           key={column.id}
           span={24 / rowColumns.length}
           column={column}
@@ -26,6 +26,4 @@ const Columns = ({ row, sectionId, disabled }: IProps) => {
       ))}
     </>
   );
-};
-
-export default Columns;
+}

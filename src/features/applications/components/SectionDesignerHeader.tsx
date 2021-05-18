@@ -4,9 +4,9 @@ import { blue } from "@ant-design/colors";
 import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
 
-import { useAppDispatch } from "../../app/hooks";
-import { showDrawer } from "../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
+import { useAppDispatch } from "../../../app/hooks";
+import { showDrawer } from "../../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../../shared/constants";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -29,7 +29,11 @@ interface IProps {
   applicationId: string;
 }
 
-const Header = ({ drawerType, btnTitle, applicationId }: IProps) => {
+export default function SectionDesignerHeader({
+  drawerType,
+  btnTitle,
+  applicationId,
+}: IProps) {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -62,6 +66,4 @@ const Header = ({ drawerType, btnTitle, applicationId }: IProps) => {
       </HeaderContent>
     </HeaderContainer>
   );
-};
-
-export default Header;
+}

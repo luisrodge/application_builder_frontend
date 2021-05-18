@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { CloseSquareOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 
-import Columns from "./Columns";
-import { GUTTER } from "../../shared/constants";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectSectionRows, removeRow } from "./applicationsSlice";
+import Columns from "./ColumnList";
+import { GUTTER } from "../../../shared/constants";
+import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import { selectSectionRows, removeRow } from "../applicationsSlice";
 
 const IconContainer = styled.div`
   position: absolute;
@@ -43,7 +43,7 @@ interface IProps {
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-const Rows = ({ sectionId, disabled }: IProps) => {
+export default function RowList({ sectionId, disabled }: IProps) {
   const sectionRows = useAppSelector(selectSectionRows(sectionId));
   const dispatch = useAppDispatch();
 
@@ -69,6 +69,4 @@ const Rows = ({ sectionId, disabled }: IProps) => {
       ))}
     </>
   );
-};
-
-export default Rows;
+}

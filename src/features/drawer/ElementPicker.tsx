@@ -47,7 +47,7 @@ const elements = [
   { name: "File Upload", type: ELEMENT_TYPES.UPLOAD_INPUT_ELEMENT },
 ];
 
-const ElementPicker = () => {
+export default function ElementPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
   const activeRow = useAppSelector(selectActiveRow);
   const activeColumn = useAppSelector(selectActiveColumn);
@@ -98,6 +98,4 @@ const ElementPicker = () => {
       <ElementOptions />
     </DrawerContainer>
   );
-};
-
-export default ElementPicker;
+}

@@ -2,11 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { normalize, schema } from "normalizr";
 
 import api from "../../utils/api";
-
 import {
   IApplication,
   IErrorMessage,
-  IApplicationAttributes,
+  ICreateApplicationAttributes,
   ISection,
   IRow,
   IColumn,
@@ -17,7 +16,7 @@ export const GetApplications = createAsyncThunk(
   "applications/list",
   async () => {
     const response = await api.get(`applications`);
-    return (await response.data) as IApplication[];
+    return response.data as IApplication[];
   }
 );
 
@@ -36,14 +35,15 @@ export const GetApplication = createAsyncThunk(
   "applications/get",
   async (id: string) => {
     const { data } = await api.get(`applications/${id}`);
-    const normalizedData = normalize(data, applicationSchema);
+
+    const { entities } = normalize(data, applicationSchema);
 
     const {
       applications,
       sections: normedSections,
       rows: normedRows,
       columns: normedColumns,
-    } = normalizedData.entities;
+    } = entities;
 
     // console.log(normalizedData);
 
@@ -78,7 +78,7 @@ export const CreateApplication = createAsyncThunk<
   // Return type of the payload creator
   IApplication,
   // First argument to the payload creator
-  IApplicationAttributes,
+  ICreateApplicationAttributes,
   // Types for ThunkAPI
   {
     rejectValue: IErrorMessage;
@@ -91,4 +91,20 @@ export const CreateApplication = createAsyncThunk<
     } as IErrorMessage);
   }
   return (await response.data) as IApplication;
+});
+
+export const DeleteApplication = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/delete", async (applicationId, thunkApi) => {
+  const response = await api.delete(`applications/${applicationId}`);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to delete application.",
+    } as IErrorMessage);
+  }
+  return applicationId;
 });

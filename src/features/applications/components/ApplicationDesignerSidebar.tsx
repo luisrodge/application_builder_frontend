@@ -11,7 +11,7 @@ interface IProps {
   sections: ISection[];
 }
 
-const Sidebar = ({ sections }: IProps) => {
+export default function ApplicationDesignerSidebar({ sections }: IProps) {
   return (
     <Sider
       theme="light"
@@ -42,6 +42,4 @@ const Sidebar = ({ sections }: IProps) => {
       </Menu>
     </Sider>
   );
-};
-
-export default Sidebar;
+}

@@ -2,19 +2,19 @@ import { Button, Drawer, Form, Input, message } from "antd";
 import { useHistory } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IApplicationAttributes } from "../applications/applications.interface";
+import { ICreateApplicationAttributes } from "../applications/applications.interface";
 
 import { hideDrawer, selectDrawer } from "./drawerSlice";
 import { CreateApplication } from "../applications/services";
 
-const NewApplication = () => {
+export default function NewApplication() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector(selectDrawer);
   const history = useHistory();
 
   const [form] = Form.useForm();
 
-  const onFinish = async (application: IApplicationAttributes) => {
+  const onFinish = async (application: ICreateApplicationAttributes) => {
     const resultAction = await dispatch(CreateApplication(application));
     if (CreateApplication.fulfilled.match(resultAction)) {
       const createdApplication = resultAction.payload;
@@ -64,6 +64,4 @@ const NewApplication = () => {
       </Form>
     </Drawer>
   );
-};
-
-export default NewApplication;
+}

@@ -11,13 +11,13 @@ interface IProps {
   width: number | string;
 }
 
-const DrawerContainer = ({
+export default function DrawerContainer({
   closeDrawer,
   children,
   title,
   isOpen,
   width,
-}: IProps) => {
+}: IProps) {
   return (
     <>
       <Drawer
@@ -30,6 +30,4 @@ const DrawerContainer = ({
       </Drawer>
     </>
   );
-};
-
-export default DrawerContainer;
+}

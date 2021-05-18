@@ -1,17 +1,17 @@
 import { Redirect, useParams } from "react-router-dom";
 import { Typography } from "antd";
 
-import { useAppSelector } from "../../app/hooks";
-import { selectSection, selectSectionRows } from "./applicationsSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectSection, selectSectionRows } from "../applicationsSlice";
 
-import Rows from "./Rows";
-import Header from "./Header";
-import { Container } from "./style";
-import { DRAWER_TYPES } from "../../shared/constants";
+import RowList from "../components/RowList";
+import Header from "../components/SectionDesignerHeader";
+import { Container } from "../style";
+import { DRAWER_TYPES } from "../../../shared/constants";
 
 const { Title, Text } = Typography;
 
-const SectionDesigner = () => {
+export default function SectionDesigner() {
   const { sectionId, applicationId } =
     useParams<{ sectionId: string; applicationId: string }>();
 
@@ -39,10 +39,8 @@ const SectionDesigner = () => {
         <Title level={4}>{section.title}</Title>
         <Text>{section.details}</Text>
 
-        <Rows sectionId={sectionId} />
+        <RowList sectionId={sectionId} />
       </Container>
     </div>
   );
-};
-
-export default SectionDesigner;
+}

@@ -10,7 +10,12 @@ import {
   IElement,
   IApplication,
 } from "./applications.interface";
-import { CreateApplication, GetApplications, GetApplication } from "./services";
+import {
+  CreateApplication,
+  GetApplications,
+  GetApplication,
+  DeleteApplication,
+} from "./services";
 
 interface ApplicationState {
   applications: IApplication[];
@@ -187,6 +192,17 @@ export const applicationsSlice = createSlice({
       state.loading = "succeeded";
     });
     builder.addCase(CreateApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+      state.loading = "idle";
+    });
+    builder.addCase(DeleteApplication.fulfilled, (state, action) => {
+      const applicationId = action.payload;
+      const applications = state.applications.filter(
+        (application) => application.id != applicationId
+      );
+      state.applications = applications;
+    });
+    builder.addCase(DeleteApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
       state.loading = "idle";
     });

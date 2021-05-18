@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 import { CloseSquareOutlined, PlusOutlined } from "@ant-design/icons";
 
-import Rows from "./Rows";
-import { useAppDispatch } from "../../app/hooks";
-import { removeSection, setActiveSection } from "./applicationsSlice";
-import { ISection } from "./applications.interface";
+import RowList from "./RowList";
+import { useAppDispatch } from "../../../app/hooks";
+import { removeSection, setActiveSection } from "../applicationsSlice";
+import { ISection } from "../applications.interface";
 import { useHistory } from "react-router";
-import { showDrawer } from "../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
+import { showDrawer } from "../../drawer/drawerSlice";
+import { DRAWER_TYPES } from "../../../shared/constants";
 
 const { Title } = Typography;
 
@@ -54,7 +54,7 @@ interface ISections {
   disabled: boolean;
 }
 
-const Sections = ({ sections, disabled }: ISections) => {
+export default function SectionList({ sections, disabled }: ISections) {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
@@ -81,7 +81,7 @@ const Sections = ({ sections, disabled }: ISections) => {
           >
             <Title level={4}>{section.title}</Title>
             <div style={{ textAlign: "center" }}>
-              <Rows sectionId={section.id} disabled={disabled} />
+              <RowList sectionId={section.id} disabled={disabled} />
             </div>
           </SectionContainer>
         </ParentContainer>
@@ -102,6 +102,4 @@ const Sections = ({ sections, disabled }: ISections) => {
       </div>
     </>
   );
-};
-
-export default Sections;
+}
