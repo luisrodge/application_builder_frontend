@@ -32,7 +32,7 @@ export default function SectionDesigner() {
     dispatch(GetSection(sectionId));
   }, []);
 
-  if (loadingStatuses.sectionLoading === "failed" && !section) {
+  if (loadingStatuses.sectionLoading === "failed") {
     message.error("Failed to load section");
     return (
       <Redirect

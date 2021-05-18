@@ -197,6 +197,7 @@ export const applicationsSlice = createSlice({
       state.columns = columns;
       // state.elements = elements;
       state.loadingStatuses.applicationLoading = "succeeded";
+      state.loadingStatuses.sectionLoading = "idle";
     });
     builder.addCase(GetApplications.rejected, (state, action) => {
       // state.error = action.payload.message;
