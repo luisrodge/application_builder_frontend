@@ -13,6 +13,7 @@ import {
   selectDrawer,
   hideChildDrawer,
   selectChildDrawer,
+  hideDrawers,
 } from "./drawerSlice";
 import { selectActiveApplication } from "../applications/applicationsSlice";
 import { DRAWER_TYPES, COLS_PER_ROW } from "../../shared/constants";
@@ -57,7 +58,7 @@ function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
 
     if (CreateSection.fulfilled.match(resultAction)) {
       const createdSection = resultAction.payload;
-      dispatch(hideDrawer());
+      dispatch(hideDrawers());
       message.success("Section created");
       history.push(
         `/applications/${createdSection.applicationId}/sections/${createdSection.id}`

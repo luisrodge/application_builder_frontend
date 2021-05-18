@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { normalize, schema } from "normalizr";
+import { normalize } from "normalizr";
 
 import api from "../../utils/api";
 import {
@@ -11,7 +11,9 @@ import {
   IColumn,
   IApplicationWithChildren,
   ICreateSectionAttributes,
+  ISectionWithChildren,
 } from "./applications.interface";
+import { ApplicationSchema, SectionSchema } from "./schemas";
 
 export const GetApplications = createAsyncThunk(
   "applications/list",
@@ -21,23 +23,12 @@ export const GetApplications = createAsyncThunk(
   }
 );
 
-const columnSchema = new schema.Entity("columns");
-const rowSchema = new schema.Entity("rows", {
-  columns: [columnSchema],
-});
-const sectionSchema = new schema.Entity("sections", {
-  rows: [rowSchema],
-});
-const applicationSchema = new schema.Entity("applications", {
-  sections: [sectionSchema],
-});
-
 export const GetApplication = createAsyncThunk(
   "applications/get",
   async (id: string) => {
     const { data } = await api.get(`applications/${id}`);
 
-    const { entities } = normalize(data, applicationSchema);
+    const { entities } = normalize(data, ApplicationSchema);
 
     const {
       applications,
@@ -121,4 +112,41 @@ export const CreateSection = createAsyncThunk<
     } as IErrorMessage);
   }
   return response.data as ISection;
+});
+
+export const GetSection = createAsyncThunk<
+  ISectionWithChildren,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("sections/get", async (id, thunkApi) => {
+  const { data, status } = await api.get(`sections/${id}`);
+
+  if (status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to load section.",
+    } as IErrorMessage);
+  }
+
+  const { entities } = normalize(data, SectionSchema);
+  const { sections, rows: normedRows, columns: normedColumns } = entities;
+  const section = sections![id];
+
+  const rows =
+    normedRows == undefined
+      ? []
+      : Object.keys(normedRows).map((id) => normedRows[id]);
+  const columns =
+    normedColumns == undefined
+      ? []
+      : Object.keys(normedColumns).map((id) => normedColumns[id]);
+
+  const sectionData = {
+    section: section as ISection,
+    rows: rows as IRow[],
+    columns: columns as IColumn[],
+  };
+
+  return sectionData as ISectionWithChildren;
 });

@@ -26,7 +26,7 @@ const HeaderContent = styled.div`
 interface IProps {
   drawerType: string;
   btnTitle: string;
-  applicationId: string;
+  applicationId: string | undefined;
 }
 
 export default function SectionDesignerHeader({

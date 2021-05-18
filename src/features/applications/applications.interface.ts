@@ -23,6 +23,12 @@ export interface IApplicationWithChildren {
   elements: IElement[];
 }
 
+export interface ISectionWithChildren {
+  section: ISection;
+  rows: IRow[];
+  columns: IColumn[];
+}
+
 export interface ISection {
   id: string;
   applicationId: string;

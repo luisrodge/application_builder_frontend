@@ -1,24 +1,39 @@
 import { Redirect, useParams } from "react-router-dom";
-import { Typography } from "antd";
+import { Typography, message } from "antd";
 
-import { useAppSelector } from "../../../app/hooks";
-import { selectSection, selectSectionRows } from "../applicationsSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import {
+  selectActiveSection,
+  selectLoadingStatuses,
+  selectSectionRows,
+} from "../applicationsSlice";
 
 import RowList from "../components/RowList";
 import Header from "../components/SectionDesignerHeader";
 import { Container } from "../style";
 import { DRAWER_TYPES } from "../../../shared/constants";
+import { useEffect } from "react";
+import { GetSection } from "../services";
+import { Spinner } from "../../../components/Spinner";
 
 const { Title, Text } = Typography;
 
 export default function SectionDesigner() {
+  const dispatch = useAppDispatch();
+
   const { sectionId, applicationId } =
     useParams<{ sectionId: string; applicationId: string }>();
 
-  const section = useAppSelector(selectSection(sectionId));
+  const loadingStatuses = useAppSelector(selectLoadingStatuses);
+  const section = useAppSelector(selectActiveSection);
   const sectionRows = useAppSelector(selectSectionRows(sectionId));
 
-  if (!section)
+  useEffect(() => {
+    dispatch(GetSection(sectionId));
+  }, []);
+
+  if (loadingStatuses.sectionLoading === "failed" && !section) {
+    message.error("Failed to load section");
     return (
       <Redirect
         to={{
@@ -26,21 +41,30 @@ export default function SectionDesigner() {
         }}
       />
     );
+  }
 
   return (
     <div style={{ background: "#f0f2f5" }}>
       <Header
         drawerType={DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER}
         btnTitle="Add row to section"
-        applicationId={section.applicationId}
+        applicationId={section && section.applicationId}
       />
-      {sectionRows!.length > 0 && <div style={{ marginTop: 70 }}></div>}
-      <Container>
-        <Title level={4}>{section.title}</Title>
-        <Text>{section.details}</Text>
+      {loadingStatuses.sectionLoading == "pending" ? (
+        <Spinner marginTop={120} />
+      ) : (
+        section && (
+          <>
+            {sectionRows!.length > 0 && <div style={{ marginTop: 70 }}></div>}
+            <Container>
+              <Title level={4}>{section.title}</Title>
+              <Text>{section.details}</Text>
 
-        <RowList sectionId={sectionId} />
-      </Container>
+              <RowList sectionId={sectionId} />
+            </Container>
+          </>
+        )
+      )}
     </div>
   );
 }

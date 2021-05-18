@@ -16,7 +16,13 @@ import {
   GetApplication,
   DeleteApplication,
   CreateSection,
+  GetSection,
 } from "./services";
+
+interface ILoadingState {
+  sectionLoading: "idle" | "pending" | "succeeded" | "failed";
+  applicationLoading: "idle" | "pending" | "succeeded" | "failed";
+}
 
 interface ApplicationState {
   applications: IApplication[];
@@ -31,7 +37,13 @@ interface ApplicationState {
   elements: IElement[];
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
+  loadingStatuses: ILoadingState;
 }
+
+const initialLoadingState = {
+  sectionLoading: "idle",
+  applicationLoading: "idle",
+} as ILoadingState;
 
 const initialState: ApplicationState = {
   applications: [],
@@ -41,6 +53,7 @@ const initialState: ApplicationState = {
   elements: [],
   loading: "idle",
   error: null,
+  loadingStatuses: initialLoadingState,
 };
 
 export const applicationsSlice = createSlice({
@@ -161,6 +174,9 @@ export const applicationsSlice = createSlice({
       state.activeColumn = undefined;
       state.activeElement = undefined;
     },
+    resetSectionLoadingStatuses: (state) => {
+      state.loadingStatuses.sectionLoading = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(GetApplications.pending, (state) => {
@@ -169,6 +185,7 @@ export const applicationsSlice = createSlice({
     builder.addCase(GetApplications.fulfilled, (state, action) => {
       state.applications = action.payload;
       state.loading = "succeeded";
+      state.loadingStatuses.sectionLoading = "idle";
     });
     builder.addCase(GetApplication.pending, (state) => {
       state.loading = "pending";
@@ -216,6 +233,22 @@ export const applicationsSlice = createSlice({
       if (action.payload) state.error = action.payload.message;
       state.loading = "idle";
     });
+    builder.addCase(GetSection.pending, (state) => {
+      state.loadingStatuses.sectionLoading = "pending";
+    });
+    builder.addCase(GetSection.fulfilled, (state, action) => {
+      const { section, rows, columns } = action.payload;
+
+      state.activeSection = section;
+      state.rows = rows;
+      state.columns = columns;
+      // state.elements = elements;
+      state.loadingStatuses.sectionLoading = "succeeded";
+    });
+    builder.addCase(GetSection.rejected, (state, action) => {
+      // state.error = action.payload.message;
+      state.loadingStatuses.sectionLoading = "failed";
+    });
   },
 });
 
@@ -233,6 +266,7 @@ export const {
   setActiveElement,
   setActiveApplication,
   resetActive,
+  resetSectionLoadingStatuses,
 } = applicationsSlice.actions;
 
 export const selectApplications = (state: RootState) =>
@@ -241,6 +275,8 @@ export const selectSections = (state: RootState) => state.applications.sections;
 export const selectRows = (state: RootState) => state.applications.rows;
 export const selectColumns = (state: RootState) => state.applications.columns;
 export const selectLoading = (state: RootState) => state.applications.loading;
+export const selectLoadingStatuses = (state: RootState) =>
+  state.applications.loadingStatuses;
 
 export const selectActiveApplication = (state: RootState) =>
   state.applications.activeApplication;
