@@ -14,6 +14,7 @@ import {
   ISectionWithChildren,
   IRowWithChildren,
   ICreateRowAttributes,
+  IDeleteColumnResult,
 } from "./applications.interface";
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
@@ -218,4 +219,20 @@ export const DeleteRow = createAsyncThunk<
     } as IErrorMessage);
   }
   return rowId;
+});
+
+export const DeleteColumn = createAsyncThunk<
+  IDeleteColumnResult,
+  IColumn,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("columns/delete", async (column, thunkApi) => {
+  const response = await api.delete(`columns/${column.id}`);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to delete column.",
+    } as IErrorMessage);
+  }
+  return { columnId: column.id, rowId: column.rowId };
 });

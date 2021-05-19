@@ -5,7 +5,6 @@ import { blue, grey } from "@ant-design/colors";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
-  removeColumn,
   selectActiveColumn,
   selectElement,
   setActiveColumn,
@@ -16,6 +15,7 @@ import { IColumn, IRow } from "../applications.interface";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../../shared/constants";
 import ElementRoot from "./ElementRoot";
+import { DeleteColumn } from "../services";
 
 const RemoveColumnIconContainer = styled.div`
   position: absolute;
@@ -115,7 +115,7 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
         <InnerContainer>
           {!disabled && (
             <RemoveColumnIconContainer
-              onClick={() => dispatch(removeColumn(column))}
+              onClick={() => dispatch(DeleteColumn(column))}
             >
               <Tooltip title="Remove column">
                 <CloseSquareOutlined style={{ color: "#fff" }} />

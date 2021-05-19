@@ -40,6 +40,11 @@ export interface IRowWithChildren {
   columns: IColumn[];
 }
 
+export interface IDeleteColumnResult {
+  rowId: string;
+  columnId: string;
+}
+
 export interface ISection {
   id: string;
   applicationId: string;
