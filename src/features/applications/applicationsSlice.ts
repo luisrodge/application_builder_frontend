@@ -18,6 +18,7 @@ import {
   CreateSection,
   GetSection,
   DeleteSection,
+  CreateRow,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -258,6 +259,14 @@ export const applicationsSlice = createSlice({
       state.sections = sections;
     });
     builder.addCase(DeleteSection.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+    });
+    builder.addCase(CreateRow.fulfilled, (state, action) => {
+      const { row, columns } = action.payload;
+      state.rows.push(row);
+      state.columns.push(...columns);
+    });
+    builder.addCase(CreateRow.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
     });
   },

@@ -12,8 +12,10 @@ import {
   IApplicationWithChildren,
   ICreateSectionAttributes,
   ISectionWithChildren,
+  IRowWithChildren,
+  ICreateRowAttributes,
 } from "./applications.interface";
-import { ApplicationSchema, SectionSchema } from "./schemas";
+import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
 export const GetApplications = createAsyncThunk(
   "applications/list",
@@ -168,4 +170,36 @@ export const DeleteSection = createAsyncThunk<
     } as IErrorMessage);
   }
   return sectionId;
+});
+
+export const CreateRow = createAsyncThunk<
+  IRowWithChildren,
+  ICreateRowAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("rows/create", async (newRow, thunkApi) => {
+  const response = await api.post("rows", { row: newRow });
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to create row.",
+    } as IErrorMessage);
+  }
+
+  const { entities } = normalize(response.data, RowSchema);
+  const { rows: normedRows, columns: normedColumns } = entities;
+
+  const row = normedRows![Object.keys(normedRows!)[0]];
+
+  const columns =
+    normedColumns == undefined
+      ? []
+      : Object.keys(normedColumns).map((id) => normedColumns[id]);
+
+  const rowData = {
+    row: row as IRow,
+    columns: columns as IColumn[],
+  };
+
+  return rowData as IRowWithChildren;
 });

@@ -8,6 +8,11 @@ export interface ICreateSectionAttributes extends ICreateApplicationAttributes {
   applicationId: string;
 }
 
+export interface ICreateRowAttributes {
+  numOfCols: number;
+  sectionId: string;
+}
+
 export interface IApplication {
   id: string;
   title?: string;
@@ -28,6 +33,11 @@ export interface ISectionWithChildren {
   rows: IRow[];
   columns: IColumn[];
   application: IApplication;
+}
+
+export interface IRowWithChildren {
+  row: IRow;
+  columns: IColumn[];
 }
 
 export interface ISection {
