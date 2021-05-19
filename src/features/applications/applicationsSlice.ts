@@ -20,6 +20,7 @@ import {
   DeleteSection,
   CreateRow,
   DeleteRow,
+  DeleteColumn,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -278,6 +279,19 @@ export const applicationsSlice = createSlice({
       state.columns = columns;
     });
     builder.addCase(DeleteRow.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+    });
+    builder.addCase(DeleteColumn.fulfilled, (state, action) => {
+      const { columnId, rowId } = action.payload;
+
+      if (state.columns.filter((column) => column.rowId == rowId).length == 1) {
+        const rows = state.rows.filter((row) => row.id != rowId);
+        state.rows = rows;
+      }
+      const columns = state.columns.filter((column) => column.id != columnId);
+      state.columns = columns;
+    });
+    builder.addCase(DeleteColumn.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
     });
   },
