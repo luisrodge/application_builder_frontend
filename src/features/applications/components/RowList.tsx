@@ -1,4 +1,4 @@
-import { Row, Tooltip } from "antd";
+import { Row } from "antd";
 import styled from "styled-components";
 import { CloseSquareOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
@@ -6,7 +6,8 @@ import { blue } from "@ant-design/colors";
 import Columns from "./ColumnList";
 import { GUTTER } from "../../../shared/constants";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { selectSectionRows, removeRow } from "../applicationsSlice";
+import { selectSectionRows } from "../applicationsSlice";
+import { DeleteRow } from "../services";
 
 const IconContainer = styled.div`
   position: absolute;
@@ -52,12 +53,8 @@ export default function RowList({ sectionId, disabled }: IProps) {
       {sectionRows?.map((row) => (
         <div key={row.id}>
           <Container>
-            <IconContainer onClick={() => dispatch(removeRow(row))}>
-              {!disabled && (
-                <Tooltip title="Remove row">
-                  <CloseSquareOutlined style={{ color: "#fff" }} />
-                </Tooltip>
-              )}
+            <IconContainer onClick={() => dispatch(DeleteRow(row.id))}>
+              {!disabled && <CloseSquareOutlined style={{ color: "#fff" }} />}
             </IconContainer>
             <RowContainer key={row.id}>
               <Row gutter={GUTTER.lg}>

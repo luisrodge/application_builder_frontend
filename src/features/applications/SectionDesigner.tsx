@@ -55,7 +55,7 @@ export default function SectionDesigner() {
       ) : (
         section && (
           <>
-            {sectionRows!.length > 0 && <div style={{ marginTop: 70 }}></div>}
+            <div style={{ marginTop: 70 }}></div>
             <Container>
               <Title level={4}>{section.title}</Title>
               <Text>{section.details}</Text>

@@ -19,6 +19,7 @@ import {
   GetSection,
   DeleteSection,
   CreateRow,
+  DeleteRow,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -267,6 +268,16 @@ export const applicationsSlice = createSlice({
       state.columns.push(...columns);
     });
     builder.addCase(CreateRow.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+    });
+    builder.addCase(DeleteRow.fulfilled, (state, action) => {
+      const rowId = action.payload;
+      const rows = state.rows.filter((row) => row.id != rowId);
+      const columns = state.columns.filter((column) => column.rowId != rowId);
+      state.rows = rows;
+      state.columns = columns;
+    });
+    builder.addCase(DeleteRow.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
     });
   },

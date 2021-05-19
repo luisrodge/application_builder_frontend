@@ -203,3 +203,19 @@ export const CreateRow = createAsyncThunk<
 
   return rowData as IRowWithChildren;
 });
+
+export const DeleteRow = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("rows/delete", async (rowId, thunkApi) => {
+  const response = await api.delete(`rows/${rowId}`);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to delete row.",
+    } as IErrorMessage);
+  }
+  return rowId;
+});
