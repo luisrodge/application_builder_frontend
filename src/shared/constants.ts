@@ -16,3 +16,5 @@ export const ELEMENT_TYPES = {
 };
 
 export const GUTTER = { xs: 8, sm: 16, md: 24, lg: 32 };
+
+export const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };

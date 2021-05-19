@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Card, Row, Drawer, Form, Input, Button } from "antd";
+import { Card, Row, Drawer, Form, Input, Button, message } from "antd";
 import { AlignCenterOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 import styled, { css } from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
 
 import DrawerContainer from "./DrawerContainer";
@@ -16,14 +15,10 @@ import {
   selectChildDrawer,
   hideDrawers,
 } from "./drawerSlice";
-import {
-  addSection,
-  selectActiveApplication,
-} from "../applications/applicationsSlice";
-import { DRAWER_TYPES } from "../../shared/constants";
-import { IApplication, ISection } from "../applications/applications.interface";
-
-const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };
+import { selectActiveApplication } from "../applications/applicationsSlice";
+import { DRAWER_TYPES, COLS_PER_ROW } from "../../shared/constants";
+import { ICreateSectionAttributes } from "../applications/applications.interface";
+import { CreateSection } from "../applications/services";
 
 interface ISectionCardProps {
   $active: boolean;
@@ -44,7 +39,7 @@ const SectionCard = styled(Card)<ISectionCardProps>`
 `;
 
 interface IEnterSectionInfoProps {
-  unsavedSection: ISection;
+  unsavedSection: ICreateSectionAttributes;
 }
 
 function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
@@ -53,13 +48,28 @@ function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
   const history = useHistory();
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    const newSection = { ...unsavedSection, ...values } as ISection;
-    dispatch(addSection(newSection));
-    dispatch(hideDrawers());
-    history.push(
-      `/applications/${newSection.applicationId}/sections/${newSection.id}`
-    );
+  const onFinish = async (values: any) => {
+    const newSection = {
+      ...unsavedSection,
+      ...values,
+    } as ICreateSectionAttributes;
+
+    const resultAction = await dispatch(CreateSection(newSection));
+
+    if (CreateSection.fulfilled.match(resultAction)) {
+      const createdSection = resultAction.payload;
+      dispatch(hideDrawers());
+      message.success("Section created");
+      history.push(
+        `/applications/${createdSection.applicationId}/sections/${createdSection.id}`
+      );
+    } else {
+      if (resultAction.payload) {
+        message.error(`Create failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Create failed: ${resultAction.error.message}`);
+      }
+    }
   };
 
   const onClose = () => {
@@ -98,11 +108,12 @@ export default function SectionLayoutPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
   const activeApplication = useAppSelector(selectActiveApplication);
   const dispatch = useAppDispatch();
-  const [unsavedSection, setUnsavedSection] = useState<ISection>();
+  const [unsavedSection, setUnsavedSection] =
+    useState<ICreateSectionAttributes>();
 
-  const pickSection = (sectionId: string, numOfCols: number) => {
+  const pickSection = (numOfCols: number) => {
     setUnsavedSection({
-      id: sectionId,
+      title: "",
       numOfCols,
       applicationId: activeApplication!.id,
     });
@@ -120,7 +131,7 @@ export default function SectionLayoutPicker() {
     >
       <Row>
         <SectionCard
-          onClick={() => pickSection(uuidv4(), COLS_PER_ROW.ONE)}
+          onClick={() => pickSection(COLS_PER_ROW.ONE)}
           $active={
             unsavedSection! && unsavedSection.numOfCols == COLS_PER_ROW.ONE
           }
@@ -131,7 +142,7 @@ export default function SectionLayoutPicker() {
       <br />
       <Row>
         <SectionCard
-          onClick={() => pickSection(uuidv4(), COLS_PER_ROW.TWO)}
+          onClick={() => pickSection(COLS_PER_ROW.TWO)}
           $active={
             unsavedSection! && unsavedSection.numOfCols == COLS_PER_ROW.TWO
           }
@@ -147,7 +158,7 @@ export default function SectionLayoutPicker() {
       <br />
       <Row>
         <SectionCard
-          onClick={() => pickSection(uuidv4(), COLS_PER_ROW.THREE)}
+          onClick={() => pickSection(COLS_PER_ROW.THREE)}
           $active={
             unsavedSection! && unsavedSection.numOfCols == COLS_PER_ROW.THREE
           }

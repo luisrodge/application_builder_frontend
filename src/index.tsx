@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { message } from "antd";
 import "antd/dist/antd.css";
 
 import "./index.css";
@@ -9,6 +10,10 @@ import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./app/store";
 import ScrollToTop from "./components/ScrollToTop";
+
+message.config({
+  maxCount: 1,
+});
 
 ReactDOM.render(
   <React.StrictMode>

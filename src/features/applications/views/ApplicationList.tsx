@@ -5,13 +5,16 @@ import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { DeleteApplication, GetApplications } from "../services";
-import { selectApplications, selectLoading } from "../applicationsSlice";
+import {
+  selectApplications,
+  selectLoadingStatuses,
+} from "../applicationsSlice";
 import Header from "../components/ApplicationsHeader";
 import { SlimContainer } from "../style";
 
 export default function ApplicationList() {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector(selectLoading);
+  const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const applications = useAppSelector(selectApplications);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ export default function ApplicationList() {
         <List
           itemLayout="horizontal"
           dataSource={applications}
-          loading={loading === "pending"}
+          loading={loadingStatuses.applicationLoading === "pending"}
           renderItem={(application) => (
             <List.Item
               actions={[

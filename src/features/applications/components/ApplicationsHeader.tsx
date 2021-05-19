@@ -15,7 +15,7 @@ export default function ApplicationsHeader() {
     <AntHeader
       className="site-layout-background"
       style={{
-        marginBottom: 100,
+        marginBottom: 60,
         background: blue.primary,
       }}
     >

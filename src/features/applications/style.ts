@@ -6,6 +6,6 @@ export const Container = styled.div`
 `;
 
 export const SlimContainer = styled.div`
-  width: 600px;
+  width: 680px;
   margin: 0 auto;
 `;

@@ -1,24 +1,16 @@
 import { useEffect } from "react";
-import { Layout, Button, Typography } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { blue } from "@ant-design/colors";
+import { Layout, Typography } from "antd";
 import { useParams } from "react-router";
 
 import SectionList from "../components/SectionList";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-  selectActiveApplication,
-  selectLoading,
-  selectSections,
-  setActiveApplication,
-} from "../applicationsSlice";
-import { DRAWER_TYPES } from "../../../shared/constants";
+import { selectLoadingStatuses, selectSections } from "../applicationsSlice";
 import Sidebar from "../components/ApplicationDesignerSidebar";
-import { showDrawer } from "../../drawer/drawerSlice";
 import { GetApplication } from "../services";
 import { Spinner } from "../../../components/Spinner";
+import ApplicationDesignerHeader from "../components/ApplicationDesignerHeader";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 export default function ApplicationDesigner() {
@@ -26,10 +18,8 @@ export default function ApplicationDesigner() {
 
   const { applicationId } = useParams<{ applicationId: string }>();
 
-  const loading = useAppSelector(selectLoading);
-  const application = useAppSelector(selectActiveApplication);
+  const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const sections = useAppSelector(selectSections);
-  dispatch(setActiveApplication(application));
 
   useEffect(() => {
     dispatch(GetApplication(applicationId));
@@ -39,31 +29,7 @@ export default function ApplicationDesigner() {
     <Layout>
       <Sidebar sections={sections} />
       <Layout className="site-layout" style={{ marginRight: 200 }}>
-        <Header
-          className="site-layout-background"
-          style={{
-            marginBottom: 100,
-            background: blue.primary,
-          }}
-        >
-          <div style={{ display: "flex" }}>
-            <div style={{ flex: "1", color: "#fff" }}>{application?.title}</div>
-            <div>
-              <Button
-                icon={<PlusOutlined />}
-                onClick={() =>
-                  dispatch(
-                    showDrawer({
-                      drawerType: DRAWER_TYPES.SECTION_LAYOUT_PICKER_DRAWER,
-                    })
-                  )
-                }
-              >
-                Add Section
-              </Button>
-            </div>
-          </div>
-        </Header>
+        <ApplicationDesignerHeader />
 
         <Content
           style={{
@@ -72,7 +38,7 @@ export default function ApplicationDesigner() {
             marginBottom: 100,
           }}
         >
-          {loading == "pending" ? (
+          {loadingStatuses.applicationLoading == "pending" ? (
             <Spinner />
           ) : sections.length ? (
             <div className="site-layout-background">

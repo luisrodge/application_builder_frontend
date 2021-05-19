@@ -1,15 +1,15 @@
-import { Button, Tooltip, Typography } from "antd";
+import { Button, Popconfirm, Typography } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 import { CloseSquareOutlined, PlusOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router";
 
 import RowList from "./RowList";
 import { useAppDispatch } from "../../../app/hooks";
-import { removeSection, setActiveSection } from "../applicationsSlice";
 import { ISection } from "../applications.interface";
-import { useHistory } from "react-router";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../../shared/constants";
+import { DeleteSection } from "../services";
 
 const { Title } = Typography;
 
@@ -59,7 +59,6 @@ export default function SectionList({ sections, disabled }: ISections) {
   const history = useHistory();
 
   const navigateToSection = (section: ISection) => {
-    dispatch(setActiveSection(section));
     history.push(
       `/applications/${section.applicationId}/sections/${section.id}`
     );
@@ -69,11 +68,17 @@ export default function SectionList({ sections, disabled }: ISections) {
     <>
       {sections.map((section) => (
         <ParentContainer key={section.id}>
-          <RemoveIconContainer onClick={() => dispatch(removeSection(section))}>
-            <Tooltip title="Remove section">
+          <Popconfirm
+            title="Are you sure？"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => dispatch(DeleteSection(section.id))}
+          >
+            <RemoveIconContainer>
               <CloseSquareOutlined style={{ color: "#fff" }} />
-            </Tooltip>
-          </RemoveIconContainer>
+            </RemoveIconContainer>
+          </Popconfirm>
+
           <SectionContainer
             key={section.id}
             onClick={() => navigateToSection(section)}

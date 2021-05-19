@@ -1,6 +1,11 @@
 export interface ICreateApplicationAttributes {
   title: string;
-  details: string;
+  details?: string;
+}
+
+export interface ICreateSectionAttributes extends ICreateApplicationAttributes {
+  numOfCols: number;
+  applicationId: string;
 }
 
 export interface IApplication {
@@ -16,6 +21,13 @@ export interface IApplicationWithChildren {
   rows: IRow[];
   columns: IColumn[];
   elements: IElement[];
+}
+
+export interface ISectionWithChildren {
+  section: ISection;
+  rows: IRow[];
+  columns: IColumn[];
+  application: IApplication;
 }
 
 export interface ISection {

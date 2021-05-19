@@ -29,9 +29,13 @@ const FullViewInnerContainer = styled.div`
   height: 100%;
 `;
 
-export const Spinner = () => (
+interface ISpinnerProps {
+  marginTop?: number;
+}
+
+export const Spinner = ({ marginTop = 50 }: ISpinnerProps) => (
   <div style={{ textAlign: "center" }}>
-    <Spin size="large" style={{ marginTop: 50 }} delay={500} />
+    <Spin size="large" style={{ marginTop }} delay={500} />
   </div>
 );
 
