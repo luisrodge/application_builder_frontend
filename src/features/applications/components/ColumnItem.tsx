@@ -5,7 +5,6 @@ import { blue, grey } from "@ant-design/colors";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
-  removeColumn,
   selectActiveColumn,
   selectElement,
   setActiveColumn,

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 import type { RootState } from "../../app/store";
 import { Selector } from "../../shared/types";
@@ -81,82 +80,6 @@ export const applicationsSlice = createSlice({
     },
     setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
       state.activeElement = action.payload;
-    },
-
-    addSection: (state, action: PayloadAction<ISection>) => {
-      const section = action.payload;
-      const row = { id: uuidv4(), sectionId: section.id } as IRow;
-
-      const columns = [...Array(section.numOfCols)].map(() => ({
-        id: uuidv4(),
-        rowId: row.id,
-        sectionId: section.id,
-      }));
-
-      state.sections.push(section);
-      state.rows.push(row);
-      state.columns.push(...columns);
-      state.activeSection = section;
-    },
-    addRow: (state, action: PayloadAction<IRow>) => {
-      const row = action.payload;
-
-      const columns = [...Array(row.numOfCols)].map(() => ({
-        id: uuidv4(),
-        rowId: row.id,
-        sectionId: row.sectionId,
-      }));
-
-      state.rows.push(row);
-      state.columns.push(...columns);
-    },
-    removeSection: (state, action: PayloadAction<ISection>) => {
-      const { id } = action.payload;
-
-      const newSections = state.sections.filter((section) => section.id != id);
-      const newRows = state.rows.filter((row) => row.sectionId != id);
-      const newColumns = state.columns.filter(
-        (column) => column.sectionId != id
-      );
-
-      state.sections = newSections;
-      state.rows = newRows;
-      state.columns = newColumns;
-    },
-    removeRow: (state, action: PayloadAction<IRow>) => {
-      const { id, sectionId } = action.payload;
-
-      if (state.rows.filter((row) => row.sectionId == sectionId).length == 1) {
-        const newSections = state.sections.filter(
-          (section) => section.id != sectionId
-        );
-        state.sections = newSections;
-      }
-
-      const newRows = state.rows.filter((row) => row.id != id);
-      const newColumns = state.columns.filter((column) => column.rowId != id);
-
-      state.rows = newRows;
-      state.columns = newColumns;
-    },
-    removeColumn: (state, action: PayloadAction<IColumn>) => {
-      const { id, rowId, sectionId } = action.payload;
-
-      if (state.columns.filter((column) => column.rowId == rowId).length == 1) {
-        const newRows = state.rows.filter((row) => row.id != rowId);
-        state.rows = newRows;
-        if (
-          state.rows.filter((row) => row.sectionId == sectionId).length == 0
-        ) {
-          const newSections = state.sections.filter(
-            (section) => section.id != sectionId
-          );
-          state.sections = newSections;
-        }
-      }
-
-      const newColumns = state.columns.filter((column) => column.id != id);
-      state.columns = newColumns;
     },
     addElement: (state, action: PayloadAction<IElement>) => {
       const element = action.payload;
@@ -298,11 +221,6 @@ export const applicationsSlice = createSlice({
 });
 
 export const {
-  addSection,
-  addRow,
-  removeSection,
-  removeRow,
-  removeColumn,
   setActiveSection,
   setActiveRow,
   setActiveColumn,
