@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveSection,
   selectLoadingStatuses,
-  selectSectionRows,
 } from "./applicationsSlice";
 
 import RowList from "./components/RowList";
@@ -26,7 +25,6 @@ export default function SectionDesigner() {
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const section = useAppSelector(selectActiveSection);
-  const sectionRows = useAppSelector(selectSectionRows(sectionId));
 
   useEffect(() => {
     dispatch(GetSection(sectionId));
