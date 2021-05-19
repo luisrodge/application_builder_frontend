@@ -17,6 +17,7 @@ import {
   DeleteApplication,
   CreateSection,
   GetSection,
+  DeleteSection,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -222,7 +223,6 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(DeleteApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
-      state.loadingStatuses.applicationLoading = "idle";
     });
     builder.addCase(CreateSection.fulfilled, (state, action) => {
       const section = action.payload;
@@ -248,6 +248,16 @@ export const applicationsSlice = createSlice({
     builder.addCase(GetSection.rejected, (state, action) => {
       // state.error = action.payload.message;
       state.loadingStatuses.sectionLoading = "failed";
+    });
+    builder.addCase(DeleteSection.fulfilled, (state, action) => {
+      const sectionId = action.payload;
+      const sections = state.sections.filter(
+        (section) => section.id != sectionId
+      );
+      state.sections = sections;
+    });
+    builder.addCase(DeleteSection.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
     });
   },
 });

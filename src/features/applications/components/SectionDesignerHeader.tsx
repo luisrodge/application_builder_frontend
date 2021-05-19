@@ -1,12 +1,14 @@
-import { Button } from "antd";
+import { Button, message, Popconfirm } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
-import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
+import { CheckOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
 
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../../shared/constants";
+import { DeleteSection } from "../services";
+import { selectActiveSection } from "../applicationsSlice";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -34,8 +36,15 @@ export default function SectionDesignerHeader({
   btnTitle,
   applicationId,
 }: IProps) {
+  const section = useAppSelector(selectActiveSection);
   const dispatch = useAppDispatch();
   const history = useHistory();
+
+  const onDeleteSection = () => {
+    dispatch(DeleteSection(section!.id));
+    message.success("Section removed");
+    history.push(`/applications/${applicationId}`);
+  };
 
   return (
     <HeaderContainer>
@@ -56,6 +65,17 @@ export default function SectionDesignerHeader({
             Done
           </Button>
         )}
+
+        <Popconfirm
+          title="Are you sure？"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={onDeleteSection}
+        >
+          <Button type="text" icon={<DeleteOutlined />}>
+            Remove
+          </Button>
+        </Popconfirm>
 
         <Button
           type="text"

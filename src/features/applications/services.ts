@@ -150,3 +150,19 @@ export const GetSection = createAsyncThunk<
 
   return sectionData as ISectionWithChildren;
 });
+
+export const DeleteSection = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("sections/delete", async (sectionId, thunkApi) => {
+  const response = await api.delete(`sections/${sectionId}`);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to delete section.",
+    } as IErrorMessage);
+  }
+  return sectionId;
+});
