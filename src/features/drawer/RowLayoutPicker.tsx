@@ -1,14 +1,13 @@
-import React from "react";
-import { Card, Row } from "antd";
+import { Card, Row, message } from "antd";
 import { AlignCenterOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { selectDrawer, hideDrawer } from "./drawerSlice";
-import { addRow, selectActiveSection } from "../applications/applicationsSlice";
+import { selectActiveSection } from "../applications/applicationsSlice";
+import { CreateRow } from "../applications/services";
 
 const SectionCard = styled(Card)`
   width: 100%;
@@ -25,10 +24,16 @@ export default function RowLayoutPicker() {
 
   const dispatch = useAppDispatch();
 
-  const pickRow = (rowId: string, numOfCols: number) => {
-    const newRow = { id: rowId, numOfCols, sectionId: section!.id };
-    dispatch(addRow(newRow));
-    dispatch(hideDrawer());
+  const pickRow = async (numOfCols: number) => {
+    const newRow = { numOfCols, sectionId: section!.id };
+    const resultAction = await dispatch(CreateRow(newRow));
+
+    if (CreateRow.fulfilled.match(resultAction)) {
+      dispatch(hideDrawer());
+      message.success("Row added to section");
+    } else {
+      message.error(`Failed to add row`);
+    }
   };
 
   return (
@@ -39,13 +44,13 @@ export default function RowLayoutPicker() {
       closeDrawer={() => dispatch(hideDrawer())}
     >
       <Row>
-        <SectionCard onClick={() => pickRow(uuidv4(), 1)}>
+        <SectionCard onClick={() => pickRow(1)}>
           <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
         </SectionCard>
       </Row>
       <br />
       <Row>
-        <SectionCard onClick={() => pickRow(uuidv4(), 2)}>
+        <SectionCard onClick={() => pickRow(2)}>
           <AlignCenterOutlined
             style={{ fontSize: 80, marginRight: 8, color: grey.primary }}
           />
@@ -56,7 +61,7 @@ export default function RowLayoutPicker() {
       </Row>
       <br />
       <Row>
-        <SectionCard onClick={() => pickRow(uuidv4(), 3)}>
+        <SectionCard onClick={() => pickRow(3)}>
           <AlignCenterOutlined
             style={{ fontSize: 80, color: grey.primary }}
             color={blue.primary}

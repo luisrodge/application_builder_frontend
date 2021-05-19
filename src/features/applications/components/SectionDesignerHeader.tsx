@@ -8,6 +8,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { showDrawer } from "../../drawer/drawerSlice";
@@ -17,7 +18,6 @@ import {
   selectActiveApplication,
   selectActiveSection,
 } from "../applicationsSlice";
-import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -59,10 +59,15 @@ export default function SectionDesignerHeader({
   const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const onDeleteSection = () => {
-    dispatch(DeleteSection(section!.id));
-    message.success("Section removed");
-    history.push(`/applications/${applicationId}`);
+  const onDeleteSection = async () => {
+    const resultAction = await dispatch(DeleteSection(section!.id));
+
+    if (DeleteSection.fulfilled.match(resultAction)) {
+      message.success("Section removed");
+      history.push(`/applications/${applicationId}`);
+    } else {
+      message.error("Failed to delete");
+    }
   };
 
   return (
