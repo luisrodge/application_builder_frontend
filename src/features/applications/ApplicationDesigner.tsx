@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { Layout, Typography } from "antd";
 import { useParams } from "react-router";
 
-import SectionList from "../components/SectionList";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectLoadingStatuses, selectSections } from "../applicationsSlice";
-import Sidebar from "../components/ApplicationDesignerSidebar";
-import { GetApplication } from "../services";
-import { Spinner } from "../../../components/Spinner";
-import ApplicationDesignerHeader from "../components/ApplicationDesignerHeader";
+import SectionList from "./components/SectionList";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectLoadingStatuses, selectSections } from "./applicationsSlice";
+import Sidebar from "./components/ApplicationDesignerSidebar";
+import { GetApplication } from "./services";
+import { Spinner } from "../../components/Spinner";
+import ApplicationDesignerHeader from "./components/ApplicationDesignerHeader";
 
 const { Content } = Layout;
 const { Title } = Typography;

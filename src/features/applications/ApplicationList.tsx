@@ -3,14 +3,11 @@ import { List, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { DeleteApplication, GetApplications } from "../services";
-import {
-  selectApplications,
-  selectLoadingStatuses,
-} from "../applicationsSlice";
-import Header from "../components/ApplicationsHeader";
-import { SlimContainer } from "../style";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { DeleteApplication, GetApplications } from "./services";
+import { selectApplications, selectLoadingStatuses } from "./applicationsSlice";
+import Header from "./components/ApplicationsHeader";
+import { SlimContainer } from "./style";
 
 export default function ApplicationList() {
   const dispatch = useAppDispatch();

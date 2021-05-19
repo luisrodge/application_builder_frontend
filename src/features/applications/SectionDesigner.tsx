@@ -1,20 +1,20 @@
 import { Redirect, useParams } from "react-router-dom";
 import { Typography, message } from "antd";
 
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveSection,
   selectLoadingStatuses,
   selectSectionRows,
-} from "../applicationsSlice";
+} from "./applicationsSlice";
 
-import RowList from "../components/RowList";
-import Header from "../components/SectionDesignerHeader";
-import { Container } from "../style";
-import { DRAWER_TYPES } from "../../../shared/constants";
+import RowList from "./components/RowList";
+import Header from "./components/SectionDesignerHeader";
+import { Container } from "./style";
+import { DRAWER_TYPES } from "../../shared/constants";
 import { useEffect } from "react";
-import { GetSection } from "../services";
-import { Spinner } from "../../../components/Spinner";
+import { GetSection } from "./services";
+import { Spinner } from "../../components/Spinner";
 
 const { Title, Text } = Typography;
 
