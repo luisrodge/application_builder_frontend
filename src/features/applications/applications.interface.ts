@@ -27,6 +27,7 @@ export interface ISectionWithChildren {
   section: ISection;
   rows: IRow[];
   columns: IColumn[];
+  application: IApplication;
 }
 
 export interface ISection {

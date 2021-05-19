@@ -237,9 +237,10 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.sectionLoading = "pending";
     });
     builder.addCase(GetSection.fulfilled, (state, action) => {
-      const { section, rows, columns } = action.payload;
+      const { section, rows, columns, application } = action.payload;
 
       state.activeSection = section;
+      state.activeApplication = application;
       state.rows = rows;
       state.columns = columns;
       // state.elements = elements;

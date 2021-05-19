@@ -37,8 +37,6 @@ export const GetApplication = createAsyncThunk(
       columns: normedColumns,
     } = entities;
 
-    // console.log(normalizedData);
-
     const application = applications![id];
     const sections =
       normedSections == undefined
@@ -59,8 +57,6 @@ export const GetApplication = createAsyncThunk(
       rows: rows as IRow[],
       columns: columns as IColumn[],
     };
-
-    console.log(applicationData);
 
     return applicationData as IApplicationWithChildren;
   }
@@ -130,8 +126,14 @@ export const GetSection = createAsyncThunk<
   }
 
   const { entities } = normalize(data, SectionSchema);
-  const { sections, rows: normedRows, columns: normedColumns } = entities;
+  const {
+    sections,
+    applications,
+    rows: normedRows,
+    columns: normedColumns,
+  } = entities;
   const section = sections![id];
+  const application = applications![section.application];
 
   const rows =
     normedRows == undefined
@@ -146,6 +148,7 @@ export const GetSection = createAsyncThunk<
     section: section as ISection,
     rows: rows as IRow[],
     columns: columns as IColumn[],
+    application: application as IApplication,
   };
 
   return sectionData as ISectionWithChildren;

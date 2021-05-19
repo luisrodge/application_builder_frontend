@@ -16,4 +16,5 @@ export const ApplicationSchema = new schema.Entity("applications", {
 
 export const SectionSchema = new schema.Entity("sections", {
   rows: [rowSchema],
+  application: new schema.Entity("applications"),
 });

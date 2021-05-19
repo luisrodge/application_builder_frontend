@@ -23,13 +23,15 @@ export default function ApplicationDesignerHeader() {
       }}
     >
       <div style={{ display: "flex" }}>
-        <div style={{ marginRight: 10 }}>
+        <div style={{ flex: 1 }}>
           <Link to="/" style={{ color: "#FFF" }}>
-            <ArrowLeftOutlined />
+            <ArrowLeftOutlined /> Applications
           </Link>
         </div>
-        <div style={{ flex: "1", color: "#fff" }}>{application?.title}</div>
         <div>
+          <span style={{ color: "#fff", marginRight: 20 }}>
+            {application?.title}
+          </span>
           <Button
             icon={<PlusOutlined />}
             onClick={() =>
