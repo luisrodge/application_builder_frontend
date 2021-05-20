@@ -105,7 +105,7 @@ export const applicationsSlice = createSlice({
       state.sections = sections;
       state.rows = rows;
       state.columns = columns;
-      // state.elements = elements;
+      state.inputs = inputs;
       state.loadingStatuses.applicationLoading = "succeeded";
       state.loadingStatuses.sectionLoading = "idle";
     });

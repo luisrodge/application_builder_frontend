@@ -40,6 +40,7 @@ export const GetApplication = createAsyncThunk(
       sections: normedSections,
       rows: normedRows,
       columns: normedColumns,
+      inputs: normedInputs,
     } = entities;
 
     const application = applications![id];
@@ -55,14 +56,20 @@ export const GetApplication = createAsyncThunk(
       normedColumns == undefined
         ? []
         : Object.keys(normedColumns).map((id) => normedColumns[id]);
+    const inputs =
+      normedInputs == undefined
+        ? []
+        : Object.keys(normedInputs).map((id) => normedInputs[id]);
 
     const applicationData = {
       application: application as IApplication,
       sections: sections as ISection[],
       rows: rows as IRow[],
       columns: columns as IColumn[],
+      inputs: inputs as IInput[],
     };
 
+    console.log(data);
     return applicationData as IApplicationWithChildren;
   }
 );
