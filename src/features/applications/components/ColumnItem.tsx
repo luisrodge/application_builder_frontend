@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Button, Col, Tooltip } from "antd";
+import { Button, Col, Tooltip, message } from "antd";
 import { PlusOutlined, CloseSquareOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 
@@ -9,13 +9,12 @@ import {
   selectInput,
   setActiveColumn,
   setActiveRow,
-  removeInput,
 } from "../applicationsSlice";
 import { IColumn, IRow } from "../applications.interface";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../../shared/constants";
 import InputRoot from "./InputRoot";
-import { DeleteColumn } from "../services";
+import { DeleteColumn, DeleteInput } from "../services";
 
 const RemoveColumnIconContainer = styled.div`
   position: absolute;
@@ -106,6 +105,18 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
     dispatch(showDrawer({ drawerType: DRAWER_TYPES.INPUT_PICKER_DRAWER }));
   };
 
+  const removeInput = async (inputId: string) => {
+    const resultAction = await dispatch(DeleteInput(inputId));
+
+    if (!DeleteInput.fulfilled.match(resultAction)) {
+      if (resultAction.payload) {
+        message.error(`Delete failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Delete failed: ${resultAction.error.message}`);
+      }
+    }
+  };
+
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
       <Container
@@ -141,9 +152,7 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
             <InputContainer>
               {!disabled && (
                 <Tooltip title="Remove input">
-                  <RemoveInputIcon
-                    onClick={() => dispatch(removeInput(input!))}
-                  />
+                  <RemoveInputIcon onClick={() => removeInput(input!.id)} />
                 </Tooltip>
               )}
               <InputRoot column={column} disabled={disabled} />

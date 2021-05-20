@@ -132,8 +132,6 @@ export const GetSection = createAsyncThunk<
 
   const { entities } = normalize(data, SectionSchema);
 
-  console.log(entities);
-
   const {
     sections,
     applications,
@@ -263,4 +261,20 @@ export const CreateInput = createAsyncThunk<
   }
 
   return response.data as IInput;
+});
+
+export const DeleteInput = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("inputs/delete", async (inputId, thunkApi) => {
+  const response = await api.delete(`inputs/${inputId}`);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to delete input",
+    } as IErrorMessage);
+  }
+  return inputId;
 });

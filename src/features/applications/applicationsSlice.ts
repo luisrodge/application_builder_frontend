@@ -21,6 +21,7 @@ import {
   DeleteRow,
   DeleteColumn,
   CreateInput,
+  DeleteInput,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -82,18 +83,7 @@ export const applicationsSlice = createSlice({
     setActiveInput: (state, action: PayloadAction<IInput | undefined>) => {
       state.activeInput = action.payload;
     },
-    addInput: (state, action: PayloadAction<IInput>) => {
-      const input = action.payload;
 
-      state.inputs.push(input);
-    },
-    removeInput: (state, action: PayloadAction<IInput>) => {
-      const input = action.payload;
-
-      const inputs = state.inputs.filter((i) => i.columnId != input.columnId);
-
-      state.inputs = inputs;
-    },
     resetSectionLoadingStatuses: (state) => {
       state.loadingStatuses.sectionLoading = "idle";
     },
@@ -217,6 +207,14 @@ export const applicationsSlice = createSlice({
     builder.addCase(CreateInput.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
     });
+    builder.addCase(DeleteInput.fulfilled, (state, action) => {
+      const inputId = action.payload;
+      const inputs = state.inputs.filter((input) => input.id != inputId);
+      state.inputs = inputs;
+    });
+    builder.addCase(DeleteInput.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+    });
   },
 });
 
@@ -224,8 +222,6 @@ export const {
   setActiveSection,
   setActiveRow,
   setActiveColumn,
-  addInput,
-  removeInput,
   setActiveInput,
   setActiveApplication,
   resetSectionLoadingStatuses,
