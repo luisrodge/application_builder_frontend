@@ -22,7 +22,3 @@ export const INPUTS = [
   { name: "Checkbox", type: INPUT_TYPES.CHECKBOX_INPUT },
   { name: "File Upload", type: INPUT_TYPES.UPLOAD_INPUT },
 ];
-
-export const GUTTER = { xs: 8, sm: 16, md: 24, lg: 32 };
-
-export const COLS_PER_ROW = { ONE: 1, TWO: 2, THREE: 3 };
