@@ -1,41 +1,41 @@
 import { Button, Drawer, Form, Input } from "antd";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IElement } from "../applications/applications.interface";
+import { IInput } from "../applications/applications.interface";
 import {
-  addElement,
-  selectActiveElement,
+  addInput,
+  selectActiveInput,
   setActiveColumn,
-  setActiveElement,
+  setActiveInput,
   setActiveRow,
 } from "../applications/applicationsSlice";
 
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 
-export default function ElementOptions() {
+export default function InputOptions() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector(selectChildDrawer);
-  const unsavedElement = useAppSelector(selectActiveElement);
+  const unsavedInput = useAppSelector(selectActiveInput);
 
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    const newElement = { ...unsavedElement, ...values } as IElement;
-    dispatch(addElement(newElement));
+    const newInput = { ...unsavedInput, ...values } as IInput;
+    dispatch(addInput(newInput));
     dispatch(setActiveRow());
     dispatch(setActiveColumn());
-    dispatch(setActiveElement());
+    dispatch(setActiveInput());
     dispatch(hideDrawers());
   };
 
   const onClose = () => {
     form.resetFields();
-    dispatch(setActiveElement());
+    dispatch(setActiveInput());
     dispatch(hideChildDrawer());
   };
 
   return (
     <Drawer
-      title="Element options"
+      title="Input options"
       width={320}
       closable={false}
       onClose={onClose}

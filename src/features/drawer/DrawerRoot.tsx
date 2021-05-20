@@ -5,15 +5,15 @@ import RowLayoutPicker from "./RowLayoutPicker";
 import { useAppSelector } from "../../app/hooks";
 import { selectDrawer } from "./drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
-import ElementPicker from "./ElementPicker";
-import ElementOptions from "./ElementOptions";
+import InputPicker from "./InputPicker";
+import InputOptions from "./InputOptions";
 import NewApplication from "./NewApplication";
 
 const {
   SECTION_LAYOUT_PICKER_DRAWER,
   ROW_LAYOUT_PICKER_DRAWER,
-  ELEMENT_PICKER_DRAWER,
-  ELEMENT_OPTIONS_DRAWER,
+  INPUT_OPTIONS_DRAWER,
+  INPUT_PICKER_DRAWER,
   NEW_APPLICATION_DRAWER,
 } = DRAWER_TYPES;
 
@@ -24,8 +24,8 @@ interface IDrawerComponents {
 const DRAWER_COMPONENTS = {
   [SECTION_LAYOUT_PICKER_DRAWER]: SectionLayoutPicker,
   [ROW_LAYOUT_PICKER_DRAWER]: RowLayoutPicker,
-  [ELEMENT_PICKER_DRAWER]: ElementPicker,
-  [ELEMENT_OPTIONS_DRAWER]: ElementOptions,
+  [INPUT_PICKER_DRAWER]: InputPicker,
+  [INPUT_OPTIONS_DRAWER]: InputOptions,
   [NEW_APPLICATION_DRAWER]: NewApplication,
 } as IDrawerComponents;
 

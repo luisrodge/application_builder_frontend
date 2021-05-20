@@ -6,7 +6,7 @@ import {
   ISection,
   IColumn,
   IRow,
-  IElement,
+  IInput,
   IApplication,
 } from "./applications.interface";
 import {
@@ -38,8 +38,8 @@ interface ApplicationState {
   activeSection?: ISection;
   activeRow?: IRow;
   activeColumn?: IColumn;
-  activeElement?: IElement;
-  elements: IElement[];
+  activeInput?: IInput;
+  inputs: IInput[];
   error: string | null;
   loadingStatuses: ILoadingState;
 }
@@ -54,7 +54,7 @@ const initialState: ApplicationState = {
   sections: [],
   rows: [],
   columns: [],
-  elements: [],
+  inputs: [],
   error: null,
   loadingStatuses: initialLoadingState,
 };
@@ -78,28 +78,20 @@ export const applicationsSlice = createSlice({
     setActiveColumn: (state, action: PayloadAction<IColumn | undefined>) => {
       state.activeColumn = action.payload;
     },
-    setActiveElement: (state, action: PayloadAction<IElement | undefined>) => {
-      state.activeElement = action.payload;
+    setActiveInput: (state, action: PayloadAction<IInput | undefined>) => {
+      state.activeInput = action.payload;
     },
-    addElement: (state, action: PayloadAction<IElement>) => {
-      const element = action.payload;
+    addInput: (state, action: PayloadAction<IInput>) => {
+      const input = action.payload;
 
-      state.elements.push(element);
+      state.inputs.push(input);
     },
-    removeElement: (state, action: PayloadAction<IElement>) => {
-      const element = action.payload;
+    removeInput: (state, action: PayloadAction<IInput>) => {
+      const input = action.payload;
 
-      const elements = state.elements.filter(
-        (e) => e.columnId != element.columnId
-      );
+      const inputs = state.inputs.filter((i) => i.columnId != input.columnId);
 
-      state.elements = elements;
-    },
-    resetActive: (state) => {
-      state.activeSection = undefined;
-      state.activeRow = undefined;
-      state.activeColumn = undefined;
-      state.activeElement = undefined;
+      state.inputs = inputs;
     },
     resetSectionLoadingStatuses: (state) => {
       state.loadingStatuses.sectionLoading = "idle";
@@ -117,7 +109,7 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(GetApplication.fulfilled, (state, action) => {
-      const { application, sections, rows, columns, elements } = action.payload;
+      const { application, sections, rows, columns, inputs } = action.payload;
       state.activeApplication = action.payload.application;
       state.sections = sections;
       state.rows = rows;
@@ -224,11 +216,10 @@ export const {
   setActiveSection,
   setActiveRow,
   setActiveColumn,
-  addElement,
-  removeElement,
-  setActiveElement,
+  addInput,
+  removeInput,
+  setActiveInput,
   setActiveApplication,
-  resetActive,
   resetSectionLoadingStatuses,
 } = applicationsSlice.actions;
 
@@ -248,8 +239,8 @@ export const selectActiveRow = (state: RootState) =>
   state.applications.activeRow;
 export const selectActiveColumn = (state: RootState) =>
   state.applications.activeColumn;
-export const selectActiveElement = (state: RootState) =>
-  state.applications.activeElement;
+export const selectActiveInput = (state: RootState) =>
+  state.applications.activeInput;
 
 export const selectApplication = (
   applicationId: string
@@ -285,13 +276,12 @@ export const selectRowColumns = (
     (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
   );
 
-export const selectElement = (
+export const selectInput = (
   columnId: string | undefined
-): Selector<IElement | undefined> =>
+): Selector<IInput | undefined> =>
   createSelector(
-    [(state: RootState) => state.applications.elements],
-    (elements: IElement[]) =>
-      elements.find((element) => element.columnId === columnId)
+    [(state: RootState) => state.applications.inputs],
+    (inputs: IInput[]) => inputs.find((input) => input.columnId === columnId)
   );
 
 export default applicationsSlice.reducer;

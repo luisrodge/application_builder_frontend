@@ -25,7 +25,7 @@ export interface IApplicationWithChildren {
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
-  elements: IElement[];
+  inputs: IInput[];
 }
 
 export interface ISectionWithChildren {
@@ -67,9 +67,7 @@ export interface IColumn {
   sectionId: string;
 }
 
-export interface IElement {
-  sectionId: string;
-  rowId: string;
+export interface IInput {
   columnId: string;
   type: string;
   label: string;

@@ -1,10 +1,10 @@
 import { Upload, Button, Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
-import { IElementProps } from "./elements.interface";
+import { IInputProps } from "./inputs.interface";
 
-const UploadInput = ({ element }: IElementProps) => (
-  <Form.Item label={element.label} style={{ marginBottom: 0 }}>
+const UploadInput = ({ input }: IInputProps) => (
+  <Form.Item label={input.label} style={{ marginBottom: 0 }}>
     <Upload>
       <Button icon={<UploadOutlined />}>Click to Upload</Button>
     </Upload>

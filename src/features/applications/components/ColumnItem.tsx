@@ -6,15 +6,15 @@ import { blue, grey } from "@ant-design/colors";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   selectActiveColumn,
-  selectElement,
+  selectInput,
   setActiveColumn,
   setActiveRow,
-  removeElement,
+  removeInput,
 } from "../applicationsSlice";
 import { IColumn, IRow } from "../applications.interface";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../../shared/constants";
-import ElementRoot from "./ElementRoot";
+import InputRoot from "./InputRoot";
 import { DeleteColumn } from "../services";
 
 const RemoveColumnIconContainer = styled.div`
@@ -28,7 +28,7 @@ const RemoveColumnIconContainer = styled.div`
   display: none;
 `;
 
-const RemoveElementIcon = styled(CloseSquareOutlined)`
+const RemoveInputIcon = styled(CloseSquareOutlined)`
   position: absolute;
   right: 0;
   top: 0;
@@ -46,12 +46,12 @@ const InnerContainer = styled.div`
   align-items: center;
 `;
 
-const ElementContainer = styled.div`
+const InputContainer = styled.div`
   border: 1px solid transparent;
   width: 100%;
   position: relative;
   padding: 24px 0;
-  &:hover ${RemoveElementIcon} {
+  &:hover ${RemoveInputIcon} {
     display: inherit;
   }
   &:hover {
@@ -96,14 +96,14 @@ interface IProps {
 export default function ColumnItem({ span, column, row, disabled }: IProps) {
   const dispatch = useAppDispatch();
   const activeColumn = useAppSelector(selectActiveColumn);
-  const element = useAppSelector(selectElement(column?.id));
+  const input = useAppSelector(selectInput(column?.id));
 
-  const isEmpty = element == undefined;
+  const isEmpty = input == undefined;
 
   const onClick = () => {
     dispatch(setActiveRow(row));
     dispatch(setActiveColumn(column));
-    dispatch(showDrawer({ drawerType: DRAWER_TYPES.ELEMENT_PICKER_DRAWER }));
+    dispatch(showDrawer({ drawerType: DRAWER_TYPES.INPUT_PICKER_DRAWER }));
   };
 
   return (
@@ -138,16 +138,16 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
               ></Button>
             </div>
           ) : (
-            <ElementContainer>
+            <InputContainer>
               {!disabled && (
-                <Tooltip title="Remove element">
-                  <RemoveElementIcon
-                    onClick={() => dispatch(removeElement(element!))}
+                <Tooltip title="Remove input">
+                  <RemoveInputIcon
+                    onClick={() => dispatch(removeInput(input!))}
                   />
                 </Tooltip>
               )}
-              <ElementRoot column={column} disabled={disabled} />
-            </ElementContainer>
+              <InputRoot column={column} disabled={disabled} />
+            </InputContainer>
           )}
         </InnerContainer>
       </Container>
