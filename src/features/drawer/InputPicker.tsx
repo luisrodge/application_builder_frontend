@@ -47,10 +47,10 @@ export default function ElementPicker() {
 
   const dispatch = useAppDispatch();
 
-  const pickInput = (type: string) => {
+  const pickInput = (inputType: string) => {
     const unsavedInput = {
       columnId: activeColumn?.id,
-      type,
+      inputType,
       label: "",
     } as IInput;
     dispatch(setActiveInput(unsavedInput));
@@ -76,9 +76,10 @@ export default function ElementPicker() {
       {INPUTS.map((input, index) => (
         <Row key={index}>
           <InputCard
-            onClick={() => pickInput(input.type)}
+            onClick={() => pickInput(input.inputType)}
             $active={
-              activeInput != undefined && activeInput.type == activeInput.type
+              activeInput != undefined &&
+              activeInput.inputType == input.inputType
             }
           >
             <h4 style={{ margin: 0 }}>{input.name}</h4>

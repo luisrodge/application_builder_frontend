@@ -1,6 +1,10 @@
 import { schema } from "normalizr";
 
-const columnSchema = new schema.Entity("columns");
+const inputSchema = new schema.Entity("inputs");
+
+const columnSchema = new schema.Entity("columns", {
+  input: inputSchema,
+});
 
 const rowSchema = new schema.Entity("rows", {
   columns: [columnSchema],

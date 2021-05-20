@@ -16,9 +16,9 @@ export const INPUT_TYPES = {
 };
 
 export const INPUTS = [
-  { name: "Number Input", type: INPUT_TYPES.NUMBER_INPUT },
-  { name: "Text Input", type: INPUT_TYPES.TEXT_INPUT },
-  { name: "Date Picker", type: INPUT_TYPES.DATE_PICKER_INPUT },
-  { name: "Checkbox", type: INPUT_TYPES.CHECKBOX_INPUT },
-  { name: "File Upload", type: INPUT_TYPES.UPLOAD_INPUT },
+  { name: "Number Input", inputType: INPUT_TYPES.NUMBER_INPUT },
+  { name: "Text Input", inputType: INPUT_TYPES.TEXT_INPUT },
+  { name: "Date Picker", inputType: INPUT_TYPES.DATE_PICKER_INPUT },
+  { name: "Checkbox", inputType: INPUT_TYPES.CHECKBOX_INPUT },
+  { name: "File Upload", inputType: INPUT_TYPES.UPLOAD_INPUT },
 ];

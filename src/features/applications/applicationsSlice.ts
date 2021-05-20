@@ -20,6 +20,7 @@ import {
   CreateRow,
   DeleteRow,
   DeleteColumn,
+  CreateInput,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -155,13 +156,13 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.sectionLoading = "pending";
     });
     builder.addCase(GetSection.fulfilled, (state, action) => {
-      const { section, rows, columns, application } = action.payload;
+      const { section, rows, columns, inputs, application } = action.payload;
 
       state.activeSection = section;
       state.activeApplication = application;
       state.rows = rows;
       state.columns = columns;
-      // state.elements = elements;
+      state.inputs = inputs;
       state.loadingStatuses.sectionLoading = "succeeded";
     });
     builder.addCase(GetSection.rejected, (state, action) => {
@@ -207,6 +208,13 @@ export const applicationsSlice = createSlice({
       state.columns = columns;
     });
     builder.addCase(DeleteColumn.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload.message;
+    });
+    builder.addCase(CreateInput.fulfilled, (state, action) => {
+      const input = action.payload;
+      state.inputs.push(input);
+    });
+    builder.addCase(CreateInput.rejected, (state, action) => {
       if (action.payload) state.error = action.payload.message;
     });
   },

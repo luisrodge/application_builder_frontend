@@ -1,14 +1,14 @@
-import { Button, Drawer, Form, Input } from "antd";
+import { Button, Drawer, Form, Input, message } from "antd";
+
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IInput } from "../applications/applications.interface";
+import { ICreateInputAttributes } from "../applications/applications.interface";
 import {
-  addInput,
   selectActiveInput,
   setActiveColumn,
   setActiveInput,
   setActiveRow,
 } from "../applications/applicationsSlice";
-
+import { CreateInput } from "../applications/services";
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 
 export default function InputOptions() {
@@ -18,13 +18,24 @@ export default function InputOptions() {
 
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    const newInput = { ...unsavedInput, ...values } as IInput;
-    dispatch(addInput(newInput));
+  const onFinish = async (values: any) => {
+    const newInput = { ...unsavedInput, ...values } as ICreateInputAttributes;
+    const resultAction = await dispatch(CreateInput(newInput));
+
     dispatch(setActiveRow());
     dispatch(setActiveColumn());
     dispatch(setActiveInput());
     dispatch(hideDrawers());
+
+    if (CreateInput.fulfilled.match(resultAction)) {
+      message.success("Input added");
+    } else {
+      if (resultAction.payload) {
+        message.error(`Failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Failed: ${resultAction.error.message}`);
+      }
+    }
   };
 
   const onClose = () => {

@@ -42,6 +42,6 @@ export default function InputRoot({ column, disabled }: IProps) {
 
   if (!input) return null;
 
-  const SpecificInput = INPUT_COMPONENTS[input.type] as React.ElementType;
+  const SpecificInput = INPUT_COMPONENTS[input.inputType] as React.ElementType;
   return <SpecificInput input={input} disabled={disabled} />;
 }

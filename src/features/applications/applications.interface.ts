@@ -32,6 +32,7 @@ export interface ISectionWithChildren {
   section: ISection;
   rows: IRow[];
   columns: IColumn[];
+  inputs: IInput[];
   application: IApplication;
 }
 
@@ -68,6 +69,14 @@ export interface IColumn {
 }
 
 export interface IInput {
+  id: string;
+  columnId: string;
+  inputType: string;
+  label: string;
+  required?: boolean;
+}
+
+export interface ICreateInputAttributes {
   columnId: string;
   type: string;
   label: string;
