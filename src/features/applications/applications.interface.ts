@@ -71,6 +71,7 @@ export interface IInput {
   columnId: string;
   type: string;
   label: string;
+  required?: boolean;
 }
 
 export interface IErrorMessage {
