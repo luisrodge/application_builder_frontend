@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { Spinner } from "../../components/Spinner";
 import { selectActiveSection, selectLoadingStatuses } from "./applySlice";
 import RowList from "./components/RowList";
 import StepsNavigation from "./components/StepsNavigation";
@@ -51,7 +52,7 @@ export default function Apply() {
     loadingStatuses.applicationLoading === "pending" ||
     loadingStatuses.applicationLoading === "idle"
   )
-    return null;
+    return <Spinner />;
 
   return (
     <Container>

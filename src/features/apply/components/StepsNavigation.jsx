@@ -1,4 +1,5 @@
 import { Steps, Typography } from "antd";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { useAppSelector } from "../../../app/hooks";
@@ -22,6 +23,7 @@ export const SectionContainer = styled.div`
 `;
 
 export default function StepsNavigation() {
+  const [current, setCurrent] = useState(0);
   const application = useAppSelector(selectActiveApplication);
   const sections = useAppSelector(selectSections);
 
@@ -29,7 +31,11 @@ export default function StepsNavigation() {
     <>
       <Title level={4}>{application.title}</Title>
       <br />
-      <Steps direction="vertical">
+      <Steps
+        direction="vertical"
+        current={current}
+        onChange={(current) => setCurrent(current)}
+      >
         {sections.map((section) => (
           <Step
             title={section.title}

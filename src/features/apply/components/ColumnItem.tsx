@@ -26,9 +26,6 @@ const InputContainer = styled.div`
   width: 100%;
   position: relative;
   padding: 24px 0;
-  &:hover {
-    border: 1px dashed ${grey.primary};
-  }
 `;
 
 const Container = styled.div`
@@ -38,7 +35,6 @@ const Container = styled.div`
   background: #fff;
   padding: 20px;
   width: 100%;
-  cursor: pointer;
 `;
 
 interface IProps {
