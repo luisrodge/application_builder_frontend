@@ -9,6 +9,11 @@ import {
   IInput,
   IApplication,
 } from "../applications/applications.interface";
+import {
+  IFieldData,
+  ISectionFields,
+  ISetSectionFieldsAttributes,
+} from "./apply.interface";
 import { GetApplication } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -30,6 +35,7 @@ interface ApplyState {
   inputs: IInput[];
   error: string | null;
   loadingStatuses: ILoadingState;
+  sectionFields: ISectionFields;
 }
 
 const initialLoadingState = {
@@ -44,6 +50,7 @@ const initialState: ApplyState = {
   inputs: [],
   error: null,
   loadingStatuses: initialLoadingState,
+  sectionFields: {},
 };
 
 export const applySlice = createSlice({
@@ -68,6 +75,13 @@ export const applySlice = createSlice({
     setActiveInput: (state, action: PayloadAction<IInput | undefined>) => {
       state.activeInput = action.payload;
     },
+    setSectionFields: (
+      state,
+      action: PayloadAction<ISetSectionFieldsAttributes>
+    ) => {
+      const { sectionId, fields } = action.payload;
+      state.sectionFields[sectionId] = fields;
+    },
     resetSectionLoadingStatuses: (state) => {
       state.loadingStatuses.sectionLoading = "idle";
     },
@@ -86,9 +100,21 @@ export const applySlice = createSlice({
       state.inputs = inputs;
       state.loadingStatuses.applicationLoading = "succeeded";
       state.loadingStatuses.sectionLoading = "idle";
+
+      const sectionFields = {} as ISectionFields;
+      for (const section of sections) {
+        const sectionInputs = inputs
+          .filter((input) => input.sectionId === section.id)
+          .map((inputValue) => ({
+            name: inputValue.label,
+            value: "",
+          })) as IFieldData[];
+        sectionFields[section.id] = [...sectionInputs];
+      }
+
+      state.sectionFields = sectionFields;
     });
     builder.addCase(GetApplication.rejected, (state, action) => {
-      // state.error = action.payload.message;
       state.loadingStatuses.applicationLoading = "idle";
     });
   },
@@ -101,11 +127,13 @@ export const {
   setActiveInput,
   setActiveApplication,
   resetSectionLoadingStatuses,
+  setSectionFields,
 } = applySlice.actions;
 
 export const selectSections = (state: RootState) => state.apply.sections;
 export const selectRows = (state: RootState) => state.apply.rows;
 export const selectColumns = (state: RootState) => state.apply.columns;
+export const selectInputs = (state: RootState) => state.apply.inputs;
 export const selectLoadingStatuses = (state: RootState) =>
   state.apply.loadingStatuses;
 
@@ -148,6 +176,14 @@ export const selectInput = (
   createSelector(
     [(state: RootState) => state.apply.inputs],
     (inputs: IInput[]) => inputs.find((input) => input.columnId === columnId)
+  );
+
+export const selectSectionFields = (
+  sectionId: string
+): Selector<IFieldData[]> =>
+  createSelector(
+    [(state: RootState) => state.apply.sectionFields],
+    (sectionFields: ISectionFields) => sectionFields[sectionId]
   );
 
 export default applySlice.reducer;

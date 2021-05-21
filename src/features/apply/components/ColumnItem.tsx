@@ -1,18 +1,9 @@
 import styled from "styled-components";
-import { Button, Col } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { grey } from "@ant-design/colors";
+import { Col } from "antd";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-  selectActiveColumn,
-  selectInput,
-  setActiveColumn,
-  setActiveRow,
-} from "../applySlice";
+import { selectActiveColumn, selectInput } from "../applySlice";
 import { IColumn, IRow } from "../../applications/applications.interface";
-import { showDrawer } from "../../drawer/drawerSlice";
-import { DRAWER_TYPES } from "../../../shared/constants";
 import InputRoot from "../../applications/components/InputRoot";
 
 const InnerContainer = styled.div`
@@ -51,12 +42,6 @@ export default function ColumnItem({ span, column, row }: IProps) {
 
   const isEmpty = input == undefined;
 
-  const onClick = () => {
-    dispatch(setActiveRow(row));
-    dispatch(setActiveColumn(column));
-    dispatch(showDrawer({ drawerType: DRAWER_TYPES.INPUT_PICKER_DRAWER }));
-  };
-
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
       <Container>
@@ -67,16 +52,11 @@ export default function ColumnItem({ span, column, row }: IProps) {
                 width: "100%",
               }}
             >
-              <Button
-                icon={<PlusOutlined />}
-                type="primary"
-                ghost
-                onClick={onClick}
-              ></Button>
+              <p>No Input</p>
             </div>
           ) : (
             <InputContainer>
-              <InputRoot column={column} disabled={false} />
+              <InputRoot input={input!} disabled={false} />
             </InputContainer>
           )}
         </InnerContainer>

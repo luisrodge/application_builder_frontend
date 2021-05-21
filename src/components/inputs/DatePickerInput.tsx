@@ -3,7 +3,7 @@ import { DatePicker, Form } from "antd";
 import { IInputProps } from "./inputs.interface";
 
 const DatePickerInput = ({ input }: IInputProps) => (
-  <Form.Item label={input.label} style={{ marginBottom: 0 }}>
+  <Form.Item label={input.label} style={{ marginBottom: 0 }} name={input.label}>
     <DatePicker style={{ width: "100%" }} />
   </Form.Item>
 );

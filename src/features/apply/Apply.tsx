@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Spinner } from "../../components/Spinner";
 import { selectActiveSection, selectLoadingStatuses } from "./applySlice";
-import RowList from "./components/RowList";
+import SectionForm from "./components/SectionForm";
 import StepsNavigation from "./components/StepsNavigation";
 import { GetApplication } from "./services";
 
@@ -61,7 +61,7 @@ export default function Apply() {
           <StepsNavigation />
         </StepsContainer>
         <SectionContainer>
-          <RowList sectionId={section!.id} />
+          <SectionForm sectionId={section!.id} />
         </SectionContainer>
       </ApplyContainer>
       <Footer>

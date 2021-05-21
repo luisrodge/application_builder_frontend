@@ -5,12 +5,11 @@ import { IRow } from "../../applications/applications.interface";
 
 interface IProps {
   row: IRow;
-  sectionId: string;
   disabled?: boolean;
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-export default function ColumnList({ row, sectionId, disabled }: IProps) {
+export default function ColumnList({ row, disabled }: IProps) {
   const rowColumns = useAppSelector(selectRowColumns(row.id));
 
   return (

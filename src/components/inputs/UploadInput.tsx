@@ -4,7 +4,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { IInputProps } from "./inputs.interface";
 
 const UploadInput = ({ input }: IInputProps) => (
-  <Form.Item label={input.label} style={{ marginBottom: 0 }}>
+  <Form.Item label={input.label} style={{ marginBottom: 0 }} name={input.label}>
     <Upload>
       <Button icon={<UploadOutlined />}>Click to Upload</Button>
     </Upload>
