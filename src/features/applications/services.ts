@@ -15,6 +15,8 @@ import {
   IRowWithChildren,
   ICreateRowAttributes,
   IDeleteColumnResult,
+  IInput,
+  ICreateInputAttributes,
 } from "./applications.interface";
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
@@ -38,6 +40,7 @@ export const GetApplication = createAsyncThunk(
       sections: normedSections,
       rows: normedRows,
       columns: normedColumns,
+      inputs: normedInputs,
     } = entities;
 
     const application = applications![id];
@@ -53,14 +56,20 @@ export const GetApplication = createAsyncThunk(
       normedColumns == undefined
         ? []
         : Object.keys(normedColumns).map((id) => normedColumns[id]);
+    const inputs =
+      normedInputs == undefined
+        ? []
+        : Object.keys(normedInputs).map((id) => normedInputs[id]);
 
     const applicationData = {
       application: application as IApplication,
       sections: sections as ISection[],
       rows: rows as IRow[],
       columns: columns as IColumn[],
+      inputs: inputs as IInput[],
     };
 
+    console.log(data);
     return applicationData as IApplicationWithChildren;
   }
 );
@@ -129,11 +138,13 @@ export const GetSection = createAsyncThunk<
   }
 
   const { entities } = normalize(data, SectionSchema);
+
   const {
     sections,
     applications,
     rows: normedRows,
     columns: normedColumns,
+    inputs: normedInputs,
   } = entities;
   const section = sections![id];
   const application = applications![section.application];
@@ -146,11 +157,16 @@ export const GetSection = createAsyncThunk<
     normedColumns == undefined
       ? []
       : Object.keys(normedColumns).map((id) => normedColumns[id]);
+  const inputs =
+    normedInputs == undefined
+      ? []
+      : Object.keys(normedInputs).map((id) => normedInputs[id]);
 
   const sectionData = {
     section: section as ISection,
     rows: rows as IRow[],
     columns: columns as IColumn[],
+    inputs: inputs as IInput[],
     application: application as IApplication,
   };
 
@@ -235,4 +251,37 @@ export const DeleteColumn = createAsyncThunk<
     } as IErrorMessage);
   }
   return { columnId: column.id, rowId: column.rowId };
+});
+
+export const CreateInput = createAsyncThunk<
+  IInput,
+  ICreateInputAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("inputs/create", async (input, thunkApi) => {
+  const response = await api.post("inputs", input);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to add input",
+    } as IErrorMessage);
+  }
+
+  return response.data as IInput;
+});
+
+export const DeleteInput = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("inputs/delete", async (inputId, thunkApi) => {
+  const response = await api.delete(`inputs/${inputId}`);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to delete input",
+    } as IErrorMessage);
+  }
+  return inputId;
 });

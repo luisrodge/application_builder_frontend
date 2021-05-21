@@ -4,7 +4,7 @@ import { CloseSquareOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 
 import Columns from "./ColumnList";
-import { GUTTER } from "../../../shared/constants";
+import { GUTTER } from "../../../shared/theme";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
 import { selectSectionRows } from "../applicationsSlice";
 import { DeleteRow } from "../services";

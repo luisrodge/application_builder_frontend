@@ -1,41 +1,52 @@
-import { Button, Drawer, Form, Input } from "antd";
+import { Button, Drawer, Form, Input, message } from "antd";
+
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { IElement } from "../applications/applications.interface";
+import { ICreateInputAttributes } from "../applications/applications.interface";
 import {
-  addElement,
-  selectActiveElement,
+  selectActiveInput,
   setActiveColumn,
-  setActiveElement,
+  setActiveInput,
   setActiveRow,
 } from "../applications/applicationsSlice";
-
+import { CreateInput } from "../applications/services";
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 
-export default function ElementOptions() {
+export default function InputOptions() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector(selectChildDrawer);
-  const unsavedElement = useAppSelector(selectActiveElement);
+  const unsavedInput = useAppSelector(selectActiveInput);
 
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    const newElement = { ...unsavedElement, ...values } as IElement;
-    dispatch(addElement(newElement));
+  const onFinish = async (values: any) => {
+    const newInput = { ...unsavedInput, ...values } as ICreateInputAttributes;
+    const resultAction = await dispatch(CreateInput(newInput));
+
     dispatch(setActiveRow());
     dispatch(setActiveColumn());
-    dispatch(setActiveElement());
+    dispatch(setActiveInput());
     dispatch(hideDrawers());
+
+    if (CreateInput.fulfilled.match(resultAction)) {
+      message.success("Input added");
+    } else {
+      if (resultAction.payload) {
+        message.error(`Failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Failed: ${resultAction.error.message}`);
+      }
+    }
   };
 
   const onClose = () => {
     form.resetFields();
-    dispatch(setActiveElement());
+    dispatch(setActiveInput());
     dispatch(hideChildDrawer());
   };
 
   return (
     <Drawer
-      title="Element options"
+      title="Input options"
       width={320}
       closable={false}
       onClose={onClose}

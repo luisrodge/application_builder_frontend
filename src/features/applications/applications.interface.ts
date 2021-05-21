@@ -25,13 +25,14 @@ export interface IApplicationWithChildren {
   sections: ISection[];
   rows: IRow[];
   columns: IColumn[];
-  elements: IElement[];
+  inputs: IInput[];
 }
 
 export interface ISectionWithChildren {
   section: ISection;
   rows: IRow[];
   columns: IColumn[];
+  inputs: IInput[];
   application: IApplication;
 }
 
@@ -67,12 +68,19 @@ export interface IColumn {
   sectionId: string;
 }
 
-export interface IElement {
-  sectionId: string;
-  rowId: string;
+export interface IInput {
+  id: string;
+  columnId: string;
+  inputType: string;
+  label: string;
+  required?: boolean;
+}
+
+export interface ICreateInputAttributes {
   columnId: string;
   type: string;
   label: string;
+  required?: boolean;
 }
 
 export interface IErrorMessage {

@@ -16,9 +16,11 @@ import {
   hideDrawers,
 } from "./drawerSlice";
 import { selectActiveApplication } from "../applications/applicationsSlice";
-import { DRAWER_TYPES, COLS_PER_ROW } from "../../shared/constants";
+import { DRAWER_TYPES } from "../../shared/constants";
 import { ICreateSectionAttributes } from "../applications/applications.interface";
 import { CreateSection } from "../applications/services";
+
+const COLS_LIMIT = { ONE: 1, TWO: 2, THREE: 3 };
 
 interface ISectionCardProps {
   $active: boolean;
@@ -131,9 +133,9 @@ export default function SectionLayoutPicker() {
     >
       <Row>
         <SectionCard
-          onClick={() => pickSection(COLS_PER_ROW.ONE)}
+          onClick={() => pickSection(COLS_LIMIT.ONE)}
           $active={
-            unsavedSection! && unsavedSection.numOfCols == COLS_PER_ROW.ONE
+            unsavedSection! && unsavedSection.numOfCols == COLS_LIMIT.ONE
           }
         >
           <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
@@ -142,9 +144,9 @@ export default function SectionLayoutPicker() {
       <br />
       <Row>
         <SectionCard
-          onClick={() => pickSection(COLS_PER_ROW.TWO)}
+          onClick={() => pickSection(COLS_LIMIT.TWO)}
           $active={
-            unsavedSection! && unsavedSection.numOfCols == COLS_PER_ROW.TWO
+            unsavedSection! && unsavedSection.numOfCols == COLS_LIMIT.TWO
           }
         >
           <AlignCenterOutlined
@@ -158,9 +160,9 @@ export default function SectionLayoutPicker() {
       <br />
       <Row>
         <SectionCard
-          onClick={() => pickSection(COLS_PER_ROW.THREE)}
+          onClick={() => pickSection(COLS_LIMIT.THREE)}
           $active={
-            unsavedSection! && unsavedSection.numOfCols == COLS_PER_ROW.THREE
+            unsavedSection! && unsavedSection.numOfCols == COLS_LIMIT.THREE
           }
         >
           <AlignCenterOutlined

@@ -7,21 +7,21 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { hideDrawer, selectDrawer, showChildDrawer } from "./drawerSlice";
 import {
   selectActiveColumn,
-  selectActiveElement,
+  selectActiveInput,
   selectActiveRow,
   setActiveColumn,
-  setActiveElement,
+  setActiveInput,
   setActiveRow,
 } from "../applications/applicationsSlice";
-import { DRAWER_TYPES, ELEMENT_TYPES } from "../../shared/constants";
-import { IElement } from "../applications/applications.interface";
-import ElementOptions from "./ElementOptions";
+import { DRAWER_TYPES, INPUTS } from "../../shared/constants";
+import { IInput } from "../applications/applications.interface";
+import ElementOptions from "./InputOptions";
 
-interface IElementCardProps {
+interface IInputCardProps {
   $active: boolean;
 }
 
-const ElementCard = styled.div<IElementCardProps>`
+const InputCard = styled.div<IInputCardProps>`
   width: 100%;
   text-align: center;
   cursor: pointer;
@@ -39,33 +39,23 @@ const ElementCard = styled.div<IElementCardProps>`
     `}
 `;
 
-const elements = [
-  { name: "Number Input", type: ELEMENT_TYPES.NUMBER_INPUT_ELEMENT },
-  { name: "Text Input", type: ELEMENT_TYPES.TEXT_INPUT_ELEMENT },
-  { name: "Date Picker", type: ELEMENT_TYPES.DATE_PICKER_INPUT_ELEMENT },
-  { name: "Checkbox", type: ELEMENT_TYPES.CHECKBOX_INPUT_ELEMENT },
-  { name: "File Upload", type: ELEMENT_TYPES.UPLOAD_INPUT_ELEMENT },
-];
-
 export default function ElementPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
   const activeRow = useAppSelector(selectActiveRow);
   const activeColumn = useAppSelector(selectActiveColumn);
-  const activeElement = useAppSelector(selectActiveElement);
+  const activeInput = useAppSelector(selectActiveInput);
 
   const dispatch = useAppDispatch();
 
-  const pickElement = (type: string) => {
-    const unsavedElement = {
-      sectionId: activeRow?.sectionId,
-      rowId: activeRow?.id,
+  const pickInput = (inputType: string) => {
+    const unsavedInput = {
       columnId: activeColumn?.id,
-      type,
+      inputType,
       label: "",
-    } as IElement;
-    dispatch(setActiveElement(unsavedElement));
+    } as IInput;
+    dispatch(setActiveInput(unsavedInput));
     dispatch(
-      showChildDrawer({ drawerType: DRAWER_TYPES.ELEMENT_OPTIONS_DRAWER })
+      showChildDrawer({ drawerType: DRAWER_TYPES.INPUT_OPTIONS_DRAWER })
     );
   };
 
@@ -79,20 +69,21 @@ export default function ElementPicker() {
     <DrawerContainer
       width={400}
       isOpen={isOpen}
-      title="Add element"
+      title="Add input"
       closeDrawer={closeDrawer}
     >
       <br />
-      {elements.map((element, index) => (
+      {INPUTS.map((input, index) => (
         <Row key={index}>
-          <ElementCard
-            onClick={() => pickElement(element.type)}
+          <InputCard
+            onClick={() => pickInput(input.inputType)}
             $active={
-              activeElement != undefined && activeElement.type == element.type
+              activeInput != undefined &&
+              activeInput.inputType == input.inputType
             }
           >
-            <h4 style={{ margin: 0 }}>{element.name}</h4>
-          </ElementCard>
+            <h4 style={{ margin: 0 }}>{input.name}</h4>
+          </InputCard>
         </Row>
       ))}
       <ElementOptions />
