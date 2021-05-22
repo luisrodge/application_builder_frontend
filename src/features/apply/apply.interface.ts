@@ -14,3 +14,33 @@ export interface ISetSectionFieldsAttributes {
   fields: IFieldData[];
   sectionId: string;
 }
+
+export interface ISubmissionRowAttributes {
+  title: string;
+  details: string;
+  sectionFields: ISectionFields;
+}
+
+export interface IFilledInputAttributes {
+  value: string;
+  name: string | number | (string | number)[];
+}
+
+export interface ISubmissionColumnAttributes {
+  filledInput: IFilledInputAttributes;
+}
+
+export interface ISubmissionRowAttributes {
+  submissionColumns: ISubmissionColumnAttributes[];
+}
+export interface ISubmissionSectionAttributes {
+  title: string;
+  details: string;
+  submissionRows: ISubmissionRowAttributes[];
+}
+
+export interface ICreateSubmissionAttributes {
+  applicationId: string;
+  // submissionSections: ISubmissionSectionAttributes[];
+  sectionFields: IFilledInputAttributes[];
+}

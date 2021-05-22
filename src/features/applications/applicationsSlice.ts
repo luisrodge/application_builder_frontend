@@ -101,7 +101,7 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(GetApplication.fulfilled, (state, action) => {
       const { application, sections, rows, columns, inputs } = action.payload;
-      state.activeApplication = action.payload.application;
+      state.activeApplication = application;
       state.sections = sections;
       state.rows = rows;
       state.columns = columns;

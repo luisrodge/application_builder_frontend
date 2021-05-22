@@ -74,6 +74,7 @@ export interface IInput {
   sectionId: string;
   inputType: string;
   label: string;
+  name: string;
   required?: boolean;
 }
 

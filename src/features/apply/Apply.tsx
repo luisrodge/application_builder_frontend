@@ -59,7 +59,7 @@ export default function Apply() {
           <SectionForm sectionId={section!.id} />
         </SectionContainer>
       </ApplyContainer>
-      <Footer />
+      <Footer applicationId={applicationId} />
     </Container>
   );
 }

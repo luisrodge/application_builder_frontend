@@ -112,7 +112,7 @@ export const applySlice = createSlice({
         const sectionInputs = inputs
           .filter((input) => input.sectionId === section.id)
           .map((inputValue) => ({
-            name: inputValue.label,
+            name: inputValue.name,
             value: "",
           })) as IFieldData[];
         sectionFields[section.id] = [...sectionInputs];
@@ -144,6 +144,7 @@ export const selectInputs = (state: RootState) => state.apply.inputs;
 export const selectLoadingStatuses = (state: RootState) =>
   state.apply.loadingStatuses;
 export const selectCurrentStep = (state: RootState) => state.apply.currentStep;
+export const selectFields = (state: RootState) => state.apply.sectionFields;
 
 export const selectActiveApplication = (state: RootState) =>
   state.apply.activeApplication;

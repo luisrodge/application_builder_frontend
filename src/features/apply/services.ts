@@ -6,11 +6,13 @@ import {
   IApplication,
   IApplicationWithChildren,
   IColumn,
+  IErrorMessage,
   IInput,
   IRow,
   ISection,
 } from "../applications/applications.interface";
 import { ApplicationSchema } from "../applications/schemas";
+import { ICreateSubmissionAttributes } from "./apply.interface";
 
 export const GetApplication = createAsyncThunk(
   "applications/get",
@@ -56,3 +58,19 @@ export const GetApplication = createAsyncThunk(
     return applicationData as IApplicationWithChildren;
   }
 );
+
+export const CreateSubmission = createAsyncThunk<
+  IApplication,
+  ICreateSubmissionAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("submissions/create", async (submissionData, thunkApi) => {
+  const response = await api.post("submissions", submissionData);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to submit application.",
+    } as IErrorMessage);
+  }
+  return {} as IApplication;
+});
