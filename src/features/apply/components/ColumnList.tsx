@@ -19,7 +19,6 @@ export default function ColumnList({ row, disabled }: IProps) {
           key={column.id}
           span={24 / rowColumns.length}
           column={column}
-          row={row}
           disabled={disabled}
         />
       ))}

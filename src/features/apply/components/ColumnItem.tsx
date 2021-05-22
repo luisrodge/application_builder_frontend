@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Col } from "antd";
 import { grey } from "@ant-design/colors";
 
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectActiveColumn, selectInput } from "../applySlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectInput } from "../applySlice";
 import { IColumn, IRow } from "../../applications/applications.interface";
 import InputRoot from "../../applications/components/InputRoot";
 
@@ -32,13 +32,10 @@ const Container = styled.div`
 interface IProps {
   column: IColumn;
   span?: number;
-  row: IRow;
   disabled?: boolean;
 }
 
-export default function ColumnItem({ span, column, row }: IProps) {
-  const dispatch = useAppDispatch();
-  const activeColumn = useAppSelector(selectActiveColumn);
+export default function ColumnItem({ span, column }: IProps) {
   const input = useAppSelector(selectInput(column?.id));
 
   const isEmpty = input == undefined;

@@ -36,6 +36,7 @@ interface ApplyState {
   error: string | null;
   loadingStatuses: ILoadingState;
   sectionFields: ISectionFields;
+  currentStep: number;
 }
 
 const initialLoadingState = {
@@ -51,6 +52,7 @@ const initialState: ApplyState = {
   error: null,
   loadingStatuses: initialLoadingState,
   sectionFields: {},
+  currentStep: 0,
 };
 
 export const applySlice = createSlice({
@@ -84,6 +86,9 @@ export const applySlice = createSlice({
     },
     resetSectionLoadingStatuses: (state) => {
       state.loadingStatuses.sectionLoading = "idle";
+    },
+    setCurrentStep: (state, action: PayloadAction<number>) => {
+      state.currentStep = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -129,6 +134,7 @@ export const {
   setActiveApplication,
   resetSectionLoadingStatuses,
   setSectionFields,
+  setCurrentStep,
 } = applySlice.actions;
 
 export const selectSections = (state: RootState) => state.apply.sections;
@@ -137,6 +143,7 @@ export const selectColumns = (state: RootState) => state.apply.columns;
 export const selectInputs = (state: RootState) => state.apply.inputs;
 export const selectLoadingStatuses = (state: RootState) =>
   state.apply.loadingStatuses;
+export const selectCurrentStep = (state: RootState) => state.apply.currentStep;
 
 export const selectActiveApplication = (state: RootState) =>
   state.apply.activeApplication;

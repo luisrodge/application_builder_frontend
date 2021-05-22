@@ -1,12 +1,13 @@
 import { Steps, Typography } from "antd";
-import { useState } from "react";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   selectActiveApplication,
+  selectCurrentStep,
   selectSections,
   setActiveSection,
+  setCurrentStep,
 } from "../applySlice";
 
 const { Step } = Steps;
@@ -28,12 +29,12 @@ export const SectionContainer = styled.div`
 
 export default function StepsNavigation() {
   const dispatch = useAppDispatch();
-  const [current, setCurrent] = useState(0);
   const application = useAppSelector(selectActiveApplication)!;
   const sections = useAppSelector(selectSections);
+  const currentStep = useAppSelector(selectCurrentStep);
 
   const changeSection = (current: number) => {
-    setCurrent(current);
+    dispatch(setCurrentStep(current));
     dispatch(setActiveSection(sections[current]));
   };
 
@@ -41,7 +42,11 @@ export default function StepsNavigation() {
     <>
       <Title level={4}>{application.title}</Title>
       <br />
-      <Steps direction="vertical" current={current} onChange={changeSection}>
+      <Steps
+        direction="vertical"
+        current={currentStep}
+        onChange={changeSection}
+      >
         {sections.map((section) => (
           <Step
             title={section.title}

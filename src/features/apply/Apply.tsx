@@ -1,4 +1,3 @@
-import { Popconfirm, Button } from "antd";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
@@ -8,6 +7,7 @@ import { Spinner } from "../../components/Spinner";
 import { selectActiveSection, selectLoadingStatuses } from "./applySlice";
 import SectionForm from "./components/SectionForm";
 import StepsNavigation from "./components/StepsNavigation";
+import Footer from "./components/Footer";
 import { GetApplication } from "./services";
 
 export const Container = styled.div`
@@ -29,11 +29,6 @@ export const StepsContainer = styled.div`
 
 export const SectionContainer = styled.div`
   flex: 1;
-`;
-
-export const Footer = styled.footer`
-  padding: 30px;
-  text-align: right;
 `;
 
 export default function Apply() {
@@ -64,14 +59,7 @@ export default function Apply() {
           <SectionForm sectionId={section!.id} />
         </SectionContainer>
       </ApplyContainer>
-      <Footer>
-        <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
-          <Button style={{ marginRight: 15 }}>Cancel</Button>
-        </Popconfirm>
-        <Button type="primary" style={{ width: 220 }}>
-          Next Section
-        </Button>
-      </Footer>
+      <Footer />
     </Container>
   );
 }
