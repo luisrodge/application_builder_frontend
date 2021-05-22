@@ -102,6 +102,7 @@ export const applySlice = createSlice({
       state.loadingStatuses.sectionLoading = "idle";
 
       const sectionFields = {} as ISectionFields;
+
       for (const section of sections) {
         const sectionInputs = inputs
           .filter((input) => input.sectionId === section.id)
@@ -114,7 +115,7 @@ export const applySlice = createSlice({
 
       state.sectionFields = sectionFields;
     });
-    builder.addCase(GetApplication.rejected, (state, action) => {
+    builder.addCase(GetApplication.rejected, (state) => {
       state.loadingStatuses.applicationLoading = "idle";
     });
   },

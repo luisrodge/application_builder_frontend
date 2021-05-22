@@ -34,7 +34,6 @@ export default function SectionForm({ sectionId }: IProps) {
   const sectionFields = useAppSelector(selectSectionFields(sectionId));
 
   const onChange = (fields: IFieldData[]) => {
-    console.log("Change: ", fields);
     dispatch(setSectionFields({ sectionId, fields }));
   };
 

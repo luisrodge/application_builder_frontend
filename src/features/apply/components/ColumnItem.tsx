@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Col } from "antd";
+import { grey } from "@ant-design/colors";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectActiveColumn, selectInput } from "../applySlice";
@@ -50,9 +51,11 @@ export default function ColumnItem({ span, column, row }: IProps) {
             <div
               style={{
                 width: "100%",
+                textAlign: "center",
+                color: grey.primary,
               }}
             >
-              <p>No Input</p>
+              <p style={{ margin: 0 }}>Empty</p>
             </div>
           ) : (
             <InputContainer>
