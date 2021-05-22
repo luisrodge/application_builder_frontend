@@ -10,7 +10,7 @@ interface IProps {
   setOpenElementDrawer?: (columnId: number) => void;
 }
 
-export default function ColumnList({ row, sectionId, disabled }: IProps) {
+export default function ColumnList({ row, disabled }: IProps) {
   const rowColumns = useAppSelector(selectRowColumns(row.id));
 
   return (
