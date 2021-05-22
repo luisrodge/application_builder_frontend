@@ -1,4 +1,4 @@
-import { Popconfirm, Button } from "antd";
+import { Popconfirm, Button, message } from "antd";
 import styled from "styled-components";
 import {
   CheckCircleOutlined,
@@ -16,6 +16,7 @@ import {
 } from "../applySlice";
 import { CreateSubmission } from "../services";
 import { IFilledInputAttributes } from "../apply.interface";
+import { useHistory } from "react-router";
 
 export const FooterContainer = styled.footer`
   padding: 30px;
@@ -28,6 +29,7 @@ interface IProps {
 
 export default function Footer({ applicationId }: IProps) {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const currentStep = useAppSelector(selectCurrentStep);
   const sections = useAppSelector(selectSections);
   const fields = useAppSelector(selectFields);
@@ -40,9 +42,10 @@ export default function Footer({ applicationId }: IProps) {
     dispatch(setActiveSection(sections[newStep]));
   };
 
-  const submitApplication = () => {
+  const submitApplication = async () => {
     const sectionIds = Object.keys(fields);
     const filledInputs: IFilledInputAttributes[] = [];
+
     for (const sectionId of sectionIds) {
       const sectionFields = fields[sectionId];
       for (const sectionField of sectionFields) {
@@ -55,7 +58,20 @@ export default function Footer({ applicationId }: IProps) {
         });
       }
     }
-    dispatch(CreateSubmission({ applicationId, sectionFields: filledInputs }));
+
+    const resultAction = await dispatch(
+      CreateSubmission({ applicationId, sectionFields: filledInputs })
+    );
+
+    if (CreateSubmission.fulfilled.match(resultAction)) {
+      history.push("/apply/success");
+    } else {
+      if (resultAction.payload) {
+        message.error(`Submission failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Submission failed: ${resultAction.error.message}`);
+      }
+    }
   };
 
   return (
