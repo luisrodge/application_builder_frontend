@@ -76,7 +76,12 @@ export default function Footer({ applicationId }: IProps) {
 
   return (
     <FooterContainer>
-      <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
+      <Popconfirm
+        title="Are you sure？"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={() => history.push("/")}
+      >
         <Button style={{ marginRight: 15 }}>Cancel</Button>
       </Popconfirm>
       {showPrevious && (
