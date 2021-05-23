@@ -71,8 +71,10 @@ export interface IColumn {
 export interface IInput {
   id: string;
   columnId: string;
+  sectionId: string;
   inputType: string;
   label: string;
+  name: string;
   required?: boolean;
 }
 

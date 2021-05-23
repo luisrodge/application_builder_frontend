@@ -23,7 +23,7 @@ import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 export const GetApplications = createAsyncThunk(
   "applications/list",
   async () => {
-    const response = await api.get(`applications`);
+    const response = await api.get(`admin/applications`);
     return response.data as IApplication[];
   }
 );
@@ -31,7 +31,7 @@ export const GetApplications = createAsyncThunk(
 export const GetApplication = createAsyncThunk(
   "applications/get",
   async (id: string) => {
-    const { data } = await api.get(`applications/${id}`);
+    const { data } = await api.get(`admin/applications/${id}`);
 
     const { entities } = normalize(data, ApplicationSchema);
 
@@ -69,7 +69,6 @@ export const GetApplication = createAsyncThunk(
       inputs: inputs as IInput[],
     };
 
-    console.log(data);
     return applicationData as IApplicationWithChildren;
   }
 );
@@ -81,7 +80,7 @@ export const CreateApplication = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("applications/create", async (application, thunkApi) => {
-  const response = await api.post(`applications`, application);
+  const response = await api.post(`admin/applications`, application);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to create application.",
@@ -97,7 +96,7 @@ export const DeleteApplication = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("applications/delete", async (applicationId, thunkApi) => {
-  const response = await api.delete(`applications/${applicationId}`);
+  const response = await api.delete(`admin/applications/${applicationId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to delete application.",
@@ -113,7 +112,7 @@ export const CreateSection = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("sections/create", async (section, thunkApi) => {
-  const response = await api.post("sections", section);
+  const response = await api.post("admin/sections", section);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to create section.",
@@ -129,7 +128,7 @@ export const GetSection = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("sections/get", async (id, thunkApi) => {
-  const { data, status } = await api.get(`sections/${id}`);
+  const { data, status } = await api.get(`admin/sections/${id}`);
 
   if (status !== 200) {
     return thunkApi.rejectWithValue({
@@ -180,7 +179,7 @@ export const DeleteSection = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("sections/delete", async (sectionId, thunkApi) => {
-  const response = await api.delete(`sections/${sectionId}`);
+  const response = await api.delete(`admin/sections/${sectionId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to delete section.",
@@ -196,7 +195,7 @@ export const CreateRow = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("rows/create", async (newRow, thunkApi) => {
-  const response = await api.post("rows", { row: newRow });
+  const response = await api.post("admin/rows", { row: newRow });
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to create row.",
@@ -228,7 +227,7 @@ export const DeleteRow = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("rows/delete", async (rowId, thunkApi) => {
-  const response = await api.delete(`rows/${rowId}`);
+  const response = await api.delete(`admin/rows/${rowId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to delete row.",
@@ -244,7 +243,7 @@ export const DeleteColumn = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("columns/delete", async (column, thunkApi) => {
-  const response = await api.delete(`columns/${column.id}`);
+  const response = await api.delete(`admin/columns/${column.id}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to delete column.",
@@ -260,7 +259,7 @@ export const CreateInput = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("inputs/create", async (input, thunkApi) => {
-  const response = await api.post("inputs", input);
+  const response = await api.post("admin/inputs", input);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to add input",
@@ -277,7 +276,7 @@ export const DeleteInput = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("inputs/delete", async (inputId, thunkApi) => {
-  const response = await api.delete(`inputs/${inputId}`);
+  const response = await api.delete(`admin/inputs/${inputId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to delete input",

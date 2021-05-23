@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { INPUT_TYPES } from "../../../shared/constants";
 import NumberInput from "../../../components/inputs/NumberInput";
 import TextInput from "../../../components/inputs/TextInput";
-import { IColumn } from "../applications.interface";
+import { IColumn, IInput } from "../applications.interface";
 import { selectInput } from "../applicationsSlice";
 import DatePickerInput from "../../../components/inputs/DatePickerInput";
 import CheckboxInput from "../../../components/inputs/CheckboxInput";
@@ -33,13 +33,11 @@ const INPUT_COMPONENTS = {
 export const InputTypes = Object.keys(INPUT_COMPONENTS);
 
 interface IProps {
-  column?: IColumn;
+  input: IInput;
   disabled?: boolean;
 }
 
-export default function InputRoot({ column, disabled }: IProps) {
-  const input = useAppSelector(selectInput(column!.id))!;
-
+export default function InputRoot({ input, disabled }: IProps) {
   if (!input) return null;
 
   const SpecificInput = INPUT_COMPONENTS[input.inputType] as React.ElementType;
