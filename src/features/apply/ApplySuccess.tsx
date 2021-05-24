@@ -18,11 +18,11 @@ export default function ApplySuccess() {
         status="success"
         title="Application Submitted!"
         subTitle="Your application is on it's way to being processed"
-        extra={[
-          <Link className="ant-btn" to="/" key="home">
-            Return home
-          </Link>,
-        ]}
+        // extra={[
+        //   <Link className="ant-btn" to="/" key="home">
+        //     Return home
+        //   </Link>,
+        // ]}
       />
     </Container>
   );
