@@ -24,6 +24,7 @@ export const ApplyContainer = styled.div`
 `;
 
 export const StepsContainer = styled.div`
+  max-width: 300px;
   padding-right: 50px;
 `;
 

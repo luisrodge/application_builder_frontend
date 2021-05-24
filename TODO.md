@@ -1,6 +1,6 @@
 # TODOS
 
-## Add simple home/landing page
+## Add simple home/landing page ✅
 
 For now this will be super simple, nothing fancy - no sliders, textual content, etc.
 

@@ -13,8 +13,8 @@ import { IFieldData } from "../apply.interface";
 
 const RowContainer = styled.div`
   width: 100%;
-  padding: 20px 0;
   border: 1px solid transparent;
+  margin-bottom: 30px;
 `;
 
 const Container = styled.div`
