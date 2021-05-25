@@ -13,7 +13,7 @@ import {
 import { IColumn, IRow } from "../applications.interface";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { DRAWER_TYPES } from "../../../shared/constants";
-import InputRoot from "./InputRoot";
+import InputRoot from "../../../components/inputs/InputRoot";
 import { DeleteColumn, DeleteInput } from "../services";
 
 const RemoveColumnIconContainer = styled.div`

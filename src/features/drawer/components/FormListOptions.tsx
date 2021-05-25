@@ -1,11 +1,15 @@
 import { Form, Input, Button } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
-export default function CheckboxOptions() {
+interface IProps {
+  name: string;
+}
+
+export default function FormListOptions({ name }: IProps) {
   return (
     <>
       <Form.List
-        name="checkboxOptions"
+        name={name}
         rules={[
           {
             validator: async (_, options) => {

@@ -1,14 +1,13 @@
 import { ReactNode } from "react";
 
-import { useAppSelector } from "../../../app/hooks";
 import { INPUT_TYPES } from "../../../shared/constants";
 import NumberInput from "../../../components/inputs/NumberInput";
 import TextInput from "../../../components/inputs/TextInput";
-import { IColumn, IInput } from "../applications.interface";
-import { selectInput } from "../applicationsSlice";
+import { IInput } from "../applications.interface";
 import DatePickerInput from "../../../components/inputs/DatePickerInput";
 import CheckboxInput from "../../../components/inputs/CheckboxInput";
 import UploadInput from "../../../components/inputs/UploadInput";
+import RadioInput from "../../../components/inputs/RadioInput";
 
 const {
   NUMBER_INPUT,
@@ -16,6 +15,7 @@ const {
   DATE_PICKER_INPUT,
   CHECKBOX_INPUT,
   UPLOAD_INPUT,
+  RADIO_INPUT,
 } = INPUT_TYPES;
 
 interface IInputComponents {
@@ -28,6 +28,7 @@ const INPUT_COMPONENTS = {
   [DATE_PICKER_INPUT]: DatePickerInput,
   [CHECKBOX_INPUT]: CheckboxInput,
   [UPLOAD_INPUT]: UploadInput,
+  [RADIO_INPUT]: RadioInput,
 } as IInputComponents;
 
 export const InputTypes = Object.keys(INPUT_COMPONENTS);

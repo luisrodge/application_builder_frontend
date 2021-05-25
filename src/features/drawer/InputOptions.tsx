@@ -11,7 +11,7 @@ import {
 import { CreateInput } from "../applications/services";
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
 import { INPUT_TYPES } from "../../shared/constants";
-import CheckboxOptions from "./components/CheckboxOptions";
+import FormListOptions from "./components/FormListOptions";
 
 export default function InputOptions() {
   const dispatch = useAppDispatch();
@@ -64,7 +64,11 @@ export default function InputOptions() {
         </Form.Item>
 
         {unsavedInput?.inputType === INPUT_TYPES.CHECKBOX_INPUT && (
-          <CheckboxOptions />
+          <FormListOptions name="checkboxOptions" />
+        )}
+
+        {unsavedInput?.inputType === INPUT_TYPES.RADIO_INPUT && (
+          <FormListOptions name="radioOptions" />
         )}
 
         <Form.Item>

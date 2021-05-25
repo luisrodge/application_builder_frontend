@@ -68,6 +68,12 @@ export interface IColumn {
   sectionId: string;
 }
 
+export interface ICheckboxOption {
+  name: string;
+}
+
+export interface IRadioOption extends ICheckboxOption {}
+
 export interface IInput {
   id: string;
   columnId: string;
@@ -77,10 +83,7 @@ export interface IInput {
   name: string;
   required?: boolean;
   checkboxOptions?: ICheckboxOption[];
-}
-
-export interface ICheckboxOption {
-  name: string;
+  radioOptions?: IRadioOption[];
 }
 
 export interface ICreateInputAttributes {
@@ -89,6 +92,7 @@ export interface ICreateInputAttributes {
   label: string;
   required?: boolean;
   checkboxOptions?: ICheckboxOption[];
+  radioOptions?: IRadioOption[];
 }
 
 export interface IErrorMessage {
