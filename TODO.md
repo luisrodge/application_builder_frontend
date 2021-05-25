@@ -28,9 +28,9 @@ The homepage should contain no more than the following:
 Finalize and ensure proper functionality (backend) of initial inputs:
 
 - DatePicker
-- NumberInput
-- TextInput
+- NumberInput ✅
+- TextInput ✅
 - UploadInput
-- Checkbox
+- Checkbox ✅
 - Radio
 - Signature
