@@ -10,6 +10,8 @@ import {
 } from "../applications/applicationsSlice";
 import { CreateInput } from "../applications/services";
 import { hideChildDrawer, hideDrawers, selectChildDrawer } from "./drawerSlice";
+import { INPUT_TYPES } from "../../shared/constants";
+import CheckboxOptions from "./components/CheckboxOptions";
 
 export default function InputOptions() {
   const dispatch = useAppDispatch();
@@ -60,6 +62,10 @@ export default function InputOptions() {
         >
           <Input />
         </Form.Item>
+
+        {unsavedInput?.inputType === INPUT_TYPES.CHECKBOX_INPUT && (
+          <CheckboxOptions />
+        )}
 
         <Form.Item>
           <Button type="primary" htmlType="submit">

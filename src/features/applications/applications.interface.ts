@@ -76,6 +76,11 @@ export interface IInput {
   label: string;
   name: string;
   required?: boolean;
+  checkboxOptions?: ICheckboxOption[];
+}
+
+export interface ICheckboxOption {
+  name: string;
 }
 
 export interface ICreateInputAttributes {
@@ -83,6 +88,7 @@ export interface ICreateInputAttributes {
   type: string;
   label: string;
   required?: boolean;
+  checkboxOptions?: ICheckboxOption[];
 }
 
 export interface IErrorMessage {
