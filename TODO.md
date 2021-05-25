@@ -32,5 +32,5 @@ Finalize and ensure proper functionality (backend) of initial inputs:
 - TextInput ✅
 - UploadInput
 - Checkbox ✅
-- Radio
+- Radio ✅
 - Signature
