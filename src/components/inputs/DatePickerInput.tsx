@@ -1,4 +1,5 @@
-import { DatePicker, Form } from "antd";
+import { Form } from "antd";
+import DatePicker from "../DatePicker";
 
 import { IInputProps } from "./inputs.interface";
 

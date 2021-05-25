@@ -25,7 +25,7 @@ export default function SimpleHome() {
     <>
       <Container>
         <Title level={1} style={{ margin: 0, marginBottom: 3 }}>
-          quikapply
+          Quikapply
         </Title>
         <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
           My super awesome but yet tbd slogan
