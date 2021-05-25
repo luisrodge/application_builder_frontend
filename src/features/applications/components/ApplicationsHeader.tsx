@@ -1,4 +1,4 @@
-import { Layout, Button, Typography } from "antd";
+import { Layout, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 

@@ -4,8 +4,8 @@ import { grey } from "@ant-design/colors";
 
 import { useAppSelector } from "../../../app/hooks";
 import { selectInput } from "../applySlice";
-import { IColumn, IRow } from "../../applications/applications.interface";
-import InputRoot from "../../applications/components/InputRoot";
+import { IColumn } from "../../applications/applications.interface";
+import InputRoot from "../../../components/inputs/InputRoot";
 
 const InnerContainer = styled.div`
   width: 100%;

@@ -48,7 +48,7 @@ export default function SimpleHome() {
       <footer style={{ padding: 24, textAlign: "center" }}>
         <Text style={{ color: grey.primary }}>
           For you with <HeartTwoTone /> from{" "}
-          <a href="http://rodgetech.com/" target="_blank">
+          <a href="http://rodgetech.com/" target="_blank" rel="noreferrer">
             rodgetech.com
           </a>
         </Text>
