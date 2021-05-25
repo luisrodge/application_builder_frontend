@@ -27,10 +27,10 @@ The homepage should contain no more than the following:
 
 Finalize and ensure proper functionality (backend) of initial inputs:
 
-- DatePicker
+- DatePicker ✅
 - NumberInput ✅
 - TextInput ✅
-- UploadInput
+- UploadInput (photo & docs)
 - Checkbox ✅
 - Radio ✅
 - Signature
