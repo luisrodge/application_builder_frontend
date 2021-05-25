@@ -68,7 +68,7 @@ export default function Footer({ applicationId }: IProps) {
     );
 
     if (CreateSubmission.fulfilled.match(resultAction)) {
-      // history.push("/apply/success");
+      history.push("/apply/success");
     } else {
       if (resultAction.payload) {
         message.error(`Submission failed: ${resultAction.payload.message}`);
