@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 
-import { INPUT_TYPES } from "../../../shared/constants";
-import NumberInput from "../../../components/inputs/NumberInput";
-import TextInput from "../../../components/inputs/TextInput";
-import { IInput } from "../applications.interface";
-import DatePickerInput from "../../../components/inputs/DatePickerInput";
-import CheckboxInput from "../../../components/inputs/CheckboxInput";
-import UploadInput from "../../../components/inputs/UploadInput";
-import RadioInput from "../../../components/inputs/RadioInput";
+import { INPUT_TYPES } from "../../shared/constants";
+import NumberInput from "./NumberInput";
+import TextInput from "./TextInput";
+import { IInput } from "../../features/applications/applications.interface";
+import DatePickerInput from "./DatePickerInput";
+import CheckboxInput from "./CheckboxInput";
+import UploadInput from "./UploadInput";
+import RadioInput from "./RadioInput";
 
 const {
   NUMBER_INPUT,
