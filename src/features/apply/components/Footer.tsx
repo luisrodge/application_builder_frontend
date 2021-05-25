@@ -52,8 +52,12 @@ export default function Footer({ applicationId }: IProps) {
         const name = Array.isArray(sectionField.name)
           ? sectionField.name[0]
           : sectionField.name;
+
+        const value = Array.isArray(sectionField.value)
+          ? sectionField.value.join(", ")
+          : sectionField.value;
         filledInputs.push({
-          value: sectionField.value,
+          value,
           name,
         });
       }
@@ -64,7 +68,7 @@ export default function Footer({ applicationId }: IProps) {
     );
 
     if (CreateSubmission.fulfilled.match(resultAction)) {
-      history.push("/apply/success");
+      // history.push("/apply/success");
     } else {
       if (resultAction.payload) {
         message.error(`Submission failed: ${resultAction.payload.message}`);
