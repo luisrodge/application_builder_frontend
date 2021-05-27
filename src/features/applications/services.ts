@@ -45,19 +45,19 @@ export const GetApplication = createAsyncThunk(
 
     const application = applications![id];
     const sections =
-      normedSections == undefined
+      normedSections === undefined
         ? []
         : Object.keys(normedSections).map((id) => normedSections[id]);
     const rows =
-      normedRows == undefined
+      normedRows === undefined
         ? []
         : Object.keys(normedRows).map((id) => normedRows[id]);
     const columns =
-      normedColumns == undefined
+      normedColumns === undefined
         ? []
         : Object.keys(normedColumns).map((id) => normedColumns[id]);
     const inputs =
-      normedInputs == undefined
+      normedInputs === undefined
         ? []
         : Object.keys(normedInputs).map((id) => normedInputs[id]);
 
@@ -149,15 +149,15 @@ export const GetSection = createAsyncThunk<
   const application = applications![section.application];
 
   const rows =
-    normedRows == undefined
+    normedRows === undefined
       ? []
       : Object.keys(normedRows).map((id) => normedRows[id]);
   const columns =
-    normedColumns == undefined
+    normedColumns === undefined
       ? []
       : Object.keys(normedColumns).map((id) => normedColumns[id]);
   const inputs =
-    normedInputs == undefined
+    normedInputs === undefined
       ? []
       : Object.keys(normedInputs).map((id) => normedInputs[id]);
 
@@ -208,7 +208,7 @@ export const CreateRow = createAsyncThunk<
   const row = normedRows![Object.keys(normedRows!)[0]];
 
   const columns =
-    normedColumns == undefined
+    normedColumns === undefined
       ? []
       : Object.keys(normedColumns).map((id) => normedColumns[id]);
 

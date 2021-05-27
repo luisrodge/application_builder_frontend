@@ -33,19 +33,19 @@ export const GetApplication = createAsyncThunk(
 
     const application = applications![id];
     const sections =
-      normedSections == undefined
+      normedSections === undefined
         ? []
         : Object.keys(normedSections).map((id) => normedSections[id]);
     const rows =
-      normedRows == undefined
+      normedRows === undefined
         ? []
         : Object.keys(normedRows).map((id) => normedRows[id]);
     const columns =
-      normedColumns == undefined
+      normedColumns === undefined
         ? []
         : Object.keys(normedColumns).map((id) => normedColumns[id]);
     const inputs =
-      normedInputs == undefined
+      normedInputs === undefined
         ? []
         : Object.keys(normedInputs).map((id) => normedInputs[id]);
 

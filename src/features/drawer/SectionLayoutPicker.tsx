@@ -135,7 +135,7 @@ export default function SectionLayoutPicker() {
         <SectionCard
           onClick={() => pickSection(COLS_LIMIT.ONE)}
           $active={
-            unsavedSection! && unsavedSection.numOfCols == COLS_LIMIT.ONE
+            unsavedSection! && unsavedSection.numOfCols === COLS_LIMIT.ONE
           }
         >
           <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
@@ -146,7 +146,7 @@ export default function SectionLayoutPicker() {
         <SectionCard
           onClick={() => pickSection(COLS_LIMIT.TWO)}
           $active={
-            unsavedSection! && unsavedSection.numOfCols == COLS_LIMIT.TWO
+            unsavedSection! && unsavedSection.numOfCols === COLS_LIMIT.TWO
           }
         >
           <AlignCenterOutlined
@@ -162,7 +162,7 @@ export default function SectionLayoutPicker() {
         <SectionCard
           onClick={() => pickSection(COLS_LIMIT.THREE)}
           $active={
-            unsavedSection! && unsavedSection.numOfCols == COLS_LIMIT.THREE
+            unsavedSection! && unsavedSection.numOfCols === COLS_LIMIT.THREE
           }
         >
           <AlignCenterOutlined

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { List, Popconfirm } from "antd";
+import { List, Popconfirm, Button } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export default function ApplicationList() {
 
   useEffect(() => {
     dispatch(GetApplications());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -38,9 +38,9 @@ export default function ApplicationList() {
                   cancelText="No"
                   onConfirm={() => dispatch(DeleteApplication(application.id))}
                 >
-                  <a key="list-delete">
+                  <Button type="link">
                     <DeleteOutlined />
-                  </a>
+                  </Button>
                 </Popconfirm>,
               ]}
             >

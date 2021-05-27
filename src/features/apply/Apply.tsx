@@ -42,7 +42,7 @@ export default function Apply() {
 
   useEffect(() => {
     dispatch(GetApplication(applicationId));
-  }, []);
+  }, [applicationId, dispatch]);
 
   if (
     loadingStatuses.applicationLoading === "pending" ||

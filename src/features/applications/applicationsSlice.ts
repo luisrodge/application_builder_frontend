@@ -126,7 +126,7 @@ export const applicationsSlice = createSlice({
     builder.addCase(DeleteApplication.fulfilled, (state, action) => {
       const applicationId = action.payload;
       const applications = state.applications.filter(
-        (application) => application.id != applicationId
+        (application) => application.id !== applicationId
       );
       state.applications = applications;
     });
@@ -162,7 +162,7 @@ export const applicationsSlice = createSlice({
     builder.addCase(DeleteSection.fulfilled, (state, action) => {
       const sectionId = action.payload;
       const sections = state.sections.filter(
-        (section) => section.id != sectionId
+        (section) => section.id !== sectionId
       );
       state.sections = sections;
     });
@@ -179,8 +179,8 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(DeleteRow.fulfilled, (state, action) => {
       const rowId = action.payload;
-      const rows = state.rows.filter((row) => row.id != rowId);
-      const columns = state.columns.filter((column) => column.rowId != rowId);
+      const rows = state.rows.filter((row) => row.id !== rowId);
+      const columns = state.columns.filter((column) => column.rowId !== rowId);
       state.rows = rows;
       state.columns = columns;
     });
@@ -190,11 +190,13 @@ export const applicationsSlice = createSlice({
     builder.addCase(DeleteColumn.fulfilled, (state, action) => {
       const { columnId, rowId } = action.payload;
 
-      if (state.columns.filter((column) => column.rowId == rowId).length == 1) {
-        const rows = state.rows.filter((row) => row.id != rowId);
+      if (
+        state.columns.filter((column) => column.rowId === rowId).length === 1
+      ) {
+        const rows = state.rows.filter((row) => row.id !== rowId);
         state.rows = rows;
       }
-      const columns = state.columns.filter((column) => column.id != columnId);
+      const columns = state.columns.filter((column) => column.id !== columnId);
       state.columns = columns;
     });
     builder.addCase(DeleteColumn.rejected, (state, action) => {
@@ -209,7 +211,7 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(DeleteInput.fulfilled, (state, action) => {
       const inputId = action.payload;
-      const inputs = state.inputs.filter((input) => input.id != inputId);
+      const inputs = state.inputs.filter((input) => input.id !== inputId);
       state.inputs = inputs;
     });
     builder.addCase(DeleteInput.rejected, (state, action) => {
@@ -261,7 +263,7 @@ export const selectSection = (
   createSelector(
     [(state: RootState) => state.applications.sections],
     (sections: ISection[]) =>
-      sections.find((section) => section.id == sectionId)
+      sections.find((section) => section.id === sectionId)
   );
 
 export const selectSectionRows = (
@@ -269,7 +271,7 @@ export const selectSectionRows = (
 ): Selector<IRow[] | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.rows],
-    (rows: IRow[]) => rows.filter((row) => row.sectionId == sectionId)
+    (rows: IRow[]) => rows.filter((row) => row.sectionId === sectionId)
   );
 
 export const selectRowColumns = (
@@ -277,7 +279,7 @@ export const selectRowColumns = (
 ): Selector<IColumn[] | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.columns],
-    (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
+    (columns: IColumn[]) => columns.filter((column) => column.rowId === rowId)
   );
 
 export const selectInput = (

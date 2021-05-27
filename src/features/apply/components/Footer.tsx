@@ -32,7 +32,7 @@ export default function Footer({ applicationId }: IProps) {
   const currentStep = useAppSelector(selectCurrentStep);
   const sections = useAppSelector(selectSections);
 
-  const isFinalStep = sections.length - 1 == currentStep;
+  const isFinalStep = sections.length - 1 === currentStep;
   const showPrevious = currentStep > 0;
 
   const changeStep = (newStep: number) => {

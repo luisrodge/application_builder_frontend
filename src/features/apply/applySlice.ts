@@ -63,7 +63,7 @@ const initialState: ApplyState = {
   loadingStatuses: initialLoadingState,
   sectionFields: {},
   currentStep: 0,
-  submission: <ICreateSubmissionAttributes>{},
+  submission: {} as ICreateSubmissionAttributes,
 };
 
 export const applySlice = createSlice({
@@ -113,7 +113,7 @@ export const applySlice = createSlice({
         } as ISubmissionSectionAttributes;
 
         const sectionRows = state.rows.filter(
-          (row) => row.sectionId == section.id
+          (row) => row.sectionId === section.id
         );
         for (const row of sectionRows) {
           let submissionRowsAttributes = {
@@ -243,14 +243,14 @@ export const selectSection = (
   createSelector(
     [(state: RootState) => state.apply.sections],
     (sections: ISection[]) =>
-      sections.find((section) => section.id == sectionId)
+      sections.find((section) => section.id === sectionId)
   );
 
 export const selectSectionRows = (
   sectionId: string
 ): Selector<IRow[] | undefined> =>
   createSelector([(state: RootState) => state.apply.rows], (rows: IRow[]) =>
-    rows.filter((row) => row.sectionId == sectionId)
+    rows.filter((row) => row.sectionId === sectionId)
   );
 
 export const selectRowColumns = (
@@ -258,7 +258,7 @@ export const selectRowColumns = (
 ): Selector<IColumn[] | undefined> =>
   createSelector(
     [(state: RootState) => state.apply.columns],
-    (columns: IColumn[]) => columns.filter((column) => column.rowId == rowId)
+    (columns: IColumn[]) => columns.filter((column) => column.rowId === rowId)
   );
 
 export const selectInput = (

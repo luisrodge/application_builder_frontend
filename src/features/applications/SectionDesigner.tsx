@@ -28,7 +28,7 @@ export default function SectionDesigner() {
 
   useEffect(() => {
     dispatch(GetSection(sectionId));
-  }, []);
+  }, [sectionId, dispatch]);
 
   if (loadingStatuses.sectionLoading === "failed") {
     message.error("Failed to load section");
@@ -48,7 +48,7 @@ export default function SectionDesigner() {
         btnTitle="Add row to section"
         applicationId={section && section.applicationId}
       />
-      {loadingStatuses.sectionLoading == "pending" ? (
+      {loadingStatuses.sectionLoading === "pending" ? (
         <Spinner marginTop={120} />
       ) : (
         section && (
