@@ -2,7 +2,9 @@ import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import camelcaseKeys from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys";
 
-const api = axios.create({ baseURL: "http://localhost:3000" });
+export const API_HOST = process.env.REACT_APP_API_HOST;
+
+const api = axios.create({ baseURL: API_HOST });
 
 // Axios middleware to convert all api responses to camelCase
 api.interceptors.response.use((response: AxiosResponse) => {

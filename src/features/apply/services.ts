@@ -3,7 +3,7 @@ import axios from "axios";
 import { normalize } from "normalizr";
 import { serialize } from "object-to-formdata";
 
-import api from "../../utils/api";
+import api, { API_HOST } from "../../utils/api";
 import {
   IApplication,
   IApplicationWithChildren,
@@ -72,7 +72,7 @@ export const CreateSubmission = createAsyncThunk<
   const { submission } = getState().apply;
 
   const response = await axios.post(
-    "http://localhost:3000/submissions",
+    `${API_HOST}/submissions`,
     serialize({ submission })
   );
 
