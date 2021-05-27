@@ -30,7 +30,7 @@ Finalize and ensure proper functionality (backend) of initial inputs:
 - DatePicker ✅
 - NumberInput ✅
 - TextInput ✅
-- UploadInput (photo & docs)
+- UploadInput (photo & docs) ✅
 - Checkbox ✅
 - Radio ✅
 - Signature
