@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { normalize } from "normalizr";
+import { serialize } from "object-to-formdata";
 
 import api from "../../utils/api";
 import {
@@ -12,7 +14,7 @@ import {
   ISection,
 } from "../applications/applications.interface";
 import { ApplicationSchema } from "../applications/schemas";
-import { ICreateSubmissionAttributes } from "./apply.interface";
+import { RootState } from "../../app/store";
 
 export const GetApplication = createAsyncThunk(
   "applications/get",
@@ -61,14 +63,21 @@ export const GetApplication = createAsyncThunk(
 
 export const CreateSubmission = createAsyncThunk<
   IApplication,
-  ICreateSubmissionAttributes,
+  void,
   {
     rejectValue: IErrorMessage;
+    state: RootState;
   }
->("submissions/create", async (submissionData, thunkApi) => {
-  const response = await api.post("submissions", submissionData);
+>("submissions/create", async (_, { rejectWithValue, getState }) => {
+  const { submission } = getState().apply;
+
+  const response = await axios.post(
+    "http://localhost:3000/submissions",
+    serialize({ submission })
+  );
+
   if (response.status !== 200) {
-    return thunkApi.rejectWithValue({
+    return rejectWithValue({
       message: "Failed to submit application.",
     } as IErrorMessage);
   }

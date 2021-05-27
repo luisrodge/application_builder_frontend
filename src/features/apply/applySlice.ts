@@ -11,8 +11,12 @@ import {
 } from "../applications/applications.interface";
 import {
   IFieldData,
+  IFilledInputAttributes,
   ISectionFields,
   ISetSectionFieldsAttributes,
+  ISubmissionColumnAttributes,
+  ISubmissionRowAttributes,
+  ISubmissionSectionAttributes,
 } from "./apply.interface";
 import { GetApplication } from "./services";
 
@@ -37,12 +41,18 @@ interface ApplyState {
   loadingStatuses: ILoadingState;
   sectionFields: ISectionFields;
   currentStep: number;
+  submission: ICreateSubmissionAttributes;
 }
 
 const initialLoadingState = {
   sectionLoading: "idle",
   applicationLoading: "idle",
 } as ILoadingState;
+
+interface ICreateSubmissionAttributes {
+  applicationId: string;
+  submissionSectionsAttributes: ISubmissionSectionAttributes[];
+}
 
 const initialState: ApplyState = {
   sections: [],
@@ -53,6 +63,7 @@ const initialState: ApplyState = {
   loadingStatuses: initialLoadingState,
   sectionFields: {},
   currentStep: 0,
+  submission: <ICreateSubmissionAttributes>{},
 };
 
 export const applySlice = createSlice({
@@ -90,6 +101,77 @@ export const applySlice = createSlice({
     setCurrentStep: (state, action: PayloadAction<number>) => {
       state.currentStep = action.payload;
     },
+    setSubmissionAttributes: (state) => {
+      const submissionSectionsAttributes: ISubmissionSectionAttributes[] = [];
+
+      for (const section of state.sections) {
+        let submissionSectionAttributes = {
+          sectionId: section.id,
+          title: section.title,
+          details: section.details,
+          submissionRowsAttributes: [],
+        } as ISubmissionSectionAttributes;
+
+        const sectionRows = state.rows.filter(
+          (row) => row.sectionId == section.id
+        );
+        for (const row of sectionRows) {
+          let submissionRowsAttributes = {
+            rowId: row.id,
+            submissionColumnsAttributes: [],
+          } as ISubmissionRowAttributes;
+          const columns = state.columns.filter(
+            (column) => column.rowId === row.id
+          );
+          for (const column of columns) {
+            const input = state.inputs.find(
+              (input) => input.columnId === column.id
+            );
+            const sectionFields = state.sectionFields[section.id];
+            const field = sectionFields.find(
+              (field) => field.name[0] === input!.name
+            );
+
+            // Not working properly when removing file, value still contains {file: {...}, fileList: []}
+            // Should actually contain an empty string
+            const value =
+              field?.value.hasOwnProperty("fileList") &&
+              field?.value.fileList.length
+                ? field?.value.fileList[0].name
+                : field?.value;
+
+            const file =
+              field?.value.hasOwnProperty("fileList") &&
+              field?.value.fileList.length
+                ? field?.value.fileList[0]
+                : undefined;
+
+            const filledInputAttributes = {
+              name: field?.name[0],
+              value,
+              file,
+              inputId: input?.id,
+            } as IFilledInputAttributes;
+
+            const submissionColumnAttributes: ISubmissionColumnAttributes = {
+              columnId: column.id,
+              filledInputAttributes,
+            };
+            submissionRowsAttributes.submissionColumnsAttributes.push(
+              submissionColumnAttributes
+            );
+          }
+          submissionSectionAttributes.submissionRowsAttributes.push(
+            submissionRowsAttributes
+          );
+        }
+        submissionSectionsAttributes.push(submissionSectionAttributes);
+      }
+      state.submission = {
+        applicationId: state.activeApplication!.id,
+        submissionSectionsAttributes,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(GetApplication.pending, (state) => {
@@ -106,8 +188,8 @@ export const applySlice = createSlice({
       state.loadingStatuses.applicationLoading = "succeeded";
       state.loadingStatuses.sectionLoading = "idle";
 
+      // Construct state object to keep track of input changes
       const sectionFields = {} as ISectionFields;
-
       for (const section of sections) {
         const sectionInputs = inputs
           .filter((input) => input.sectionId === section.id)
@@ -117,7 +199,6 @@ export const applySlice = createSlice({
           })) as IFieldData[];
         sectionFields[section.id] = [...sectionInputs];
       }
-
       state.sectionFields = sectionFields;
     });
     builder.addCase(GetApplication.rejected, (state) => {
@@ -135,6 +216,7 @@ export const {
   resetSectionLoadingStatuses,
   setSectionFields,
   setCurrentStep,
+  setSubmissionAttributes,
 } = applySlice.actions;
 
 export const selectSections = (state: RootState) => state.apply.sections;

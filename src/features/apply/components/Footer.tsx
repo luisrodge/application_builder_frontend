@@ -5,6 +5,7 @@ import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
 } from "@ant-design/icons";
+import { useHistory } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
@@ -12,11 +13,9 @@ import {
   selectSections,
   setCurrentStep,
   setActiveSection,
-  selectFields,
+  setSubmissionAttributes,
 } from "../applySlice";
 import { CreateSubmission } from "../services";
-import { IFilledInputAttributes } from "../apply.interface";
-import { useHistory } from "react-router";
 
 export const FooterContainer = styled.footer`
   padding: 30px;
@@ -32,7 +31,6 @@ export default function Footer({ applicationId }: IProps) {
   const history = useHistory();
   const currentStep = useAppSelector(selectCurrentStep);
   const sections = useAppSelector(selectSections);
-  const fields = useAppSelector(selectFields);
 
   const isFinalStep = sections.length - 1 == currentStep;
   const showPrevious = currentStep > 0;
@@ -43,29 +41,10 @@ export default function Footer({ applicationId }: IProps) {
   };
 
   const submitApplication = async () => {
-    const sectionIds = Object.keys(fields);
-    const filledInputs: IFilledInputAttributes[] = [];
+    // Build out the submission object to POST
+    dispatch(setSubmissionAttributes());
 
-    for (const sectionId of sectionIds) {
-      const sectionFields = fields[sectionId];
-      for (const sectionField of sectionFields) {
-        const name = Array.isArray(sectionField.name)
-          ? sectionField.name[0]
-          : sectionField.name;
-
-        const value = Array.isArray(sectionField.value)
-          ? sectionField.value.join(", ")
-          : sectionField.value;
-        filledInputs.push({
-          value,
-          name,
-        });
-      }
-    }
-
-    const resultAction = await dispatch(
-      CreateSubmission({ applicationId, sectionFields: filledInputs })
-    );
+    const resultAction = await dispatch(CreateSubmission());
 
     if (CreateSubmission.fulfilled.match(resultAction)) {
       history.push("/apply/success");

@@ -1,5 +1,5 @@
 export interface IFieldData {
-  name: string | number | (string | number)[];
+  name: string;
   value?: any;
   touched?: boolean;
   validating?: boolean;
@@ -15,32 +15,31 @@ export interface ISetSectionFieldsAttributes {
   sectionId: string;
 }
 
-export interface ISubmissionRowAttributes {
-  title: string;
-  details: string;
-  sectionFields: ISectionFields;
-}
-
 export interface IFilledInputAttributes {
   value: string;
-  name: string | number | (string | number)[];
-}
-
-export interface ISubmissionColumnAttributes {
-  filledInput: IFilledInputAttributes;
-}
-
-export interface ISubmissionRowAttributes {
-  submissionColumns: ISubmissionColumnAttributes[];
-}
-export interface ISubmissionSectionAttributes {
-  title: string;
-  details: string;
-  submissionRows: ISubmissionRowAttributes[];
+  name: string;
+  file?: File;
 }
 
 export interface ICreateSubmissionAttributes {
   applicationId: string;
   // submissionSections: ISubmissionSectionAttributes[];
   sectionFields: IFilledInputAttributes[];
+}
+
+export interface ISubmissionSectionsAttributes {}
+
+export interface ISubmissionColumnAttributes {
+  columnId: string;
+  filledInputAttributes: IFilledInputAttributes;
+}
+
+export interface ISubmissionRowAttributes {
+  submissionColumnsAttributes: ISubmissionColumnAttributes[];
+}
+
+export interface ISubmissionSectionAttributes {
+  title: string;
+  details?: string;
+  submissionRowsAttributes: ISubmissionRowAttributes[];
 }

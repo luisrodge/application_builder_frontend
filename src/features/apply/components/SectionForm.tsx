@@ -44,7 +44,7 @@ export default function SectionForm({ sectionId }: IProps) {
         layout="inline"
         fields={sectionFields}
         onFieldsChange={(_, inputFields) => {
-          onChange(inputFields);
+          onChange(inputFields as IFieldData[]);
         }}
       >
         {sectionRows?.map((row) => (
