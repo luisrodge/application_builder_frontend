@@ -28,7 +28,7 @@ export default function SimpleHome() {
           Quikapply
         </Title>
         <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
-          My super awesome but yet tbd slogan
+          Design applications or apply - the quik way!
         </Text>
         <Button
           type="primary"
