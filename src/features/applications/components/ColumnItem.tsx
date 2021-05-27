@@ -97,7 +97,7 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
   const activeColumn = useAppSelector(selectActiveColumn);
   const input = useAppSelector(selectInput(column?.id));
 
-  const isEmpty = input == undefined;
+  const isEmpty = input === undefined;
 
   const onClick = () => {
     dispatch(setActiveRow(row));
@@ -120,7 +120,7 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
       <Container
-        $active={activeColumn! && activeColumn.id == column.id}
+        $active={activeColumn! && activeColumn.id === column.id}
         $disabled={disabled!}
       >
         <InnerContainer>

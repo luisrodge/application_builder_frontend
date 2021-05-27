@@ -38,7 +38,7 @@ interface IProps {
 export default function ColumnItem({ span, column }: IProps) {
   const input = useAppSelector(selectInput(column?.id));
 
-  const isEmpty = input == undefined;
+  const isEmpty = input === undefined;
 
   return (
     <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>

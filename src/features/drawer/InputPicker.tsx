@@ -8,7 +8,6 @@ import { hideDrawer, selectDrawer, showChildDrawer } from "./drawerSlice";
 import {
   selectActiveColumn,
   selectActiveInput,
-  selectActiveRow,
   setActiveColumn,
   setActiveInput,
   setActiveRow,
@@ -41,7 +40,6 @@ const InputCard = styled.div<IInputCardProps>`
 
 export default function ElementPicker() {
   const { isOpen } = useAppSelector(selectDrawer);
-  const activeRow = useAppSelector(selectActiveRow);
   const activeColumn = useAppSelector(selectActiveColumn);
   const activeInput = useAppSelector(selectActiveInput);
 
@@ -78,8 +76,8 @@ export default function ElementPicker() {
           <InputCard
             onClick={() => pickInput(input.inputType)}
             $active={
-              activeInput != undefined &&
-              activeInput.inputType == input.inputType
+              activeInput !== undefined &&
+              activeInput.inputType === input.inputType
             }
           >
             <h4 style={{ margin: 0 }}>{input.name}</h4>

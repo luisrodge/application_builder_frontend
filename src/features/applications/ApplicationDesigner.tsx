@@ -23,7 +23,7 @@ export default function ApplicationDesigner() {
 
   useEffect(() => {
     dispatch(GetApplication(applicationId));
-  }, []);
+  }, [applicationId, dispatch]);
 
   return (
     <Layout>
@@ -38,7 +38,7 @@ export default function ApplicationDesigner() {
             marginBottom: 100,
           }}
         >
-          {loadingStatuses.applicationLoading == "pending" ? (
+          {loadingStatuses.applicationLoading === "pending" ? (
             <Spinner />
           ) : sections.length ? (
             <div className="site-layout-background">

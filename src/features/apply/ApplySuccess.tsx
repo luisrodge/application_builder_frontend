@@ -1,5 +1,4 @@
-import { Result, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Result } from "antd";
 import styled from "styled-components";
 
 const Container = styled.div`
