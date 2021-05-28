@@ -2,7 +2,14 @@ import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 import camelcaseKeys from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys";
 
-export const API_HOST = process.env.REACT_APP_API_HOST;
+const CURRENT_HOST = window.location.hostname;
+
+const PROD_HOST = "quikapply.com";
+const DEV_API_HOST = "http://localhost:3000";
+const PROD_API_HOST = "http://10.108.0.2";
+
+export const API_HOST =
+  CURRENT_HOST === PROD_HOST ? PROD_API_HOST : DEV_API_HOST;
 
 const api = axios.create({ baseURL: API_HOST });
 
