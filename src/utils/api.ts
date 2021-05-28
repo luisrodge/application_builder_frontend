@@ -6,7 +6,7 @@ const CURRENT_HOST = window.location.hostname;
 
 const PROD_HOST = "quikapply.com";
 const DEV_API_HOST = "http://localhost:3000";
-const PROD_API_HOST = "http://10.108.0.2";
+const PROD_API_HOST = "http://167.99.127.148";
 
 export const API_HOST =
   CURRENT_HOST === PROD_HOST ? PROD_API_HOST : DEV_API_HOST;
