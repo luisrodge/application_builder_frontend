@@ -90,8 +90,8 @@ export const CreateApplication = createAsyncThunk<
 });
 
 export const DeleteApplication = createAsyncThunk<
-  string,
-  string,
+  number,
+  number,
   {
     rejectValue: IErrorMessage;
   }
@@ -173,8 +173,8 @@ export const GetSection = createAsyncThunk<
 });
 
 export const DeleteSection = createAsyncThunk<
-  string,
-  string,
+  number,
+  number,
   {
     rejectValue: IErrorMessage;
   }
@@ -221,8 +221,8 @@ export const CreateRow = createAsyncThunk<
 });
 
 export const DeleteRow = createAsyncThunk<
-  string,
-  string,
+  number,
+  number,
   {
     rejectValue: IErrorMessage;
   }

@@ -23,7 +23,7 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  sectionId: string;
+  sectionId: number;
   setOpenElementDrawer?: (columnId: number) => void;
 }
 

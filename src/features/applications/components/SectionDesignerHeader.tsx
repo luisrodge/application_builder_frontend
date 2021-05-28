@@ -46,7 +46,7 @@ const BackContainer = styled.div`
 interface IProps {
   drawerType: string;
   btnTitle: string;
-  applicationId: string | undefined;
+  applicationId: number | undefined;
 }
 
 export default function SectionDesignerHeader({

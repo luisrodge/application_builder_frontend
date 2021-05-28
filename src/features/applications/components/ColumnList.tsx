@@ -5,7 +5,7 @@ import { IRow } from "../applications.interface";
 
 interface IProps {
   row: IRow;
-  sectionId: string;
+  sectionId: number;
   disabled?: boolean;
   setOpenElementDrawer?: (columnId: number) => void;
 }

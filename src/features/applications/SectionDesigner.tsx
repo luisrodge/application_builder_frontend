@@ -58,7 +58,7 @@ export default function SectionDesigner() {
               <Title level={4}>{section.title}</Title>
               <Text>{section.details}</Text>
 
-              <RowList sectionId={sectionId} />
+              <RowList sectionId={Number(sectionId)} />
             </Container>
           </>
         )
