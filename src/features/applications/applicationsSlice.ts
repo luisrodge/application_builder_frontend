@@ -249,7 +249,7 @@ export const selectActiveInput = (state: RootState) =>
   state.applications.activeInput;
 
 export const selectApplication = (
-  applicationId: string
+  applicationId: number
 ): Selector<IApplication | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.applications],
@@ -258,7 +258,7 @@ export const selectApplication = (
   );
 
 export const selectSection = (
-  sectionId: string
+  sectionId: number
 ): Selector<ISection | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.sections],
@@ -267,7 +267,7 @@ export const selectSection = (
   );
 
 export const selectSectionRows = (
-  sectionId: string
+  sectionId: number
 ): Selector<IRow[] | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.rows],
@@ -275,7 +275,7 @@ export const selectSectionRows = (
   );
 
 export const selectRowColumns = (
-  rowId: string
+  rowId: number
 ): Selector<IColumn[] | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.columns],
@@ -283,7 +283,7 @@ export const selectRowColumns = (
   );
 
 export const selectInput = (
-  columnId: string | undefined
+  columnId: number | undefined
 ): Selector<IInput | undefined> =>
   createSelector(
     [(state: RootState) => state.applications.inputs],

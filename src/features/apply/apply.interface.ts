@@ -12,7 +12,7 @@ export interface ISectionFields {
 
 export interface ISetSectionFieldsAttributes {
   fields: IFieldData[];
-  sectionId: string;
+  sectionId: number;
 }
 
 export interface IFilledInputAttributes {
@@ -22,7 +22,7 @@ export interface IFilledInputAttributes {
 }
 
 export interface ICreateSubmissionAttributes {
-  applicationId: string;
+  applicationId: number;
   // submissionSections: ISubmissionSectionAttributes[];
   sectionFields: IFilledInputAttributes[];
 }
@@ -30,7 +30,7 @@ export interface ICreateSubmissionAttributes {
 export interface ISubmissionSectionsAttributes {}
 
 export interface ISubmissionColumnAttributes {
-  columnId: string;
+  columnId: number;
   filledInputAttributes: IFilledInputAttributes;
 }
 

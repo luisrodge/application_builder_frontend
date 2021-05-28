@@ -39,7 +39,7 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  sectionId: string;
+  sectionId: number;
   disabled?: boolean;
   setOpenElementDrawer?: (columnId: number) => void;
 }

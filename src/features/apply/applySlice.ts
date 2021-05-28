@@ -50,7 +50,7 @@ const initialLoadingState = {
 } as ILoadingState;
 
 interface ICreateSubmissionAttributes {
-  applicationId: string;
+  applicationId: number;
   submissionSectionsAttributes: ISubmissionSectionAttributes[];
 }
 
@@ -238,7 +238,7 @@ export const selectActiveColumn = (state: RootState) =>
 export const selectActiveInput = (state: RootState) => state.apply.activeInput;
 
 export const selectSection = (
-  sectionId: string
+  sectionId: number
 ): Selector<ISection | undefined> =>
   createSelector(
     [(state: RootState) => state.apply.sections],
@@ -247,14 +247,14 @@ export const selectSection = (
   );
 
 export const selectSectionRows = (
-  sectionId: string
+  sectionId: number
 ): Selector<IRow[] | undefined> =>
   createSelector([(state: RootState) => state.apply.rows], (rows: IRow[]) =>
     rows.filter((row) => row.sectionId === sectionId)
   );
 
 export const selectRowColumns = (
-  rowId: string
+  rowId: number
 ): Selector<IColumn[] | undefined> =>
   createSelector(
     [(state: RootState) => state.apply.columns],
@@ -262,7 +262,7 @@ export const selectRowColumns = (
   );
 
 export const selectInput = (
-  columnId: string | undefined
+  columnId: number | undefined
 ): Selector<IInput | undefined> =>
   createSelector(
     [(state: RootState) => state.apply.inputs],
@@ -270,7 +270,7 @@ export const selectInput = (
   );
 
 export const selectSectionFields = (
-  sectionId: string
+  sectionId: number
 ): Selector<IFieldData[]> =>
   createSelector(
     [(state: RootState) => state.apply.sectionFields],

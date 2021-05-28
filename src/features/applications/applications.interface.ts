@@ -5,16 +5,16 @@ export interface ICreateApplicationAttributes {
 
 export interface ICreateSectionAttributes extends ICreateApplicationAttributes {
   numOfCols: number;
-  applicationId: string;
+  applicationId: number;
 }
 
 export interface ICreateRowAttributes {
   numOfCols: number;
-  sectionId: string;
+  sectionId: number;
 }
 
 export interface IApplication {
-  id: string;
+  id: number;
   title?: string;
   details?: string;
   sections?: number[];
@@ -42,13 +42,13 @@ export interface IRowWithChildren {
 }
 
 export interface IDeleteColumnResult {
-  rowId: string;
-  columnId: string;
+  rowId: number;
+  columnId: number;
 }
 
 export interface ISection {
-  id: string;
-  applicationId: string;
+  id: number;
+  applicationId: number;
   title?: string;
   details?: string;
   numOfCols: number;
@@ -56,16 +56,16 @@ export interface ISection {
 }
 
 export interface IRow {
-  id: string;
-  sectionId: string;
+  id: number;
+  sectionId: number;
   numOfCols?: number;
   columns?: number[];
 }
 
 export interface IColumn {
-  id: string;
-  rowId: string;
-  sectionId: string;
+  id: number;
+  rowId: number;
+  sectionId: number;
 }
 
 export interface ICheckboxOption {
@@ -76,8 +76,8 @@ export interface IRadioOption extends ICheckboxOption {}
 
 export interface IInput {
   id: string;
-  columnId: string;
-  sectionId: string;
+  columnId: number;
+  sectionId: number;
   inputType: string;
   label: string;
   name: string;
@@ -87,7 +87,7 @@ export interface IInput {
 }
 
 export interface ICreateInputAttributes {
-  columnId: string;
+  columnId: number;
   type: string;
   label: string;
   required?: boolean;
