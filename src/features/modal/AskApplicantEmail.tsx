@@ -1,5 +1,6 @@
 import { useHistory } from "react-router";
-import { Modal, Form, Input, Alert, message } from "antd";
+import { Modal, Form, Input, Alert, message, Button } from "antd";
+import { SendOutlined } from "@ant-design/icons";
 
 import { hideModal, selectModal } from "./modalSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -20,6 +21,7 @@ export default function AskApplicantEmail() {
       dispatch(hideModal());
       history.push("/apply/success");
     } else {
+      dispatch(hideModal());
       if (resultAction.payload) {
         message.error(`Submission failed: ${resultAction.payload.message}`);
       } else {
@@ -30,7 +32,7 @@ export default function AskApplicantEmail() {
 
   return (
     <Modal
-      width={550}
+      width={400}
       style={{ top: 40 }}
       visible={isOpen}
       title="Just one more thing"
@@ -39,6 +41,16 @@ export default function AskApplicantEmail() {
       onOk={submitApplication}
       onCancel={() => dispatch(hideModal())}
       closable={true}
+      footer={[
+        <Button
+          key="link"
+          type="primary"
+          onClick={submitApplication}
+          icon={<SendOutlined />}
+        >
+          Submit Application
+        </Button>,
+      ]}
     >
       <Form
         form={form}
