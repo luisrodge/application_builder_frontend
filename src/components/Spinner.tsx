@@ -31,11 +31,12 @@ const FullViewInnerContainer = styled.div`
 
 interface ISpinnerProps {
   marginTop?: number;
+  delay?: number;
 }
 
-export const Spinner = ({ marginTop = 50 }: ISpinnerProps) => (
+export const Spinner = ({ marginTop = 50, delay = 500 }: ISpinnerProps) => (
   <div style={{ textAlign: "center" }}>
-    <Spin size="large" style={{ marginTop }} delay={500} />
+    <Spin size="large" style={{ marginTop }} delay={delay} />
   </div>
 );
 

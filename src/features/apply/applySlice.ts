@@ -18,7 +18,7 @@ import {
   ISubmissionRowAttributes,
   ISubmissionSectionAttributes,
 } from "./apply.interface";
-import { GetApplication } from "./services";
+import { GetApplication, GetApplicationIdByShortUrl } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
@@ -42,6 +42,7 @@ interface ApplyState {
   sectionFields: ISectionFields;
   currentStep: number;
   submission: ICreateSubmissionAttributes;
+  redirectApplicationId?: number;
 }
 
 const initialLoadingState = {
@@ -205,6 +206,10 @@ export const applySlice = createSlice({
     builder.addCase(GetApplication.rejected, (state) => {
       state.loadingStatuses.applicationLoading = "idle";
     });
+    builder.addCase(GetApplicationIdByShortUrl.fulfilled, (state, action) => {
+      const { applicationId } = action.payload;
+      state.redirectApplicationId = applicationId;
+    });
   },
 });
 
@@ -228,6 +233,8 @@ export const selectLoadingStatuses = (state: RootState) =>
   state.apply.loadingStatuses;
 export const selectCurrentStep = (state: RootState) => state.apply.currentStep;
 export const selectFields = (state: RootState) => state.apply.sectionFields;
+export const selectRedirectId = (state: RootState) =>
+  state.apply.redirectApplicationId;
 
 export const selectActiveApplication = (state: RootState) =>
   state.apply.activeApplication;

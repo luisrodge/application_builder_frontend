@@ -101,3 +101,7 @@ export interface ICreateInputAttributes {
 export interface IErrorMessage {
   message: string;
 }
+
+export interface IExpandedShortUrl {
+  applicationId: number;
+}

@@ -6,11 +6,15 @@ import SectionDesigner from "../features/applications/SectionDesigner";
 import Apply from "../features/apply/Apply";
 import ApplySuccess from "../features/apply/ApplySuccess";
 import SimpleHome from "../components/SimpleHome";
+import ShortUrlRedirect from "../features/apply/ShortUrlRedirect";
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact>
       <SimpleHome />
+    </Route>
+    <Route path="/s/:shortUrl" exact>
+      <ShortUrlRedirect />
     </Route>
     <Route path="/applications" exact>
       <ApplicationList />
