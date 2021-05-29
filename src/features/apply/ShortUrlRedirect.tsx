@@ -37,7 +37,7 @@ export default function ShortUrlRedirect() {
   }, [dispatch, shortUrl]);
 
   const redirect = async () => {
-    await timeout(1300);
+    await timeout(1200);
     history.push(`/applications/${applicationId}/apply`);
   };
 
