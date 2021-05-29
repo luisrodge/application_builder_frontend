@@ -1,7 +1,7 @@
 import { Switch, Route } from "react-router-dom";
 
 import ApplicationList from "../features/applications/ApplicationList";
-import ApplicationDesigner from "../features/applications/ApplicationDesigner";
+import ApplicationOverview from "../features/applications/ApplicationOverview";
 import SectionDesigner from "../features/applications/SectionDesigner";
 import Apply from "../features/apply/Apply";
 import ApplySuccess from "../features/apply/ApplySuccess";
@@ -20,7 +20,7 @@ const Routes = () => (
       <ApplicationList />
     </Route>
     <Route path="/applications/:slug" exact>
-      <ApplicationDesigner />
+      <ApplicationOverview />
     </Route>
     <Route path="/applications/:applicationSlug/sections/:sectionId" exact>
       <SectionDesigner />

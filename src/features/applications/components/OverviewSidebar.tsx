@@ -11,7 +11,7 @@ interface IProps {
   sections: ISection[];
 }
 
-export default function ApplicationDesignerSidebar({ sections }: IProps) {
+export default function OverviewSidebar({ sections }: IProps) {
   return (
     <Sider
       theme="light"

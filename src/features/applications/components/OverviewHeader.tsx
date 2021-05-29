@@ -10,7 +10,7 @@ import { selectActiveApplication } from "../applicationsSlice";
 
 const { Header } = Layout;
 
-export default function ApplicationDesignerHeader() {
+export default function OverviewHeader() {
   const dispatch = useAppDispatch();
   const application = useAppSelector(selectActiveApplication);
 

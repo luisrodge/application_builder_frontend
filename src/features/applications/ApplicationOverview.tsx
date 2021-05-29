@@ -5,15 +5,15 @@ import { useParams } from "react-router";
 import SectionList from "./components/SectionList";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectLoadingStatuses, selectSections } from "./applicationsSlice";
-import Sidebar from "./components/ApplicationDesignerSidebar";
+import Sidebar from "./components/OverviewSidebar";
 import { GetApplication } from "./services";
 import { Spinner } from "../../components/Spinner";
-import ApplicationDesignerHeader from "./components/ApplicationDesignerHeader";
+import OverviewHeader from "./components/OverviewHeader";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
-export default function ApplicationDesigner() {
+export default function ApplicationOverview() {
   const dispatch = useAppDispatch();
 
   const { slug } = useParams<{ slug: string }>();
@@ -29,7 +29,7 @@ export default function ApplicationDesigner() {
     <Layout>
       <Sidebar sections={sections} />
       <Layout className="site-layout" style={{ marginRight: 200 }}>
-        <ApplicationDesignerHeader />
+        <OverviewHeader />
 
         <Content
           style={{
