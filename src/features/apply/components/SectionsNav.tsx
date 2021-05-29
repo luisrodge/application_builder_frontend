@@ -27,7 +27,7 @@ export const SectionContainer = styled.div`
   flex: 1;
 `;
 
-export default function StepsNavigation() {
+export default function SectionsNav() {
   const dispatch = useAppDispatch();
   const application = useAppSelector(selectActiveApplication)!;
   const sections = useAppSelector(selectSections);

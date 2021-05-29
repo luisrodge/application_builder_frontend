@@ -18,16 +18,12 @@ import {
 import { showModal } from "../../modal/modalSlice";
 import { MODAL_TYPES } from "../../../shared/constants";
 
-export const FooterContainer = styled.footer`
+export const Container = styled.footer`
   padding: 30px;
   text-align: right;
 `;
 
-interface IProps {
-  applicationId: string;
-}
-
-export default function Footer({ applicationId }: IProps) {
+export default function MainActions() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const currentStep = useAppSelector(selectCurrentStep);
@@ -45,12 +41,12 @@ export default function Footer({ applicationId }: IProps) {
     // Build out the submission object to POST
     dispatch(setSubmissionAttributes());
 
-    // Post submission in modal
-    dispatch(showModal({ modalType: MODAL_TYPES.ASK_APPLICANT_EMAIL }));
+    // POST submission in email request modal
+    dispatch(showModal({ modalType: MODAL_TYPES.APPLICANT_EMAIL_REQUEST }));
   };
 
   return (
-    <FooterContainer>
+    <Container>
       <Popconfirm
         title="Are you sure？"
         okText="Yes"
@@ -95,6 +91,6 @@ export default function Footer({ applicationId }: IProps) {
           </Button>
         </Popconfirm>
       )}
-    </FooterContainer>
+    </Container>
   );
 }

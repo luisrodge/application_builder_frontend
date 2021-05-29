@@ -3,16 +3,16 @@ import { ReactNode } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { MODAL_TYPES } from "../../shared/constants";
 import { selectModal } from "./modalSlice";
-import AskApplicantEmail from "./AskApplicantEmail";
+import ApplicantEmailRequest from "./ApplicantEmailRequest";
 
-const { ASK_APPLICANT_EMAIL } = MODAL_TYPES;
+const { APPLICANT_EMAIL_REQUEST } = MODAL_TYPES;
 
 interface IModalComponents {
   [key: string]: ReactNode;
 }
 
 const MODAL_COMPONENTS = {
-  [ASK_APPLICANT_EMAIL]: AskApplicantEmail,
+  [APPLICANT_EMAIL_REQUEST]: ApplicantEmailRequest,
 } as IModalComponents;
 
 export const ModalTypes = Object.keys(MODAL_COMPONENTS);

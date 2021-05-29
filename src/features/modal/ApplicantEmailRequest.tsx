@@ -6,7 +6,7 @@ import { hideModal, selectModal } from "./modalSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { CreateSubmission } from "../apply/services";
 
-export default function AskApplicantEmail() {
+export default function ApplicantEmailRequest() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const { isOpen } = useAppSelector(selectModal);
