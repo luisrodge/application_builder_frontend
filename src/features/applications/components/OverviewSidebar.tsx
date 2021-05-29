@@ -2,10 +2,18 @@ import { Layout, Menu } from "antd";
 import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import { ISection } from "../applications.interface";
 
 const { Sider } = Layout;
+
+const MenuLink = styled(Link)`
+  color: #fff !important;
+  &:hover {
+    color: #dadada !important;
+  }
+`;
 
 interface IProps {
   sections: ISection[];
@@ -28,15 +36,21 @@ export default function OverviewSidebar({ sections }: IProps) {
         Sections
       </div>
 
-      <Menu theme="light" mode="inline" defaultSelectedKeys={["4"]}>
+      <Menu
+        mode="inline"
+        defaultSelectedKeys={["4"]}
+        style={{
+          background: blue[4],
+        }}
+      >
         {sections.map((section) => (
           <Menu.Item key={section.id}>
-            <Link
-              to={`/applications/${section.applicationId}/sections/${section.id}`}
+            <MenuLink
+              to={`/applications/${section.applicationSlug}/sections/${section.id}`}
             >
               <EditOutlined />
               <span>{section.title}</span>
-            </Link>
+            </MenuLink>
           </Menu.Item>
         ))}
       </Menu>

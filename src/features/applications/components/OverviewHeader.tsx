@@ -1,5 +1,5 @@
 import { Button, Layout } from "antd";
-import { PlusOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { PlusOutlined, EyeOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 import { Link } from "react-router-dom";
 
@@ -24,14 +24,11 @@ export default function OverviewHeader() {
     >
       <div style={{ display: "flex" }}>
         <div style={{ flex: 1 }}>
-          <Link to="/" style={{ color: "#FFF" }}>
-            <ArrowLeftOutlined /> Applications
-          </Link>
-        </div>
-        <div>
           <span style={{ color: "#fff", marginRight: 20 }}>
             {application?.title}
           </span>
+        </div>
+        <div>
           <Button
             icon={<PlusOutlined />}
             onClick={() =>
@@ -43,6 +40,13 @@ export default function OverviewHeader() {
             }
           >
             Add Section
+          </Button>
+          <Button
+            icon={<EyeOutlined />}
+            style={{ marginLeft: 20, background: blue[4] }}
+            type="primary"
+          >
+            Publish
           </Button>
         </div>
       </div>
