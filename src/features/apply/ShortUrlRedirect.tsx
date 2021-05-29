@@ -34,7 +34,7 @@ export default function ShortUrlRedirect() {
 
   useEffect(() => {
     dispatch(GetApplicationIdByShortUrl(shortUrl));
-  }, [dispatch]);
+  }, [dispatch, shortUrl]);
 
   const redirect = async () => {
     await timeout(1500);
