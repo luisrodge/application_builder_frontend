@@ -1,9 +1,10 @@
-import { Button, message } from "antd";
+import { Button, message, Popconfirm } from "antd";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
 import {
   CheckOutlined,
   PlusOutlined,
+  DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
@@ -83,8 +84,7 @@ export default function SectionDesignerHeader({
         <HeaderActionsContainer>
           <Button
             onClick={() => dispatch(showDrawer({ drawerType }))}
-            style={{ marginRight: 24, background: blue[4] }}
-            type="primary"
+            style={{ marginRight: 24 }}
             icon={<PlusOutlined />}
           >
             {btnTitle}
@@ -93,10 +93,22 @@ export default function SectionDesignerHeader({
             <Button
               icon={<CheckOutlined />}
               onClick={() => history.push(`/applications/${applicationSlug}`)}
+              type="text"
             >
               Done
             </Button>
           )}
+
+          <Popconfirm
+            title="Are you sure？"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={onDeleteSection}
+          >
+            <Button type="text" icon={<DeleteOutlined />}>
+              Remove
+            </Button>
+          </Popconfirm>
         </HeaderActionsContainer>
       </HeaderContent>
     </HeaderContainer>
