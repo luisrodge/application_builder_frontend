@@ -1,7 +1,6 @@
 import { Button, Layout } from "antd";
 import { PlusOutlined, EyeOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
-import { Link } from "react-router-dom";
 
 import { DRAWER_TYPES } from "../../../shared/constants";
 import { showDrawer } from "../../drawer/drawerSlice";
