@@ -47,12 +47,30 @@ export default function NewApplication() {
         <Form.Item
           label="Title"
           name="title"
-          rules={[{ required: true, message: "Please enter a title" }]}
+          rules={[{ required: true, message: "Title is required" }]}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item label="Application details" name="details">
+        <Form.Item
+          label="Email"
+          name="email"
+          tooltip="The email address submissions will be sent to."
+          rules={[
+            {
+              required: true,
+              message: "Email is required",
+            },
+            {
+              message: "Must be a valid email address",
+              type: "email",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Details" name="details">
           <Input.TextArea />
         </Form.Item>
 
