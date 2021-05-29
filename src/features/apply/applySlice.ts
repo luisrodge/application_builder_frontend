@@ -51,6 +51,7 @@ const initialLoadingState = {
 
 interface ICreateSubmissionAttributes {
   applicationId: number;
+  email?: string;
   submissionSectionsAttributes: ISubmissionSectionAttributes[];
 }
 

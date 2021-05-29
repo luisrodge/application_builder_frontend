@@ -1,4 +1,5 @@
 import DrawerRoot from "../features/drawer/DrawerRoot";
+import ModalRoot from "../features/modal/ModalRoot";
 import Routes from "./routes";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <>
       <Routes />
       <DrawerRoot />
+      <ModalRoot />
     </>
   );
 }

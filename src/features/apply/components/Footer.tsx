@@ -15,7 +15,8 @@ import {
   setActiveSection,
   setSubmissionAttributes,
 } from "../applySlice";
-import { CreateSubmission } from "../services";
+import { showModal } from "../../modal/modalSlice";
+import { MODAL_TYPES } from "../../../shared/constants";
 
 export const FooterContainer = styled.footer`
   padding: 30px;
@@ -44,17 +45,8 @@ export default function Footer({ applicationId }: IProps) {
     // Build out the submission object to POST
     dispatch(setSubmissionAttributes());
 
-    const resultAction = await dispatch(CreateSubmission());
-
-    if (CreateSubmission.fulfilled.match(resultAction)) {
-      history.push("/apply/success");
-    } else {
-      if (resultAction.payload) {
-        message.error(`Submission failed: ${resultAction.payload.message}`);
-      } else {
-        message.error(`Submission failed: ${resultAction.error.message}`);
-      }
-    }
+    // Post submission in modal
+    dispatch(showModal({ modalType: MODAL_TYPES.ASK_APPLICANT_EMAIL }));
   };
 
   return (

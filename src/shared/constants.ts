@@ -7,6 +7,10 @@ export const DRAWER_TYPES = {
   NEW_APPLICATION_DRAWER: "NEW_APPLICATION_DRAWER",
 };
 
+export const MODAL_TYPES = {
+  ASK_APPLICANT_EMAIL: "ASK_APPLICANT_EMAIL",
+};
+
 export const INPUT_TYPES = {
   NUMBER_INPUT: "NumberInput",
   TEXT_INPUT: "TextInput",
