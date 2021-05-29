@@ -25,7 +25,7 @@ const Routes = () => (
     <Route path="/applications/:applicationId/sections/:sectionId" exact>
       <SectionDesigner />
     </Route>
-    <Route path="/applications/:applicationId/apply" exact>
+    <Route path="/:slug/apply" exact>
       <Apply />
     </Route>
     <Route path="/apply/success" exact>

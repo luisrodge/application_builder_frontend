@@ -18,6 +18,7 @@ export interface ICreateRowAttributes {
 
 export interface IApplication {
   id: number;
+  slug: string;
   title?: string;
   details?: string;
   sections?: number[];
@@ -103,5 +104,5 @@ export interface IErrorMessage {
 }
 
 export interface IExpandedShortUrl {
-  applicationId: number;
+  applicationSlug: string;
 }

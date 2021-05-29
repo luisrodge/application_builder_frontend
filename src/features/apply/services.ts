@@ -19,8 +19,8 @@ import { RootState } from "../../app/store";
 
 export const GetApplication = createAsyncThunk(
   "applications/get",
-  async (id: string) => {
-    const { data } = await api.get(`applications/${id}`);
+  async (slug: string) => {
+    const { data } = await api.get(`applications/${slug}`);
 
     const { entities } = normalize(data, ApplicationSchema);
 
@@ -32,7 +32,9 @@ export const GetApplication = createAsyncThunk(
       inputs: normedInputs,
     } = entities;
 
-    const application = applications![id];
+    const appliactionId = data.id;
+
+    const application = applications![appliactionId];
     const sections =
       normedSections === undefined
         ? []
@@ -87,13 +89,11 @@ export const CreateSubmission = createAsyncThunk<
   return {} as IApplication;
 });
 
-export const GetApplicationIdByShortUrl = createAsyncThunk(
+export const GetApplicationSlugByShortUrl = createAsyncThunk(
   "short_url/expand",
   async (shortUrl: string) => {
     const { data } = await api.get(`s/${shortUrl}`);
 
-    console.log("JEJ", data);
-
-    return { applicationId: data } as IExpandedShortUrl;
+    return { applicationSlug: data } as IExpandedShortUrl;
   }
 );

@@ -18,7 +18,7 @@ import {
   ISubmissionRowAttributes,
   ISubmissionSectionAttributes,
 } from "./apply.interface";
-import { GetApplication, GetApplicationIdByShortUrl } from "./services";
+import { GetApplication, GetApplicationSlugByShortUrl } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
@@ -42,7 +42,7 @@ interface ApplyState {
   sectionFields: ISectionFields;
   currentStep: number;
   submission: ICreateSubmissionAttributes;
-  redirectApplicationId?: number;
+  redirectApplicationSlug?: string;
 }
 
 const initialLoadingState = {
@@ -206,9 +206,9 @@ export const applySlice = createSlice({
     builder.addCase(GetApplication.rejected, (state) => {
       state.loadingStatuses.applicationLoading = "idle";
     });
-    builder.addCase(GetApplicationIdByShortUrl.fulfilled, (state, action) => {
-      const { applicationId } = action.payload;
-      state.redirectApplicationId = applicationId;
+    builder.addCase(GetApplicationSlugByShortUrl.fulfilled, (state, action) => {
+      const { applicationSlug } = action.payload;
+      state.redirectApplicationSlug = applicationSlug;
     });
   },
 });
@@ -233,8 +233,8 @@ export const selectLoadingStatuses = (state: RootState) =>
   state.apply.loadingStatuses;
 export const selectCurrentStep = (state: RootState) => state.apply.currentStep;
 export const selectFields = (state: RootState) => state.apply.sectionFields;
-export const selectRedirectId = (state: RootState) =>
-  state.apply.redirectApplicationId;
+export const selectRedirectSlug = (state: RootState) =>
+  state.apply.redirectApplicationSlug;
 
 export const selectActiveApplication = (state: RootState) =>
   state.apply.activeApplication;

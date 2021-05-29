@@ -35,14 +35,14 @@ export const SectionContainer = styled.div`
 export default function Apply() {
   const dispatch = useAppDispatch();
 
-  const { applicationId } = useParams<{ applicationId: string }>();
+  const { slug } = useParams<{ slug: string }>();
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const section = useAppSelector(selectActiveSection);
 
   useEffect(() => {
-    dispatch(GetApplication(applicationId));
-  }, [applicationId, dispatch]);
+    dispatch(GetApplication(slug));
+  }, [slug, dispatch]);
 
   if (
     loadingStatuses.applicationLoading === "pending" ||

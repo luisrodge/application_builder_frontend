@@ -5,8 +5,8 @@ import { blue } from "@ant-design/colors";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { GetApplicationIdByShortUrl } from "./services";
-import { selectRedirectId } from "./applySlice";
+import { GetApplicationSlugByShortUrl } from "./services";
+import { selectRedirectSlug } from "./applySlice";
 import { Spinner } from "../../components/Spinner";
 
 const { Title } = Typography;
@@ -29,19 +29,19 @@ function timeout(delay: number) {
 export default function ShortUrlRedirect() {
   const dispatch = useAppDispatch();
   const { shortUrl } = useParams<{ shortUrl: string }>();
-  const applicationId = useAppSelector(selectRedirectId);
+  const applicationSlug = useAppSelector(selectRedirectSlug);
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(GetApplicationIdByShortUrl(shortUrl));
+    dispatch(GetApplicationSlugByShortUrl(shortUrl));
   }, [dispatch, shortUrl]);
 
   const redirect = async () => {
     await timeout(1000);
-    history.push(`/applications/${applicationId}/apply`);
+    history.push(`/${applicationSlug}/apply`);
   };
 
-  if (applicationId) redirect();
+  if (applicationSlug) redirect();
 
   return (
     <>
