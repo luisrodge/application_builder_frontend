@@ -1,9 +1,12 @@
 export interface ICreateApplicationAttributes {
   title: string;
+  email: string;
   details?: string;
 }
 
-export interface ICreateSectionAttributes extends ICreateApplicationAttributes {
+export interface ICreateSectionAttributes {
+  title: string;
+  details?: string;
   numOfCols: number;
   applicationId: number;
 }

@@ -36,7 +36,7 @@ Finalize and ensure proper functionality (backend) of initial inputs:
 - Radio ✅
 - Signature
 
-## Email input modal
+## Email input modal ✅
 
 When someone visits a quik link, before they can submit their application we want to show
 a popup modal that will ask them for their email address. This is optional and the email collected
