@@ -101,6 +101,10 @@ export default function SectionList({ sections, disabled }: ISections) {
             )
           }
           icon={<PlusOutlined />}
+          style={{
+            paddingLeft: 50,
+            paddingRight: 50,
+          }}
         >
           Add Section
         </Button>
