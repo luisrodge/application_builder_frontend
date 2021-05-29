@@ -1,4 +1,4 @@
-import { Popconfirm, Button, message } from "antd";
+import { Popconfirm, Button } from "antd";
 import styled from "styled-components";
 import {
   CheckCircleOutlined,
