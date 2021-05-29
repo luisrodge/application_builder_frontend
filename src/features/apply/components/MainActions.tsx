@@ -1,4 +1,4 @@
-import { Popconfirm, Button, message } from "antd";
+import { Popconfirm, Button } from "antd";
 import styled from "styled-components";
 import {
   CheckCircleOutlined,
@@ -15,18 +15,15 @@ import {
   setActiveSection,
   setSubmissionAttributes,
 } from "../applySlice";
-import { CreateSubmission } from "../services";
+import { showModal } from "../../modal/modalSlice";
+import { MODAL_TYPES } from "../../../shared/constants";
 
-export const FooterContainer = styled.footer`
+export const Container = styled.footer`
   padding: 30px;
   text-align: right;
 `;
 
-interface IProps {
-  applicationId: string;
-}
-
-export default function Footer({ applicationId }: IProps) {
+export default function MainActions() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const currentStep = useAppSelector(selectCurrentStep);
@@ -44,21 +41,12 @@ export default function Footer({ applicationId }: IProps) {
     // Build out the submission object to POST
     dispatch(setSubmissionAttributes());
 
-    const resultAction = await dispatch(CreateSubmission());
-
-    if (CreateSubmission.fulfilled.match(resultAction)) {
-      history.push("/apply/success");
-    } else {
-      if (resultAction.payload) {
-        message.error(`Submission failed: ${resultAction.payload.message}`);
-      } else {
-        message.error(`Submission failed: ${resultAction.error.message}`);
-      }
-    }
+    // POST submission in email request modal
+    dispatch(showModal({ modalType: MODAL_TYPES.APPLICANT_EMAIL_REQUEST }));
   };
 
   return (
-    <FooterContainer>
+    <Container>
       <Popconfirm
         title="Are you sure？"
         okText="Yes"
@@ -103,6 +91,6 @@ export default function Footer({ applicationId }: IProps) {
           </Button>
         </Popconfirm>
       )}
-    </FooterContainer>
+    </Container>
   );
 }

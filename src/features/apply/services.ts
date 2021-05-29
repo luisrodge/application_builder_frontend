@@ -63,17 +63,19 @@ export const GetApplication = createAsyncThunk(
 
 export const CreateSubmission = createAsyncThunk<
   IApplication,
-  void,
+  string,
   {
     rejectValue: IErrorMessage;
     state: RootState;
   }
->("submissions/create", async (_, { rejectWithValue, getState }) => {
+>("submissions/create", async (email, { rejectWithValue, getState }) => {
   const { submission } = getState().apply;
+
+  const finalSubmission = { ...submission, email };
 
   const response = await axios.post(
     `${API_HOST}/submissions`,
-    serialize({ submission })
+    serialize({ submission: finalSubmission })
   );
 
   if (response.status !== 200) {

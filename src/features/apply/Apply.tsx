@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Spinner } from "../../components/Spinner";
 import { selectActiveSection, selectLoadingStatuses } from "./applySlice";
 import SectionForm from "./components/SectionForm";
-import StepsNavigation from "./components/StepsNavigation";
-import Footer from "./components/Footer";
+import SectionsNav from "./components/SectionsNav";
+import MainActions from "./components/MainActions";
 import { GetApplication } from "./services";
 
 export const Container = styled.div`
@@ -54,13 +54,13 @@ export default function Apply() {
     <Container>
       <ApplyContainer>
         <StepsContainer>
-          <StepsNavigation />
+          <SectionsNav />
         </StepsContainer>
         <SectionContainer>
           <SectionForm sectionId={section!.id} />
         </SectionContainer>
       </ApplyContainer>
-      <Footer applicationId={applicationId} />
+      <MainActions />
     </Container>
   );
 }
