@@ -53,6 +53,7 @@ export interface IDeleteColumnResult {
 export interface ISection {
   id: number;
   applicationId: number;
+  applicationSlug: string;
   title?: string;
   details?: string;
   numOfCols: number;

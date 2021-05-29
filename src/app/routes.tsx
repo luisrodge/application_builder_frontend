@@ -19,10 +19,10 @@ const Routes = () => (
     <Route path="/applications" exact>
       <ApplicationList />
     </Route>
-    <Route path="/applications/:applicationId" exact>
+    <Route path="/applications/:slug" exact>
       <ApplicationDesigner />
     </Route>
-    <Route path="/applications/:applicationId/sections/:sectionId" exact>
+    <Route path="/applications/:applicationSlug/sections/:sectionId" exact>
       <SectionDesigner />
     </Route>
     <Route path="/:slug/apply" exact>

@@ -20,8 +20,8 @@ const { Title, Text } = Typography;
 export default function SectionDesigner() {
   const dispatch = useAppDispatch();
 
-  const { sectionId, applicationId } =
-    useParams<{ sectionId: string; applicationId: string }>();
+  const { sectionId, applicationSlug } =
+    useParams<{ sectionId: string; applicationSlug: string }>();
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const section = useAppSelector(selectActiveSection);
@@ -35,7 +35,7 @@ export default function SectionDesigner() {
     return (
       <Redirect
         to={{
-          pathname: `/applications/${applicationId}`,
+          pathname: `/applications/${applicationSlug}`,
         }}
       />
     );
@@ -46,7 +46,7 @@ export default function SectionDesigner() {
       <Header
         drawerType={DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER}
         btnTitle="Add row to section"
-        applicationId={section && section.applicationId}
+        applicationSlug={section && section.applicationSlug}
       />
       {loadingStatuses.sectionLoading === "pending" ? (
         <Spinner marginTop={120} />

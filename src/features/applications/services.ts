@@ -30,8 +30,8 @@ export const GetApplications = createAsyncThunk(
 
 export const GetApplication = createAsyncThunk(
   "applications/get",
-  async (id: string) => {
-    const { data } = await api.get(`admin/applications/${id}`);
+  async (slug: string) => {
+    const { data } = await api.get(`admin/applications/${slug}`);
 
     const { entities } = normalize(data, ApplicationSchema);
 
@@ -43,7 +43,9 @@ export const GetApplication = createAsyncThunk(
       inputs: normedInputs,
     } = entities;
 
-    const application = applications![id];
+    const applicationId = data.id;
+
+    const application = applications![applicationId];
     const sections =
       normedSections === undefined
         ? []

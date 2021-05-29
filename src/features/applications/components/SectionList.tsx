@@ -60,7 +60,7 @@ export default function SectionList({ sections, disabled }: ISections) {
 
   const navigateToSection = (section: ISection) => {
     history.push(
-      `/applications/${section.applicationId}/sections/${section.id}`
+      `/applications/${section.applicationSlug}/sections/${section.id}`
     );
   };
 

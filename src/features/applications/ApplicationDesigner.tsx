@@ -16,14 +16,14 @@ const { Title } = Typography;
 export default function ApplicationDesigner() {
   const dispatch = useAppDispatch();
 
-  const { applicationId } = useParams<{ applicationId: string }>();
+  const { slug } = useParams<{ slug: string }>();
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const sections = useAppSelector(selectSections);
 
   useEffect(() => {
-    dispatch(GetApplication(applicationId));
-  }, [applicationId, dispatch]);
+    dispatch(GetApplication(slug));
+  }, [slug, dispatch]);
 
   return (
     <Layout>
