@@ -53,7 +53,7 @@ export default function ShortUrlRedirect() {
       <Content>
         <Spinner marginTop={0} delay={0} />
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Title level={3}>Redirecting to application</Title>
+          <Title level={4}>Redirecting to application</Title>
         </div>
       </Content>
     </>
