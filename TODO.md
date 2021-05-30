@@ -22,7 +22,7 @@ The homepage should contain no more than the following:
 ## Application Overview/Designer
 
 - Add ability to edit application (title, details)
-- Publish feature - an application should not be accessible by anyone until it has been published. Upon publishing a quik link (public link) will be generated and the user can then share this link across any medium.
+- Publish feature - an application should not be accessible by anyone until it has been published. Upon publishing a quik link (public link) will be generated and the user can then share this link across any medium. ✅
 
 ## Form Inputs
 
