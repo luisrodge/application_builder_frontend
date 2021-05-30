@@ -28,7 +28,7 @@ export default function SimpleHome() {
           Quikapply
         </Title>
         <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
-          Bring your paper <FileTextOutlined /> applications online - the{" "}
+          Bring your printed <FileTextOutlined /> applications online - the{" "}
           <strong>quik</strong> way!
         </Text>
         <Button
