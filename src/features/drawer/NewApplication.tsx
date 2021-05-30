@@ -20,7 +20,7 @@ export default function NewApplication() {
       const createdApplication = resultAction.payload;
       dispatch(hideDrawer());
       message.success("Application created");
-      history.push(`/applications/${createdApplication.id}`);
+      history.push(`/applications/${createdApplication.slug}`);
     } else {
       if (resultAction.payload) {
         message.error(`Create failed: ${resultAction.payload.message}`);
