@@ -1,7 +1,7 @@
 import { Typography, Button } from "antd";
 import styled from "styled-components";
 import { grey } from "@ant-design/colors";
-import { HeartTwoTone } from "@ant-design/icons";
+import { HeartTwoTone, FileTextOutlined } from "@ant-design/icons";
 
 import { useAppDispatch } from "../app/hooks";
 import { showDrawer } from "../features/drawer/drawerSlice";
@@ -28,7 +28,8 @@ export default function SimpleHome() {
           Quikapply
         </Title>
         <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
-          Design your formal applications - the <strong>quik</strong> way!
+          Take your paper <FileTextOutlined /> applications online - the{" "}
+          <strong>quik</strong> way!
         </Text>
         <Button
           type="primary"
