@@ -286,3 +286,21 @@ export const DeleteInput = createAsyncThunk<
   }
   return inputId;
 });
+
+export const Publish = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/publish", async (applicationSlug, thunkApi) => {
+  const response = await api.patch(
+    `admin/applications/${applicationSlug}/publish`
+  );
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to publish application.",
+    } as IErrorMessage);
+  }
+  return applicationSlug;
+});

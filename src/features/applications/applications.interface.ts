@@ -19,6 +19,7 @@ export interface ICreateRowAttributes {
 export interface IApplication {
   id: number;
   slug: string;
+  shortUrl: string;
   title?: string;
   details?: string;
   sections?: number[];
