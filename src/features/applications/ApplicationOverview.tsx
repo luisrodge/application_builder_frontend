@@ -4,11 +4,16 @@ import { useParams } from "react-router";
 
 import SectionList from "./components/SectionList";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectLoadingStatuses, selectSections } from "./applicationsSlice";
+import {
+  selectError,
+  selectLoadingStatuses,
+  selectSections,
+} from "./applicationsSlice";
 import Sidebar from "./components/OverviewSidebar";
 import { GetApplication } from "./services";
 import { Spinner } from "../../components/Spinner";
 import OverviewHeader from "./components/OverviewHeader";
+import NotFound from "../../components/NotFound";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -20,10 +25,13 @@ export default function ApplicationOverview() {
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const sections = useAppSelector(selectSections);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     dispatch(GetApplication(slug));
   }, [slug, dispatch]);
+
+  if (error && error.status === 404) return <NotFound />;
 
   return (
     <Layout>

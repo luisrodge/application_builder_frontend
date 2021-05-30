@@ -103,6 +103,7 @@ export interface ICreateInputAttributes {
 
 export interface IErrorMessage {
   message: string;
+  status?: number;
 }
 
 export interface IExpandedShortUrl {

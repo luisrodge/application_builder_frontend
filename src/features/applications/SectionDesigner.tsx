@@ -1,10 +1,11 @@
 import { Redirect, useParams } from "react-router-dom";
-import { Typography, message, Button } from "antd";
+import { Typography, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveSection,
+  selectError,
   selectLoadingStatuses,
 } from "./applicationsSlice";
 
@@ -27,13 +28,13 @@ export default function SectionDesigner() {
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const section = useAppSelector(selectActiveSection);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
     dispatch(GetSection(sectionId));
   }, [sectionId, dispatch]);
 
-  if (loadingStatuses.sectionLoading === "failed") {
-    message.error("Failed to load section");
+  if (error) {
     return (
       <Redirect
         to={{

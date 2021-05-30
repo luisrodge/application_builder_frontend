@@ -8,6 +8,7 @@ import {
   IRow,
   IInput,
   IApplication,
+  IErrorMessage,
 } from "./applications.interface";
 import {
   CreateApplication,
@@ -42,7 +43,7 @@ interface ApplicationState {
   activeColumn?: IColumn;
   activeInput?: IInput;
   inputs: IInput[];
-  error: string | null;
+  error: IErrorMessage | null;
   loadingStatuses: ILoadingState;
 }
 
@@ -83,9 +84,11 @@ export const applicationsSlice = createSlice({
     setActiveInput: (state, action: PayloadAction<IInput | undefined>) => {
       state.activeInput = action.payload;
     },
-
     resetSectionLoadingStatuses: (state) => {
       state.loadingStatuses.sectionLoading = "idle";
+    },
+    resetError: (state) => {
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -109,18 +112,23 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.applicationLoading = "succeeded";
       state.loadingStatuses.sectionLoading = "idle";
     });
+    builder.addCase(GetApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload;
+      state.loadingStatuses.applicationLoading = "failed";
+    });
     builder.addCase(GetApplications.rejected, (state, action) => {
       // state.error = action.payload.message;
       state.loadingStatuses.applicationLoading = "idle";
     });
     builder.addCase(CreateApplication.pending, (state) => {
+      state.error = null;
       state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(CreateApplication.fulfilled, (state) => {
       state.loadingStatuses.applicationLoading = "succeeded";
     });
     builder.addCase(CreateApplication.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
       state.loadingStatuses.applicationLoading = "idle";
     });
     builder.addCase(DeleteApplication.fulfilled, (state, action) => {
@@ -131,7 +139,7 @@ export const applicationsSlice = createSlice({
       state.applications = applications;
     });
     builder.addCase(DeleteApplication.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
     builder.addCase(CreateSection.fulfilled, (state, action) => {
       const section = action.payload;
@@ -139,7 +147,7 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.sectionLoading = "succeeded";
     });
     builder.addCase(CreateSection.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
       state.loadingStatuses.sectionLoading = "idle";
     });
     builder.addCase(GetSection.pending, (state) => {
@@ -156,8 +164,8 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.sectionLoading = "succeeded";
     });
     builder.addCase(GetSection.rejected, (state, action) => {
-      // state.error = action.payload.message;
-      state.loadingStatuses.sectionLoading = "failed";
+      if (action.payload) state.error = action.payload;
+      state.loadingStatuses.applicationLoading = "failed";
     });
     builder.addCase(DeleteSection.fulfilled, (state, action) => {
       const sectionId = action.payload;
@@ -167,7 +175,7 @@ export const applicationsSlice = createSlice({
       state.sections = sections;
     });
     builder.addCase(DeleteSection.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
     builder.addCase(CreateRow.fulfilled, (state, action) => {
       const { row, columns } = action.payload;
@@ -175,7 +183,7 @@ export const applicationsSlice = createSlice({
       state.columns.push(...columns);
     });
     builder.addCase(CreateRow.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
     builder.addCase(DeleteRow.fulfilled, (state, action) => {
       const rowId = action.payload;
@@ -185,7 +193,7 @@ export const applicationsSlice = createSlice({
       state.columns = columns;
     });
     builder.addCase(DeleteRow.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
     builder.addCase(DeleteColumn.fulfilled, (state, action) => {
       const { columnId, rowId } = action.payload;
@@ -200,14 +208,14 @@ export const applicationsSlice = createSlice({
       state.columns = columns;
     });
     builder.addCase(DeleteColumn.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
     builder.addCase(CreateInput.fulfilled, (state, action) => {
       const input = action.payload;
       state.inputs.push(input);
     });
     builder.addCase(CreateInput.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
     builder.addCase(DeleteInput.fulfilled, (state, action) => {
       const inputId = action.payload;
@@ -215,7 +223,7 @@ export const applicationsSlice = createSlice({
       state.inputs = inputs;
     });
     builder.addCase(DeleteInput.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
+      if (action.payload) state.error = action.payload;
     });
   },
 });
@@ -227,6 +235,7 @@ export const {
   setActiveInput,
   setActiveApplication,
   resetSectionLoadingStatuses,
+  resetError,
 } = applicationsSlice.actions;
 
 export const selectApplications = (state: RootState) =>
@@ -234,8 +243,10 @@ export const selectApplications = (state: RootState) =>
 export const selectSections = (state: RootState) => state.applications.sections;
 export const selectRows = (state: RootState) => state.applications.rows;
 export const selectColumns = (state: RootState) => state.applications.columns;
+export const selectInputs = (state: RootState) => state.applications.inputs;
 export const selectLoadingStatuses = (state: RootState) =>
   state.applications.loadingStatuses;
+export const selectError = (state: RootState) => state.applications.error;
 
 export const selectActiveApplication = (state: RootState) =>
   state.applications.activeApplication;

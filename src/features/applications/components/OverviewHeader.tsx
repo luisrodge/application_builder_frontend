@@ -9,7 +9,11 @@ import { blue } from "@ant-design/colors";
 import { DRAWER_TYPES } from "../../../shared/constants";
 import { showDrawer } from "../../drawer/drawerSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectActiveApplication } from "../applicationsSlice";
+import {
+  selectActiveApplication,
+  selectSections,
+  selectInputs,
+} from "../applicationsSlice";
 import { Publish } from "../services";
 import { useHistory } from "react-router";
 
@@ -20,6 +24,12 @@ export default function OverviewHeader() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const application = useAppSelector(selectActiveApplication);
+  const sections = useAppSelector(selectSections);
+  const inputs = useAppSelector(selectInputs);
+
+  let canPublish = false;
+
+  if (sections.length && inputs.length) canPublish = true;
 
   const publishApplication = async () => {
     const resultAction = await dispatch(Publish(application!.slug));
@@ -47,9 +57,7 @@ export default function OverviewHeader() {
       onOk() {
         publishApplication();
       },
-      onCancel() {
-        console.log("Cancel");
-      },
+      onCancel() {},
     });
   };
 
@@ -80,14 +88,16 @@ export default function OverviewHeader() {
           >
             Add Section
           </Button>
-          <Button
-            icon={<EyeOutlined />}
-            style={{ marginLeft: 20, background: blue[4] }}
-            type="primary"
-            onClick={showConfirm}
-          >
-            Publish
-          </Button>
+          {canPublish && (
+            <Button
+              icon={<EyeOutlined />}
+              style={{ marginLeft: 20, background: blue[4] }}
+              type="primary"
+              onClick={showConfirm}
+            >
+              Publish
+            </Button>
+          )}
         </div>
       </div>
     </Header>

@@ -35,7 +35,7 @@ export default function PublishSuccess() {
         <Alert
           message="Be sure to save your apply links somewhere. After leaving or reloading this page you won't have access to them again."
           type="info"
-          style={{ textAlign: "center" }}
+          style={{ textAlign: "center", fontWeight: "bold" }}
         />
       </div>
       <Container>

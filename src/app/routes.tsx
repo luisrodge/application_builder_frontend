@@ -8,6 +8,7 @@ import ApplySuccess from "../features/apply/ApplySuccess";
 import SimpleHome from "../components/SimpleHome";
 import ShortUrlRedirect from "../features/apply/ShortUrlRedirect";
 import PublishSuccess from "../features/apply/PublishSuccess";
+import NotFound from "../components/NotFound";
 
 const Routes = () => (
   <Switch>
@@ -35,6 +36,7 @@ const Routes = () => (
     <Route path="/:applicationSlug/published" exact>
       <PublishSuccess />
     </Route>
+    <Route component={NotFound} />
   </Switch>
 );
 
