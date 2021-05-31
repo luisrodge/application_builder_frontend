@@ -23,6 +23,7 @@ import {
   DeleteColumn,
   CreateInput,
   DeleteInput,
+  UpdateApplication,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -130,6 +131,13 @@ export const applicationsSlice = createSlice({
     builder.addCase(CreateApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
       state.loadingStatuses.applicationLoading = "idle";
+    });
+    builder.addCase(UpdateApplication.pending, (state) => {
+      state.loadingStatuses.applicationLoading = "pending";
+    });
+    builder.addCase(UpdateApplication.fulfilled, (state, action) => {
+      state.loadingStatuses.applicationLoading = "succeeded";
+      state.activeApplication = action.payload;
     });
     builder.addCase(DeleteApplication.fulfilled, (state, action) => {
       const applicationId = action.payload;

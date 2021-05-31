@@ -3,6 +3,7 @@ import {
   PlusOutlined,
   EyeOutlined,
   ExclamationCircleOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 
@@ -88,16 +89,30 @@ export default function OverviewHeader() {
           >
             Add Section
           </Button>
+
           {canPublish && (
             <Button
               icon={<EyeOutlined />}
-              style={{ marginLeft: 20, background: blue[4] }}
+              style={{ marginLeft: 20, marginRight: 20, background: blue[4] }}
               type="primary"
               onClick={showConfirm}
             >
               Publish
             </Button>
           )}
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() =>
+              dispatch(
+                showDrawer({
+                  drawerType: DRAWER_TYPES.APPLICATION_FORM_DRAWER,
+                })
+              )
+            }
+          >
+            Edit
+          </Button>
         </div>
       </div>
     </Header>

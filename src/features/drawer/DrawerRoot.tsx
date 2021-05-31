@@ -7,14 +7,14 @@ import { selectDrawer } from "./drawerSlice";
 import { DRAWER_TYPES } from "../../shared/constants";
 import InputPicker from "./InputPicker";
 import InputOptions from "./InputOptions";
-import NewApplication from "./NewApplication";
+import ApplicationForm from "./ApplicationForm";
 
 const {
   SECTION_LAYOUT_PICKER_DRAWER,
   ROW_LAYOUT_PICKER_DRAWER,
   INPUT_OPTIONS_DRAWER,
   INPUT_PICKER_DRAWER,
-  NEW_APPLICATION_DRAWER,
+  APPLICATION_FORM_DRAWER,
 } = DRAWER_TYPES;
 
 interface IDrawerComponents {
@@ -26,7 +26,7 @@ const DRAWER_COMPONENTS = {
   [ROW_LAYOUT_PICKER_DRAWER]: RowLayoutPicker,
   [INPUT_PICKER_DRAWER]: InputPicker,
   [INPUT_OPTIONS_DRAWER]: InputOptions,
-  [NEW_APPLICATION_DRAWER]: NewApplication,
+  [APPLICATION_FORM_DRAWER]: ApplicationForm,
 } as IDrawerComponents;
 
 export const DrawerTypes = Object.keys(DRAWER_COMPONENTS);

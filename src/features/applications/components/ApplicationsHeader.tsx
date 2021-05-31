@@ -27,7 +27,7 @@ export default function ApplicationsHeader() {
               onClick={() =>
                 dispatch(
                   showDrawer({
-                    drawerType: DRAWER_TYPES.NEW_APPLICATION_DRAWER,
+                    drawerType: DRAWER_TYPES.APPLICATION_FORM_DRAWER,
                   })
                 )
               }

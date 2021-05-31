@@ -17,6 +17,7 @@ import {
   IDeleteColumnResult,
   IInput,
   ICreateInputAttributes,
+  IUpdateApplicationAttributes,
 } from "./applications.interface";
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
@@ -96,6 +97,25 @@ export const CreateApplication = createAsyncThunk<
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to create application.",
+    } as IErrorMessage);
+  }
+  return response.data as IApplication;
+});
+
+export const UpdateApplication = createAsyncThunk<
+  IApplication,
+  IUpdateApplicationAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/update", async (application, thunkApi) => {
+  const response = await api.put(
+    `admin/applications/${application.id}`,
+    application
+  );
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to update application.",
     } as IErrorMessage);
   }
   return response.data as IApplication;
