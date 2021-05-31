@@ -8,6 +8,7 @@ import { DRAWER_TYPES } from "../../shared/constants";
 import InputPicker from "./InputPicker";
 import InputOptions from "./InputOptions";
 import ApplicationForm from "./ApplicationForm";
+import SectionForm from "./SectionForm";
 
 const {
   SECTION_LAYOUT_PICKER_DRAWER,
@@ -15,6 +16,7 @@ const {
   INPUT_OPTIONS_DRAWER,
   INPUT_PICKER_DRAWER,
   APPLICATION_FORM_DRAWER,
+  SECTION_FORM_DRAWER,
 } = DRAWER_TYPES;
 
 interface IDrawerComponents {
@@ -27,6 +29,7 @@ const DRAWER_COMPONENTS = {
   [INPUT_PICKER_DRAWER]: InputPicker,
   [INPUT_OPTIONS_DRAWER]: InputOptions,
   [APPLICATION_FORM_DRAWER]: ApplicationForm,
+  [SECTION_FORM_DRAWER]: SectionForm,
 } as IDrawerComponents;
 
 export const DrawerTypes = Object.keys(DRAWER_COMPONENTS);

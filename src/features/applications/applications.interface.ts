@@ -16,6 +16,12 @@ export interface ICreateSectionAttributes {
   applicationId: number;
 }
 
+export interface IUpdateSectionAttributes {
+  id: number;
+  title: string;
+  details?: string;
+}
+
 export interface ICreateRowAttributes {
   numOfCols: number;
   sectionId: number;

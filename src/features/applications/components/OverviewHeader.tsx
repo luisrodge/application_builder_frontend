@@ -93,7 +93,7 @@ export default function OverviewHeader() {
           {canPublish && (
             <Button
               icon={<EyeOutlined />}
-              style={{ marginLeft: 20, marginRight: 20, background: blue[4] }}
+              style={{ marginLeft: 20, background: blue[4] }}
               type="primary"
               onClick={showConfirm}
             >
@@ -102,6 +102,7 @@ export default function OverviewHeader() {
           )}
           <Button
             type="text"
+            style={{ marginLeft: 20 }}
             icon={<EditOutlined />}
             onClick={() =>
               dispatch(

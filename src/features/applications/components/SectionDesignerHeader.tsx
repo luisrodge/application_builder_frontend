@@ -6,6 +6,7 @@ import {
   PlusOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -84,20 +85,34 @@ export default function SectionDesignerHeader({
         <HeaderActionsContainer>
           <Button
             onClick={() => dispatch(showDrawer({ drawerType }))}
-            style={{ marginRight: 24 }}
+            style={{ marginRight: 20 }}
             icon={<PlusOutlined />}
           >
             {btnTitle}
           </Button>
           {drawerType === DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER && (
             <Button
+              type="text"
               icon={<CheckOutlined />}
               onClick={() => history.push(`/applications/${applicationSlug}`)}
-              type="text"
             >
               Done
             </Button>
           )}
+
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() =>
+              dispatch(
+                showDrawer({
+                  drawerType: DRAWER_TYPES.SECTION_FORM_DRAWER,
+                })
+              )
+            }
+          >
+            Edit
+          </Button>
 
           <Popconfirm
             title="Are you sure？"

@@ -20,10 +20,10 @@ export default function ApplicationForm() {
   const [form] = Form.useForm();
 
   const { isOpen } = useAppSelector(selectDrawer);
-  const { applicationLoading } = useAppSelector(selectLoadingStatuses);
+  const { applicationLoading, applicationUpdateLoading } = useAppSelector(
+    selectLoadingStatuses
+  );
   const application = useAppSelector(selectActiveApplication);
-
-  const loading = applicationLoading === "pending";
 
   const initialValues = {
     id: application?.id,
@@ -122,12 +122,20 @@ export default function ApplicationForm() {
 
         <Form.Item>
           {application ? (
-            <Button type="primary" htmlType="submit" loading={loading}>
-              {loading ? "Updating" : "Update"}
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={applicationUpdateLoading === "pending"}
+            >
+              {applicationUpdateLoading === "pending" ? "Updating" : "Update"}
             </Button>
           ) : (
-            <Button type="primary" htmlType="submit" loading={loading}>
-              {loading ? "Creating" : "Create"}
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={applicationLoading === "pending"}
+            >
+              {applicationLoading === "pending" ? "Creating" : "Create"}
             </Button>
           )}
         </Form.Item>
