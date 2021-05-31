@@ -63,7 +63,7 @@ function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
       dispatch(hideDrawers());
       message.success("Section created");
       history.push(
-        `/applications/${createdSection.applicationId}/sections/${createdSection.id}`
+        `/applications/${createdSection.applicationSlug}/sections/${createdSection.id}`
       );
     } else {
       if (resultAction.payload) {

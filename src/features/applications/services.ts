@@ -28,10 +28,15 @@ export const GetApplications = createAsyncThunk(
   }
 );
 
-export const GetApplication = createAsyncThunk(
-  "applications/get",
-  async (id: string) => {
-    const { data } = await api.get(`admin/applications/${id}`);
+export const GetApplication = createAsyncThunk<
+  IApplicationWithChildren,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/get", async (slug, thunkApi) => {
+  try {
+    const { data } = await api.get(`admin/applications/${slug}`);
 
     const { entities } = normalize(data, ApplicationSchema);
 
@@ -43,7 +48,9 @@ export const GetApplication = createAsyncThunk(
       inputs: normedInputs,
     } = entities;
 
-    const application = applications![id];
+    const applicationId = data.id;
+
+    const application = applications![applicationId];
     const sections =
       normedSections === undefined
         ? []
@@ -70,8 +77,13 @@ export const GetApplication = createAsyncThunk(
     };
 
     return applicationData as IApplicationWithChildren;
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to load application.",
+      status: error.response.status,
+    } as IErrorMessage);
   }
-);
+});
 
 export const CreateApplication = createAsyncThunk<
   IApplication,
@@ -128,48 +140,49 @@ export const GetSection = createAsyncThunk<
     rejectValue: IErrorMessage;
   }
 >("sections/get", async (id, thunkApi) => {
-  const { data, status } = await api.get(`admin/sections/${id}`);
+  try {
+    const { data } = await api.get(`admin/sections/${id}`);
 
-  if (status !== 200) {
+    const { entities } = normalize(data, SectionSchema);
+
+    const {
+      sections,
+      applications,
+      rows: normedRows,
+      columns: normedColumns,
+      inputs: normedInputs,
+    } = entities;
+    const section = sections![id];
+    const application = applications![section.application];
+
+    const rows =
+      normedRows === undefined
+        ? []
+        : Object.keys(normedRows).map((id) => normedRows[id]);
+    const columns =
+      normedColumns === undefined
+        ? []
+        : Object.keys(normedColumns).map((id) => normedColumns[id]);
+    const inputs =
+      normedInputs === undefined
+        ? []
+        : Object.keys(normedInputs).map((id) => normedInputs[id]);
+
+    const sectionData = {
+      section: section as ISection,
+      rows: rows as IRow[],
+      columns: columns as IColumn[],
+      inputs: inputs as IInput[],
+      application: application as IApplication,
+    };
+
+    return sectionData as ISectionWithChildren;
+  } catch (error) {
     return thunkApi.rejectWithValue({
-      message: "Failed to load section.",
+      message: "Failed to load application.",
+      status: error.response.status,
     } as IErrorMessage);
   }
-
-  const { entities } = normalize(data, SectionSchema);
-
-  const {
-    sections,
-    applications,
-    rows: normedRows,
-    columns: normedColumns,
-    inputs: normedInputs,
-  } = entities;
-  const section = sections![id];
-  const application = applications![section.application];
-
-  const rows =
-    normedRows === undefined
-      ? []
-      : Object.keys(normedRows).map((id) => normedRows[id]);
-  const columns =
-    normedColumns === undefined
-      ? []
-      : Object.keys(normedColumns).map((id) => normedColumns[id]);
-  const inputs =
-    normedInputs === undefined
-      ? []
-      : Object.keys(normedInputs).map((id) => normedInputs[id]);
-
-  const sectionData = {
-    section: section as ISection,
-    rows: rows as IRow[],
-    columns: columns as IColumn[],
-    inputs: inputs as IInput[],
-    application: application as IApplication,
-  };
-
-  return sectionData as ISectionWithChildren;
 });
 
 export const DeleteSection = createAsyncThunk<
@@ -283,4 +296,22 @@ export const DeleteInput = createAsyncThunk<
     } as IErrorMessage);
   }
   return inputId;
+});
+
+export const Publish = createAsyncThunk<
+  string,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/publish", async (applicationSlug, thunkApi) => {
+  const response = await api.patch(
+    `admin/applications/${applicationSlug}/publish`
+  );
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to publish application.",
+    } as IErrorMessage);
+  }
+  return applicationSlug;
 });

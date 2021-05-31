@@ -9,6 +9,7 @@ import {
   IApplicationWithChildren,
   IColumn,
   IErrorMessage,
+  IExpandedShortUrl,
   IInput,
   IRow,
   ISection,
@@ -16,10 +17,15 @@ import {
 import { ApplicationSchema } from "../applications/schemas";
 import { RootState } from "../../app/store";
 
-export const GetApplication = createAsyncThunk(
-  "applications/get",
-  async (id: string) => {
-    const { data } = await api.get(`applications/${id}`);
+export const GetApplication = createAsyncThunk<
+  IApplicationWithChildren,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/get", async (slug, thunkApi) => {
+  try {
+    const { data } = await api.get(`applications/${slug}`);
 
     const { entities } = normalize(data, ApplicationSchema);
 
@@ -31,7 +37,9 @@ export const GetApplication = createAsyncThunk(
       inputs: normedInputs,
     } = entities;
 
-    const application = applications![id];
+    const appliactionId = data.id;
+
+    const application = applications![appliactionId];
     const sections =
       normedSections === undefined
         ? []
@@ -58,8 +66,13 @@ export const GetApplication = createAsyncThunk(
     };
 
     return applicationData as IApplicationWithChildren;
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to load application.",
+      status: error.response.status,
+    } as IErrorMessage);
   }
-);
+});
 
 export const CreateSubmission = createAsyncThunk<
   IApplication,
@@ -85,3 +98,12 @@ export const CreateSubmission = createAsyncThunk<
   }
   return {} as IApplication;
 });
+
+export const GetApplicationSlugByShortUrl = createAsyncThunk(
+  "short_url/expand",
+  async (shortUrl: string) => {
+    const { data } = await api.get(`s/${shortUrl}`);
+
+    return { applicationSlug: data } as IExpandedShortUrl;
+  }
+);

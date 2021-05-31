@@ -18,6 +18,8 @@ export interface ICreateRowAttributes {
 
 export interface IApplication {
   id: number;
+  slug: string;
+  shortUrl: string;
   title?: string;
   details?: string;
   sections?: number[];
@@ -52,6 +54,7 @@ export interface IDeleteColumnResult {
 export interface ISection {
   id: number;
   applicationId: number;
+  applicationSlug: string;
   title?: string;
   details?: string;
   numOfCols: number;
@@ -100,4 +103,9 @@ export interface ICreateInputAttributes {
 
 export interface IErrorMessage {
   message: string;
+  status?: number;
+}
+
+export interface IExpandedShortUrl {
+  applicationSlug: string;
 }

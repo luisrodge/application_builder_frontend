@@ -1,32 +1,42 @@
 import { Switch, Route } from "react-router-dom";
 
 import ApplicationList from "../features/applications/ApplicationList";
-import ApplicationDesigner from "../features/applications/ApplicationDesigner";
+import ApplicationOverview from "../features/applications/ApplicationOverview";
 import SectionDesigner from "../features/applications/SectionDesigner";
 import Apply from "../features/apply/Apply";
 import ApplySuccess from "../features/apply/ApplySuccess";
 import SimpleHome from "../components/SimpleHome";
+import ShortUrlRedirect from "../features/apply/ShortUrlRedirect";
+import PublishSuccess from "../features/apply/PublishSuccess";
+import NotFound from "../components/NotFound";
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact>
       <SimpleHome />
     </Route>
+    <Route path="/s/:shortUrl" exact>
+      <ShortUrlRedirect />
+    </Route>
     <Route path="/applications" exact>
       <ApplicationList />
     </Route>
-    <Route path="/applications/:applicationId" exact>
-      <ApplicationDesigner />
+    <Route path="/applications/:slug" exact>
+      <ApplicationOverview />
     </Route>
-    <Route path="/applications/:applicationId/sections/:sectionId" exact>
+    <Route path="/applications/:applicationSlug/sections/:sectionId" exact>
       <SectionDesigner />
     </Route>
-    <Route path="/applications/:applicationId/apply" exact>
+    <Route path="/:slug/apply" exact>
       <Apply />
     </Route>
     <Route path="/apply/success" exact>
       <ApplySuccess />
     </Route>
+    <Route path="/:applicationSlug/published" exact>
+      <PublishSuccess />
+    </Route>
+    <Route component={NotFound} />
   </Switch>
 );
 

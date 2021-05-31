@@ -46,13 +46,13 @@ const BackContainer = styled.div`
 interface IProps {
   drawerType: string;
   btnTitle: string;
-  applicationId: number | undefined;
+  applicationSlug: string | undefined;
 }
 
 export default function SectionDesignerHeader({
   drawerType,
   btnTitle,
-  applicationId,
+  applicationSlug,
 }: IProps) {
   const section = useAppSelector(selectActiveSection);
   const application = useAppSelector(selectActiveApplication);
@@ -64,7 +64,7 @@ export default function SectionDesignerHeader({
 
     if (DeleteSection.fulfilled.match(resultAction)) {
       message.success("Section removed");
-      history.push(`/applications/${applicationId}`);
+      history.push(`/applications/${applicationSlug}`);
     } else {
       message.error("Failed to delete");
     }
@@ -75,7 +75,7 @@ export default function SectionDesignerHeader({
       <HeaderContent>
         <BackContainer>
           <Link
-            to={`/applications/${section?.applicationId}`}
+            to={`/applications/${section?.applicationSlug}`}
             style={{ color: "#FFF" }}
           >
             <ArrowLeftOutlined /> {application?.title}
@@ -92,8 +92,8 @@ export default function SectionDesignerHeader({
           {drawerType === DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER && (
             <Button
               icon={<CheckOutlined />}
-              style={{ marginRight: 24 }}
-              onClick={() => history.push(`/applications/${applicationId}`)}
+              onClick={() => history.push(`/applications/${applicationSlug}`)}
+              type="text"
             >
               Done
             </Button>
@@ -109,13 +109,6 @@ export default function SectionDesignerHeader({
               Remove
             </Button>
           </Popconfirm>
-
-          <Button
-            type="text"
-            onClick={() => history.push(`/applications/${applicationId}`)}
-          >
-            Cancel
-          </Button>
         </HeaderActionsContainer>
       </HeaderContent>
     </HeaderContainer>

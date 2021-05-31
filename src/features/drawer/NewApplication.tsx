@@ -6,13 +6,17 @@ import { ICreateApplicationAttributes } from "../applications/applications.inter
 
 import { hideDrawer, selectDrawer } from "./drawerSlice";
 import { CreateApplication } from "../applications/services";
+import { selectLoadingStatuses } from "../applications/applicationsSlice";
 
 export default function NewApplication() {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector(selectDrawer);
+  const { applicationLoading } = useAppSelector(selectLoadingStatuses);
   const history = useHistory();
 
   const [form] = Form.useForm();
+
+  const loading = applicationLoading === "pending";
 
   const onFinish = async (application: ICreateApplicationAttributes) => {
     const resultAction = await dispatch(CreateApplication(application));
@@ -20,7 +24,7 @@ export default function NewApplication() {
       const createdApplication = resultAction.payload;
       dispatch(hideDrawer());
       message.success("Application created");
-      history.push(`/applications/${createdApplication.id}`);
+      history.push(`/applications/${createdApplication.slug}`);
     } else {
       if (resultAction.payload) {
         message.error(`Create failed: ${resultAction.payload.message}`);
@@ -75,8 +79,8 @@ export default function NewApplication() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create
+          <Button type="primary" htmlType="submit" loading={loading}>
+            {loading ? "Creating" : "Create"}
           </Button>
         </Form.Item>
       </Form>

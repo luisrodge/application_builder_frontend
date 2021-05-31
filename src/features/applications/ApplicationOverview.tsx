@@ -4,32 +4,40 @@ import { useParams } from "react-router";
 
 import SectionList from "./components/SectionList";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectLoadingStatuses, selectSections } from "./applicationsSlice";
-import Sidebar from "./components/ApplicationDesignerSidebar";
+import {
+  selectError,
+  selectLoadingStatuses,
+  selectSections,
+} from "./applicationsSlice";
+import Sidebar from "./components/OverviewSidebar";
 import { GetApplication } from "./services";
 import { Spinner } from "../../components/Spinner";
-import ApplicationDesignerHeader from "./components/ApplicationDesignerHeader";
+import OverviewHeader from "./components/OverviewHeader";
+import NotFound from "../../components/NotFound";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
-export default function ApplicationDesigner() {
+export default function ApplicationOverview() {
   const dispatch = useAppDispatch();
 
-  const { applicationId } = useParams<{ applicationId: string }>();
+  const { slug } = useParams<{ slug: string }>();
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const sections = useAppSelector(selectSections);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
-    dispatch(GetApplication(applicationId));
-  }, [applicationId, dispatch]);
+    dispatch(GetApplication(slug));
+  }, [slug, dispatch]);
+
+  if (error && error.status === 404) return <NotFound />;
 
   return (
     <Layout>
       <Sidebar sections={sections} />
       <Layout className="site-layout" style={{ marginRight: 200 }}>
-        <ApplicationDesignerHeader />
+        <OverviewHeader />
 
         <Content
           style={{

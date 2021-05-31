@@ -4,11 +4,16 @@ import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Spinner } from "../../components/Spinner";
-import { selectActiveSection, selectLoadingStatuses } from "./applySlice";
+import {
+  selectActiveSection,
+  selectLoadingStatuses,
+  selectError,
+} from "./applySlice";
 import SectionForm from "./components/SectionForm";
 import SectionsNav from "./components/SectionsNav";
 import MainActions from "./components/MainActions";
 import { GetApplication } from "./services";
+import NotFound from "../../components/NotFound";
 
 export const Container = styled.div`
   display: flex;
@@ -35,20 +40,23 @@ export const SectionContainer = styled.div`
 export default function Apply() {
   const dispatch = useAppDispatch();
 
-  const { applicationId } = useParams<{ applicationId: string }>();
+  const { slug } = useParams<{ slug: string }>();
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
   const section = useAppSelector(selectActiveSection);
+  const error = useAppSelector(selectError);
 
   useEffect(() => {
-    dispatch(GetApplication(applicationId));
-  }, [applicationId, dispatch]);
+    dispatch(GetApplication(slug));
+  }, [slug, dispatch]);
 
   if (
     loadingStatuses.applicationLoading === "pending" ||
     loadingStatuses.applicationLoading === "idle"
   )
     return <Spinner />;
+
+  if (error && error.status === 404) return <NotFound />;
 
   return (
     <Container>

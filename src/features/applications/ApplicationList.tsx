@@ -46,7 +46,7 @@ export default function ApplicationList() {
             >
               <List.Item.Meta
                 title={
-                  <Link to={`/applications/${application.id}`}>
+                  <Link to={`/applications/${application.slug}`}>
                     {application.title}
                   </Link>
                 }
