@@ -64,9 +64,7 @@ export default function RowList({ sectionId, disabled }: IProps) {
 
   const addColumnToRow = async (column: ICreateColumnAttributes) => {
     const resultAction = await dispatch(CreateColumn(column));
-    if (CreateColumn.fulfilled.match(resultAction)) {
-      const createdColumn = resultAction.payload;
-    } else {
+    if (!CreateColumn.fulfilled.match(resultAction)) {
       if (resultAction.payload) {
         message.error(`Failed: ${resultAction.payload.message}`);
       } else {
