@@ -41,7 +41,7 @@ export default function SectionForm() {
 
   return (
     <Drawer
-      title="Update section"
+      title="Edit section"
       width={320}
       closable={false}
       onClose={onClose}
