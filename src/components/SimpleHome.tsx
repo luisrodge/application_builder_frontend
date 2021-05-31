@@ -1,6 +1,6 @@
 import { Typography, Button } from "antd";
 import styled from "styled-components";
-import { grey } from "@ant-design/colors";
+import { grey, blue } from "@ant-design/colors";
 import { HeartTwoTone, FileTextOutlined } from "@ant-design/icons";
 
 import { useAppDispatch } from "../app/hooks";
@@ -25,7 +25,7 @@ export default function SimpleHome() {
     <>
       <Container>
         <Title level={1} style={{ margin: 0, marginBottom: 3 }}>
-          Quikapply
+          <span style={{ color: blue.primary }}>Quik</span>apply
         </Title>
         <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
           Bring your printed <FileTextOutlined /> applications online - the{" "}
