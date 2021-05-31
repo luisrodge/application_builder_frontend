@@ -20,7 +20,7 @@ import { DRAWER_TYPES } from "../../shared/constants";
 import { ICreateSectionAttributes } from "../applications/applications.interface";
 import { CreateSection } from "../applications/services";
 
-const COLS_LIMIT = { ONE: 1, TWO: 2, THREE: 3 };
+const COLS_LIMIT = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4 };
 
 interface ISectionCardProps {
   $active: boolean;
@@ -138,7 +138,7 @@ export default function SectionLayoutPicker() {
             unsavedSection! && unsavedSection.numOfCols === COLS_LIMIT.ONE
           }
         >
-          <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
+          <AlignCenterOutlined style={{ fontSize: 60, color: grey.primary }} />
         </SectionCard>
       </Row>
       <br />
@@ -150,10 +150,10 @@ export default function SectionLayoutPicker() {
           }
         >
           <AlignCenterOutlined
-            style={{ fontSize: 80, marginRight: 8, color: grey.primary }}
+            style={{ fontSize: 60, marginRight: 8, color: grey.primary }}
           />
           <AlignCenterOutlined
-            style={{ fontSize: 80, marginLeft: 8, color: grey.primary }}
+            style={{ fontSize: 60, marginLeft: 8, color: grey.primary }}
           />
         </SectionCard>
       </Row>
@@ -166,18 +166,43 @@ export default function SectionLayoutPicker() {
           }
         >
           <AlignCenterOutlined
-            style={{ fontSize: 80, color: grey.primary }}
+            style={{ fontSize: 60, color: grey.primary }}
             color={blue.primary}
           />
           <AlignCenterOutlined
             style={{
-              fontSize: 80,
+              fontSize: 60,
               marginRight: 16,
               marginLeft: 16,
               color: grey.primary,
             }}
           />
-          <AlignCenterOutlined style={{ fontSize: 80, color: grey.primary }} />
+          <AlignCenterOutlined style={{ fontSize: 60, color: grey.primary }} />
+        </SectionCard>
+      </Row>
+      <br />
+      <Row>
+        <SectionCard
+          onClick={() => pickSection(COLS_LIMIT.FOUR)}
+          $active={
+            unsavedSection! && unsavedSection.numOfCols === COLS_LIMIT.FOUR
+          }
+        >
+          <AlignCenterOutlined
+            style={{ fontSize: 60, color: grey.primary, marginRight: 16 }}
+            color={blue.primary}
+          />
+          <AlignCenterOutlined
+            style={{
+              fontSize: 60,
+              marginRight: 16,
+              color: grey.primary,
+            }}
+          />
+          <AlignCenterOutlined
+            style={{ fontSize: 60, color: grey.primary, marginRight: 16 }}
+          />
+          <AlignCenterOutlined style={{ fontSize: 60, color: grey.primary }} />
         </SectionCard>
       </Row>
       <EnterSectionInfo unsavedSection={unsavedSection!} />

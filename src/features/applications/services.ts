@@ -19,6 +19,7 @@ import {
   ICreateInputAttributes,
   IUpdateApplicationAttributes,
   IUpdateSectionAttributes,
+  ICreateColumnAttributes,
 } from "./applications.interface";
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
@@ -351,4 +352,21 @@ export const Publish = createAsyncThunk<
     } as IErrorMessage);
   }
   return applicationSlug;
+});
+
+export const CreateColumn = createAsyncThunk<
+  IColumn,
+  ICreateColumnAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("columns/create", async (column, thunkApi) => {
+  const response = await api.post("admin/columns", column);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to add column to row",
+    } as IErrorMessage);
+  }
+
+  return response.data as IColumn;
 });

@@ -113,6 +113,11 @@ export interface ICreateInputAttributes {
   radioOptions?: IRadioOption[];
 }
 
+export interface ICreateColumnAttributes {
+  sectionId: number;
+  rowId: number;
+}
+
 export interface IErrorMessage {
   message: string;
   status?: number;

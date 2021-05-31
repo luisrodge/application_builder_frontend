@@ -118,7 +118,15 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
   };
 
   return (
-    <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
+    <Col
+      span={span}
+      style={{
+        display: "inline-flex",
+        alignSelf: "stretch",
+        marginTop: 10,
+        marginBottom: 10,
+      }}
+    >
       <Container
         $active={activeColumn! && activeColumn.id === column.id}
         $disabled={disabled!}
