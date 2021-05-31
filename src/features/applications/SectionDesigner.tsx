@@ -1,5 +1,5 @@
 import { Redirect, useParams } from "react-router-dom";
-import { Typography, Button } from "antd";
+import { Typography, Button, Divider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -59,8 +59,8 @@ export default function SectionDesigner() {
             <div style={{ marginTop: 70 }}></div>
             <Container>
               <Title level={4}>{section.title}</Title>
-              <Text>{section.details}</Text>
-
+              {section.details && <Text>{section.details}</Text>}
+              <Divider />
               <RowList sectionId={Number(sectionId)} />
               <Button
                 onClick={() =>

@@ -17,6 +17,8 @@ import {
   IDeleteColumnResult,
   IInput,
   ICreateInputAttributes,
+  IUpdateApplicationAttributes,
+  IUpdateSectionAttributes,
 } from "./applications.interface";
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
@@ -101,6 +103,25 @@ export const CreateApplication = createAsyncThunk<
   return response.data as IApplication;
 });
 
+export const UpdateApplication = createAsyncThunk<
+  IApplication,
+  IUpdateApplicationAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/update", async (application, thunkApi) => {
+  const response = await api.put(
+    `admin/applications/${application.id}`,
+    application
+  );
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to update application.",
+    } as IErrorMessage);
+  }
+  return response.data as IApplication;
+});
+
 export const DeleteApplication = createAsyncThunk<
   number,
   number,
@@ -128,6 +149,22 @@ export const CreateSection = createAsyncThunk<
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
       message: "Failed to create section.",
+    } as IErrorMessage);
+  }
+  return response.data as ISection;
+});
+
+export const UpdateSection = createAsyncThunk<
+  ISection,
+  IUpdateSectionAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("sections/update", async (section, thunkApi) => {
+  const response = await api.put(`admin/sections/${section.id}`, section);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to update section.",
     } as IErrorMessage);
   }
   return response.data as ISection;

@@ -23,12 +23,16 @@ import {
   DeleteColumn,
   CreateInput,
   DeleteInput,
+  UpdateApplication,
+  UpdateSection,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
 interface ILoadingState {
   sectionLoading: LoadingType;
+  sectionUpdateLoading: LoadingType;
+  applicationUpdateLoading: LoadingType;
   applicationLoading: LoadingType;
 }
 
@@ -131,6 +135,13 @@ export const applicationsSlice = createSlice({
       if (action.payload) state.error = action.payload;
       state.loadingStatuses.applicationLoading = "idle";
     });
+    builder.addCase(UpdateApplication.pending, (state) => {
+      state.loadingStatuses.applicationUpdateLoading = "pending";
+    });
+    builder.addCase(UpdateApplication.fulfilled, (state, action) => {
+      state.loadingStatuses.applicationUpdateLoading = "succeeded";
+      state.activeApplication = action.payload;
+    });
     builder.addCase(DeleteApplication.fulfilled, (state, action) => {
       const applicationId = action.payload;
       const applications = state.applications.filter(
@@ -149,6 +160,13 @@ export const applicationsSlice = createSlice({
     builder.addCase(CreateSection.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
       state.loadingStatuses.sectionLoading = "idle";
+    });
+    builder.addCase(UpdateSection.pending, (state) => {
+      state.loadingStatuses.sectionUpdateLoading = "pending";
+    });
+    builder.addCase(UpdateSection.fulfilled, (state, action) => {
+      state.loadingStatuses.sectionUpdateLoading = "succeeded";
+      state.activeSection = action.payload;
     });
     builder.addCase(GetSection.pending, (state) => {
       state.loadingStatuses.sectionLoading = "pending";

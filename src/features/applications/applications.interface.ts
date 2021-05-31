@@ -4,11 +4,22 @@ export interface ICreateApplicationAttributes {
   details?: string;
 }
 
+export interface IUpdateApplicationAttributes
+  extends ICreateApplicationAttributes {
+  id: number;
+}
+
 export interface ICreateSectionAttributes {
   title: string;
   details?: string;
   numOfCols: number;
   applicationId: number;
+}
+
+export interface IUpdateSectionAttributes {
+  id: number;
+  title: string;
+  details?: string;
 }
 
 export interface ICreateRowAttributes {
@@ -18,6 +29,7 @@ export interface ICreateRowAttributes {
 
 export interface IApplication {
   id: number;
+  email: string;
   slug: string;
   shortUrl: string;
   title?: string;
