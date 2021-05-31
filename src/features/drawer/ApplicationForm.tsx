@@ -117,7 +117,7 @@ export default function ApplicationForm() {
         </Form.Item>
 
         <Form.Item label="Details" name="details">
-          <Input.TextArea />
+          <Input.TextArea rows={3} />
         </Form.Item>
 
         <Form.Item>

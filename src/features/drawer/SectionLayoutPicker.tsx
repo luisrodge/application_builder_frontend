@@ -93,7 +93,7 @@ function EnterSectionInfo({ unsavedSection }: IEnterSectionInfoProps) {
         </Form.Item>
 
         <Form.Item label="Section details" name="details">
-          <Input.TextArea placeholder="Section details" />
+          <Input.TextArea placeholder="Section details" rows={4} />
         </Form.Item>
 
         <Form.Item>

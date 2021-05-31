@@ -59,7 +59,7 @@ export default function SectionForm() {
         </Form.Item>
 
         <Form.Item label="Details" name="details">
-          <Input.TextArea placeholder="Section details" />
+          <Input.TextArea placeholder="Section details" rows={4} />
         </Form.Item>
 
         <Form.Item>
