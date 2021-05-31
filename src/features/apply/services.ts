@@ -17,9 +17,14 @@ import {
 import { ApplicationSchema } from "../applications/schemas";
 import { RootState } from "../../app/store";
 
-export const GetApplication = createAsyncThunk(
-  "applications/get",
-  async (slug: string) => {
+export const GetApplication = createAsyncThunk<
+  IApplicationWithChildren,
+  string,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("applications/get", async (slug, thunkApi) => {
+  try {
     const { data } = await api.get(`applications/${slug}`);
 
     const { entities } = normalize(data, ApplicationSchema);
@@ -61,8 +66,13 @@ export const GetApplication = createAsyncThunk(
     };
 
     return applicationData as IApplicationWithChildren;
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to load application.",
+      status: error.response.status,
+    } as IErrorMessage);
   }
-);
+});
 
 export const CreateSubmission = createAsyncThunk<
   IApplication,

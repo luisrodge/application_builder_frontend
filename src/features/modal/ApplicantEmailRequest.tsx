@@ -59,6 +59,7 @@ export default function ApplicantEmailRequest() {
         requiredMark="optional"
       >
         <Alert
+          showIcon
           message="Entering your email address will allow us to send you a copy of your submission."
           type="info"
           style={{ fontSize: 12 }}

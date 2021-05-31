@@ -8,6 +8,7 @@ import {
   IRow,
   IInput,
   IApplication,
+  IErrorMessage,
 } from "../applications/applications.interface";
 import {
   IFieldData,
@@ -37,7 +38,7 @@ interface ApplyState {
   activeColumn?: IColumn;
   activeInput?: IInput;
   inputs: IInput[];
-  error: string | null;
+  error: IErrorMessage | null;
   loadingStatuses: ILoadingState;
   sectionFields: ISectionFields;
   currentStep: number;
@@ -203,8 +204,9 @@ export const applySlice = createSlice({
       }
       state.sectionFields = sectionFields;
     });
-    builder.addCase(GetApplication.rejected, (state) => {
-      state.loadingStatuses.applicationLoading = "idle";
+    builder.addCase(GetApplication.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload;
+      state.loadingStatuses.applicationLoading = "failed";
     });
     builder.addCase(GetApplicationSlugByShortUrl.fulfilled, (state, action) => {
       const { applicationSlug } = action.payload;
@@ -235,6 +237,7 @@ export const selectCurrentStep = (state: RootState) => state.apply.currentStep;
 export const selectFields = (state: RootState) => state.apply.sectionFields;
 export const selectRedirectSlug = (state: RootState) =>
   state.apply.redirectApplicationSlug;
+export const selectError = (state: RootState) => state.apply.error;
 
 export const selectActiveApplication = (state: RootState) =>
   state.apply.activeApplication;
