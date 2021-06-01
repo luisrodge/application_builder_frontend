@@ -46,4 +46,6 @@ will be used to email them a copy of their submitted application. (pdf, file att
 
 The last section on each application should be the terms of service and any additional policies. This would also be the place for any other additional details that the applicant should be aware of before submitting.
 
+For this section we'd want to have a rich text editor like draftjs.
+
 We may also want to place the signature input here.
