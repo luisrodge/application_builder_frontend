@@ -102,7 +102,7 @@ export default function OverviewHeader() {
           )}
           <Button
             type="text"
-            style={{ marginLeft: 20 }}
+            style={{ marginLeft: 20, color: "#fff" }}
             icon={<EditOutlined />}
             onClick={() =>
               dispatch(

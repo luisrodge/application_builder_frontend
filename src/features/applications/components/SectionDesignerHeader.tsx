@@ -93,6 +93,7 @@ export default function SectionDesignerHeader({
           {drawerType === DRAWER_TYPES.ROW_LAYOUT_PICKER_DRAWER && (
             <Button
               type="text"
+              style={{ color: "#fff" }}
               icon={<CheckOutlined />}
               onClick={() => history.push(`/applications/${applicationSlug}`)}
             >
@@ -103,6 +104,7 @@ export default function SectionDesignerHeader({
           <Button
             type="text"
             icon={<EditOutlined />}
+            style={{ color: "#fff" }}
             onClick={() =>
               dispatch(
                 showDrawer({
@@ -120,7 +122,11 @@ export default function SectionDesignerHeader({
             cancelText="No"
             onConfirm={onDeleteSection}
           >
-            <Button type="text" icon={<DeleteOutlined />}>
+            <Button
+              type="text"
+              icon={<DeleteOutlined />}
+              style={{ color: "#fff" }}
+            >
               Remove
             </Button>
           </Popconfirm>
