@@ -41,7 +41,10 @@ export default function ColumnItem({ span, column }: IProps) {
   const isEmpty = input === undefined;
 
   return (
-    <Col span={span} style={{ display: "inline-flex", alignSelf: "stretch" }}>
+    <Col
+      span={span}
+      style={{ display: "inline-flex", alignSelf: "stretch", marginBottom: 20 }}
+    >
       <Container>
         <InnerContainer>
           {isEmpty ? (

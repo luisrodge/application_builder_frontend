@@ -73,7 +73,7 @@ export default function SectionDesigner() {
                 style={{
                   paddingLeft: 50,
                   paddingRight: 50,
-                  marginTop: 20,
+                  marginTop: 30,
                   marginBottom: 20,
                 }}
                 icon={<PlusOutlined />}
