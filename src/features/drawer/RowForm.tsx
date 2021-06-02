@@ -1,7 +1,7 @@
 import { Drawer, Form, Input, Button, message } from "antd";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { hideDrawer, selectDrawer, hideDrawers } from "./drawerSlice";
+import { selectDrawer, hideDrawers } from "./drawerSlice";
 import {
   selectActiveRow,
   selectLoadingStatuses,

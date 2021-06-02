@@ -66,9 +66,7 @@ export default function SectionDesigner() {
             >
               <Row gutter={GUTTER.lg} style={{ textAlign: "left" }}>
                 <Col span={24}>
-                  <Title level={4} style={{ margin: 0 }}>
-                    {section.title}
-                  </Title>
+                  <Title level={4}>{section.title}</Title>
                   {section.details && <Text>{section.details}</Text>}
                 </Col>
               </Row>

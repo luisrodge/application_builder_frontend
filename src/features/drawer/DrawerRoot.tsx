@@ -11,7 +11,6 @@ import SectionForm from "./SectionForm";
 import RowForm from "./RowForm";
 
 const {
-  SECTION_LAYOUT_PICKER_DRAWER,
   ROW_LAYOUT_PICKER_DRAWER,
   INPUT_OPTIONS_DRAWER,
   INPUT_PICKER_DRAWER,

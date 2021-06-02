@@ -33,6 +33,7 @@ type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
 interface ILoadingState {
   sectionLoading: LoadingType;
+  sectionCreateLoading: LoadingType;
   sectionUpdateLoading: LoadingType;
   rowUpdateLoading: LoadingType;
   applicationUpdateLoading: LoadingType;
@@ -156,14 +157,17 @@ export const applicationsSlice = createSlice({
     builder.addCase(DeleteApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
     });
+    builder.addCase(CreateSection.pending, (state) => {
+      state.loadingStatuses.sectionCreateLoading = "pending";
+    });
     builder.addCase(CreateSection.fulfilled, (state, action) => {
       const section = action.payload;
       state.sections.push(section);
-      state.loadingStatuses.sectionLoading = "succeeded";
+      state.loadingStatuses.sectionCreateLoading = "succeeded";
     });
     builder.addCase(CreateSection.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
-      state.loadingStatuses.sectionLoading = "idle";
+      state.loadingStatuses.sectionCreateLoading = "failed";
     });
     builder.addCase(UpdateSection.pending, (state) => {
       state.loadingStatuses.sectionUpdateLoading = "pending";

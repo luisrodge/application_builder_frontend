@@ -2,7 +2,7 @@ import { Drawer, Form, Input, Button, message } from "antd";
 import { useHistory } from "react-router";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { hideDrawer, selectDrawer, hideDrawers } from "./drawerSlice";
+import { selectDrawer, hideDrawers } from "./drawerSlice";
 import {
   selectActiveApplication,
   selectActiveSection,
@@ -19,7 +19,9 @@ export default function SectionForm() {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
 
-  const { sectionUpdateLoading } = useAppSelector(selectLoadingStatuses);
+  const { sectionUpdateLoading, sectionCreateLoading } = useAppSelector(
+    selectLoadingStatuses
+  );
   const { isOpen } = useAppSelector(selectDrawer);
   const activeApplication = useAppSelector(selectActiveApplication)!;
   const activeSection = useAppSelector(selectActiveSection);
@@ -92,7 +94,11 @@ export default function SectionForm() {
         form={form}
         onFinish={activeSection ? update : create}
       >
-        <Form.Item label="Title" name="title" required>
+        <Form.Item
+          label="Title"
+          name="title"
+          rules={[{ required: true, message: "Title is required" }]}
+        >
           <Input placeholder="Section title" />
         </Form.Item>
 
@@ -101,13 +107,23 @@ export default function SectionForm() {
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={sectionUpdateLoading === "pending"}
-          >
-            {sectionUpdateLoading === "pending" ? "Updating" : "Update"}
-          </Button>
+          {activeSection ? (
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={sectionUpdateLoading === "pending"}
+            >
+              {sectionUpdateLoading === "pending" ? "Updating" : "Update"}
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={sectionCreateLoading === "pending"}
+            >
+              {sectionCreateLoading === "pending" ? "Creating" : "Create"}
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </Drawer>
