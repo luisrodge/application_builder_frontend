@@ -50,6 +50,7 @@ const InputContainer = styled.div`
   width: 100%;
   position: relative;
   padding: 24px 0;
+  text-align: left;
   &:hover ${RemoveInputIcon} {
     display: inherit;
   }
