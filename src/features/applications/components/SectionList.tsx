@@ -96,7 +96,7 @@ export default function SectionList({ sections, disabled }: ISections) {
           onClick={() =>
             dispatch(
               showDrawer({
-                drawerType: DRAWER_TYPES.SECTION_LAYOUT_PICKER_DRAWER,
+                drawerType: DRAWER_TYPES.SECTION_FORM_DRAWER,
               })
             )
           }

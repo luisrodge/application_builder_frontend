@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 
-import SectionLayoutPicker from "./SectionLayoutPicker";
 import RowLayoutPicker from "./RowLayoutPicker";
 import { useAppSelector } from "../../app/hooks";
 import { selectDrawer } from "./drawerSlice";
@@ -26,7 +25,6 @@ interface IDrawerComponents {
 }
 
 const DRAWER_COMPONENTS = {
-  [SECTION_LAYOUT_PICKER_DRAWER]: SectionLayoutPicker,
   [ROW_LAYOUT_PICKER_DRAWER]: RowLayoutPicker,
   [INPUT_PICKER_DRAWER]: InputPicker,
   [INPUT_OPTIONS_DRAWER]: InputOptions,

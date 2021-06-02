@@ -107,6 +107,7 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.applicationLoading = "succeeded";
     });
     builder.addCase(GetApplication.pending, (state) => {
+      state.activeSection = undefined;
       state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(GetApplication.fulfilled, (state, action) => {
@@ -168,8 +169,8 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.sectionUpdateLoading = "pending";
     });
     builder.addCase(UpdateSection.fulfilled, (state, action) => {
-      state.loadingStatuses.sectionUpdateLoading = "succeeded";
       state.activeSection = action.payload;
+      state.loadingStatuses.sectionUpdateLoading = "succeeded";
     });
     builder.addCase(GetSection.pending, (state) => {
       state.loadingStatuses.sectionLoading = "pending";

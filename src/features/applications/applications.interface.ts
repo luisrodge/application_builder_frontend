@@ -12,14 +12,11 @@ export interface IUpdateApplicationAttributes
 export interface ICreateSectionAttributes {
   title: string;
   details?: string;
-  numOfCols: number;
   applicationId: number;
 }
 
-export interface IUpdateSectionAttributes {
+export interface IUpdateSectionAttributes extends ICreateSectionAttributes {
   id: number;
-  title: string;
-  details?: string;
 }
 
 export interface IUpdateRowAttributes extends IUpdateSectionAttributes {}
@@ -73,7 +70,6 @@ export interface ISection {
   applicationSlug: string;
   title?: string;
   details?: string;
-  numOfCols: number;
   rows?: number[];
 }
 
