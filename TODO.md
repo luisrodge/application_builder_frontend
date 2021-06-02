@@ -17,11 +17,11 @@ The homepage should contain no more than the following:
 
 ## Section Designer
 
-- Add ability to edit section (title, details)
+- Add ability to edit section (title, details) ✅
 
 ## Application Overview/Designer
 
-- Add ability to edit application (title, details)
+- Add ability to edit application (title, details) ✅
 - Publish feature - an application should not be accessible by anyone until it has been published. Upon publishing a quik link (public link) will be generated and the user can then share this link across any medium. ✅
 
 ## Form Inputs
@@ -41,3 +41,11 @@ Finalize and ensure proper functionality (backend) of initial inputs:
 When someone visits a quik link, before they can submit their application we want to show
 a popup modal that will ask them for their email address. This is optional and the email collected
 will be used to email them a copy of their submitted application. (pdf, file attachments)
+
+## Terms of Service and Policies
+
+The last section on each application should be the terms of service and any additional policies. This would also be the place for any other additional details that the applicant should be aware of before submitting.
+
+For this section we'd want to have a rich text editor like draftjs.
+
+We may also want to place the signature input here.

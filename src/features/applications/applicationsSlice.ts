@@ -26,13 +26,16 @@ import {
   UpdateApplication,
   UpdateSection,
   CreateColumn,
+  UpdateRow,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
 interface ILoadingState {
   sectionLoading: LoadingType;
+  sectionCreateLoading: LoadingType;
   sectionUpdateLoading: LoadingType;
+  rowUpdateLoading: LoadingType;
   applicationUpdateLoading: LoadingType;
   applicationLoading: LoadingType;
 }
@@ -105,6 +108,7 @@ export const applicationsSlice = createSlice({
       state.loadingStatuses.applicationLoading = "succeeded";
     });
     builder.addCase(GetApplication.pending, (state) => {
+      state.activeSection = undefined;
       state.loadingStatuses.applicationLoading = "pending";
     });
     builder.addCase(GetApplication.fulfilled, (state, action) => {
@@ -153,21 +157,24 @@ export const applicationsSlice = createSlice({
     builder.addCase(DeleteApplication.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
     });
+    builder.addCase(CreateSection.pending, (state) => {
+      state.loadingStatuses.sectionCreateLoading = "pending";
+    });
     builder.addCase(CreateSection.fulfilled, (state, action) => {
       const section = action.payload;
       state.sections.push(section);
-      state.loadingStatuses.sectionLoading = "succeeded";
+      state.loadingStatuses.sectionCreateLoading = "succeeded";
     });
     builder.addCase(CreateSection.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
-      state.loadingStatuses.sectionLoading = "idle";
+      state.loadingStatuses.sectionCreateLoading = "failed";
     });
     builder.addCase(UpdateSection.pending, (state) => {
       state.loadingStatuses.sectionUpdateLoading = "pending";
     });
     builder.addCase(UpdateSection.fulfilled, (state, action) => {
-      state.loadingStatuses.sectionUpdateLoading = "succeeded";
       state.activeSection = action.payload;
+      state.loadingStatuses.sectionUpdateLoading = "succeeded";
     });
     builder.addCase(GetSection.pending, (state) => {
       state.loadingStatuses.sectionLoading = "pending";
@@ -203,6 +210,19 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(CreateRow.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
+    });
+    builder.addCase(UpdateRow.pending, (state) => {
+      state.loadingStatuses.rowUpdateLoading = "pending";
+    });
+    builder.addCase(UpdateRow.fulfilled, (state, action) => {
+      const updatedRow = action.payload;
+      const rowIndex = state.rows.findIndex((row) => row.id === updatedRow.id);
+      state.rows[rowIndex] = updatedRow;
+      state.loadingStatuses.rowUpdateLoading = "succeeded";
+    });
+    builder.addCase(UpdateRow.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload;
+      state.loadingStatuses.rowUpdateLoading = "failed";
     });
     builder.addCase(DeleteRow.fulfilled, (state, action) => {
       const rowId = action.payload;

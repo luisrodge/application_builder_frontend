@@ -9,6 +9,7 @@ const RadioInput = ({ input, disabled }: IInputProps) => {
     <>
       <Form.Item
         label={input.label}
+        labelCol={{ span: 24 }}
         style={{ marginBottom: 0 }}
         name={input.name}
       >
