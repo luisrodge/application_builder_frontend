@@ -1,5 +1,5 @@
 import { Redirect, useParams } from "react-router-dom";
-import { Typography, Button, Divider } from "antd";
+import { Typography, Button, Row, Col } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { GetSection } from "./services";
 import { Spinner } from "../../components/Spinner";
 import { showDrawer } from "../drawer/drawerSlice";
+import { GUTTER } from "../../shared/theme";
 
 const { Title, Text } = Typography;
 
@@ -56,11 +57,23 @@ export default function SectionDesigner() {
       ) : (
         section && (
           <>
-            <div style={{ marginTop: 70 }}></div>
+            <div
+              style={{
+                background: "#FFF",
+                marginTop: 74,
+                padding: "12px 20px",
+              }}
+            >
+              <Row gutter={GUTTER.lg} style={{ textAlign: "left" }}>
+                <Col span={24}>
+                  <Title level={4} style={{ margin: 0 }}>
+                    {section.title}
+                  </Title>
+                  {section.details && <Text>{section.details}</Text>}
+                </Col>
+              </Row>
+            </div>
             <Container>
-              <Title level={4}>{section.title}</Title>
-              {section.details && <Text>{section.details}</Text>}
-              <Divider />
               <RowList sectionId={Number(sectionId)} />
               <Button
                 onClick={() =>

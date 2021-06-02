@@ -20,6 +20,7 @@ import {
   IUpdateApplicationAttributes,
   IUpdateSectionAttributes,
   ICreateColumnAttributes,
+  IUpdateRowAttributes,
 } from "./applications.interface";
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
@@ -269,6 +270,22 @@ export const CreateRow = createAsyncThunk<
   };
 
   return rowData as IRowWithChildren;
+});
+
+export const UpdateRow = createAsyncThunk<
+  IRow,
+  IUpdateRowAttributes,
+  {
+    rejectValue: IErrorMessage;
+  }
+>("rows/update", async (row, thunkApi) => {
+  const response = await api.put(`admin/rows/${row.id}`, row);
+  if (response.status !== 200) {
+    return thunkApi.rejectWithValue({
+      message: "Failed to update row.",
+    } as IErrorMessage);
+  }
+  return response.data as IRow;
 });
 
 export const DeleteRow = createAsyncThunk<

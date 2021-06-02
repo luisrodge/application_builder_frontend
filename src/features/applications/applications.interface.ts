@@ -22,9 +22,13 @@ export interface IUpdateSectionAttributes {
   details?: string;
 }
 
+export interface IUpdateRowAttributes extends IUpdateSectionAttributes {}
+
 export interface ICreateRowAttributes {
   numOfCols: number;
   sectionId: number;
+  title?: string;
+  details?: string;
 }
 
 export interface IApplication {
@@ -78,6 +82,8 @@ export interface IRow {
   sectionId: number;
   numOfCols?: number;
   columns?: number[];
+  title?: string;
+  details?: string;
 }
 
 export interface IColumn {

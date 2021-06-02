@@ -26,6 +26,7 @@ import {
   UpdateApplication,
   UpdateSection,
   CreateColumn,
+  UpdateRow,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -33,6 +34,7 @@ type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 interface ILoadingState {
   sectionLoading: LoadingType;
   sectionUpdateLoading: LoadingType;
+  rowUpdateLoading: LoadingType;
   applicationUpdateLoading: LoadingType;
   applicationLoading: LoadingType;
 }
@@ -203,6 +205,19 @@ export const applicationsSlice = createSlice({
     });
     builder.addCase(CreateRow.rejected, (state, action) => {
       if (action.payload) state.error = action.payload;
+    });
+    builder.addCase(UpdateRow.pending, (state) => {
+      state.loadingStatuses.rowUpdateLoading = "pending";
+    });
+    builder.addCase(UpdateRow.fulfilled, (state, action) => {
+      const updatedRow = action.payload;
+      const rowIndex = state.rows.findIndex((row) => row.id === updatedRow.id);
+      state.rows[rowIndex] = updatedRow;
+      state.loadingStatuses.rowUpdateLoading = "succeeded";
+    });
+    builder.addCase(UpdateRow.rejected, (state, action) => {
+      if (action.payload) state.error = action.payload;
+      state.loadingStatuses.rowUpdateLoading = "failed";
     });
     builder.addCase(DeleteRow.fulfilled, (state, action) => {
       const rowId = action.payload;

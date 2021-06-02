@@ -1,13 +1,23 @@
-import { Card, Row, message } from "antd";
+import { Card, Row, message, Form, Drawer, Input, Button } from "antd";
 import { AlignCenterOutlined } from "@ant-design/icons";
 import { blue, grey } from "@ant-design/colors";
 import styled from "styled-components";
 
 import DrawerContainer from "./DrawerContainer";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { selectDrawer, hideDrawer } from "./drawerSlice";
+import {
+  selectDrawer,
+  hideDrawer,
+  selectChildDrawer,
+  hideDrawers,
+  hideChildDrawer,
+  showChildDrawer,
+} from "./drawerSlice";
 import { selectActiveSection } from "../applications/applicationsSlice";
 import { CreateRow } from "../applications/services";
+import { ICreateRowAttributes } from "../applications/applications.interface";
+import { useState } from "react";
+import { DRAWER_TYPES } from "../../shared/constants";
 
 const SectionCard = styled(Card)`
   width: 100%;
@@ -18,22 +28,81 @@ const SectionCard = styled(Card)`
   }
 `;
 
-export default function RowLayoutPicker() {
-  const { isOpen } = useAppSelector(selectDrawer);
-  const section = useAppSelector(selectActiveSection);
+interface IEnterRowInfoProps {
+  unsavedRow: ICreateRowAttributes;
+}
 
+function EnterRowInfo({ unsavedRow }: IEnterRowInfoProps) {
+  const { isOpen } = useAppSelector(selectChildDrawer);
   const dispatch = useAppDispatch();
+  const [form] = Form.useForm();
 
-  const pickRow = async (numOfCols: number) => {
-    const newRow = { numOfCols, sectionId: section!.id };
+  const onFinish = async (values: any) => {
+    const newRow = {
+      ...unsavedRow,
+      ...values,
+    } as ICreateRowAttributes;
+
     const resultAction = await dispatch(CreateRow(newRow));
 
     if (CreateRow.fulfilled.match(resultAction)) {
-      dispatch(hideDrawer());
+      dispatch(hideDrawers());
       message.success("Row added to section");
     } else {
       message.error(`Failed to add row`);
     }
+  };
+
+  const onClose = () => {
+    form.resetFields();
+    dispatch(hideChildDrawer());
+  };
+
+  return (
+    <Drawer
+      title="Enter row details"
+      width={320}
+      closable={false}
+      onClose={onClose}
+      visible={isOpen}
+    >
+      <Form name="basic" layout="vertical" form={form} onFinish={onFinish}>
+        <Form.Item label="Row title" name="title">
+          <Input placeholder="title" />
+        </Form.Item>
+
+        <Form.Item label="Row details" name="details">
+          <Input.TextArea placeholder="details" rows={4} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Done
+          </Button>
+        </Form.Item>
+      </Form>
+    </Drawer>
+  );
+}
+
+export default function RowLayoutPicker() {
+  const { isOpen } = useAppSelector(selectDrawer);
+  const section = useAppSelector(selectActiveSection);
+  const [unsavedRow, setUnsavedRow] = useState<ICreateRowAttributes>();
+
+  const dispatch = useAppDispatch();
+
+  const pickRow = async (numOfCols: number) => {
+    setUnsavedRow({
+      title: "",
+      details: "",
+      numOfCols,
+      sectionId: section!.id,
+    });
+
+    dispatch(
+      showChildDrawer({ drawerType: DRAWER_TYPES.ENTER_SECTION_INFO_DRAWER })
+    );
   };
 
   return (
@@ -97,6 +166,7 @@ export default function RowLayoutPicker() {
           <AlignCenterOutlined style={{ fontSize: 60, color: grey.primary }} />
         </SectionCard>
       </Row>
+      <EnterRowInfo unsavedRow={unsavedRow!} />
     </DrawerContainer>
   );
 }
