@@ -9,6 +9,7 @@ export interface IUpdateApplicationAttributes
   id: number;
   terms?: string;
   policies?: string;
+  signatureEnabled: boolean;
 }
 
 export interface ICreateSectionAttributes {
@@ -40,6 +41,7 @@ export interface IApplication {
   terms?: string;
   policies?: string;
   sections?: number[];
+  signatureEnabled: boolean;
 }
 
 export interface IApplicationWithChildren {

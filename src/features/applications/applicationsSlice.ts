@@ -91,6 +91,13 @@ export const applicationsSlice = createSlice({
       if (state.activeApplication)
         state.activeApplication.policies = action.payload;
     },
+    setApplicationSignatureRequired: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      if (state.activeApplication)
+        state.activeApplication.signatureEnabled = action.payload;
+    },
     setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
       state.activeSection = action.payload;
     },
@@ -295,6 +302,7 @@ export const {
   resetError,
   setApplicationTerms,
   setApplicationPolicies,
+  setApplicationSignatureRequired,
 } = applicationsSlice.actions;
 
 export const selectApplications = (state: RootState) =>

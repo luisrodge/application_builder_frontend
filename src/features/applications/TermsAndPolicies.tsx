@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Typography, message, Divider } from "antd";
+import { Typography, message, Divider, Radio } from "antd";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import ReactQuill from "react-quill";
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveApplication,
   setApplicationPolicies,
+  setApplicationSignatureRequired,
   setApplicationTerms,
 } from "./applicationsSlice";
 import Header from "./components/Header";
@@ -87,6 +88,20 @@ export default function TermsAndPolicies() {
               value={activeApplication?.policies}
               onChange={(values) => dispatch(setApplicationPolicies(values))}
             />
+            <br />
+            <Title level={4}>Require signature?</Title>
+            <Radio
+              checked={activeApplication?.signatureEnabled}
+              onChange={() => dispatch(setApplicationSignatureRequired(true))}
+            >
+              Enabled
+            </Radio>
+            <Radio
+              checked={!activeApplication?.signatureEnabled}
+              onChange={() => dispatch(setApplicationSignatureRequired(false))}
+            >
+              Disabled
+            </Radio>
           </RichContainer>
           <PreviewContainer>
             {activeApplication?.terms && Parser(activeApplication?.terms)}
