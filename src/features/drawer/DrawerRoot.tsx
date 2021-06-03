@@ -9,6 +9,7 @@ import InputOptions from "./InputOptions";
 import ApplicationForm from "./ApplicationForm";
 import SectionForm from "./SectionForm";
 import RowForm from "./RowForm";
+import Signature from "./Signature";
 
 const {
   ROW_LAYOUT_PICKER_DRAWER,
@@ -17,6 +18,7 @@ const {
   APPLICATION_FORM_DRAWER,
   SECTION_FORM_DRAWER,
   ROW_FORM_DRAWER,
+  SIGNATURE_DRAWER,
 } = DRAWER_TYPES;
 
 interface IDrawerComponents {
@@ -30,6 +32,7 @@ const DRAWER_COMPONENTS = {
   [APPLICATION_FORM_DRAWER]: ApplicationForm,
   [SECTION_FORM_DRAWER]: SectionForm,
   [ROW_FORM_DRAWER]: RowForm,
+  [SIGNATURE_DRAWER]: Signature,
 } as IDrawerComponents;
 
 export const DrawerTypes = Object.keys(DRAWER_COMPONENTS);

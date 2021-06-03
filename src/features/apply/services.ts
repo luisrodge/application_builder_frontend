@@ -74,17 +74,22 @@ export const GetApplication = createAsyncThunk<
   }
 });
 
+interface ICreateSubmissionParams {
+  email?: string;
+  signature?: string;
+}
+
 export const CreateSubmission = createAsyncThunk<
   IApplication,
-  string,
+  ICreateSubmissionParams,
   {
     rejectValue: IErrorMessage;
     state: RootState;
   }
->("submissions/create", async (email, { rejectWithValue, getState }) => {
+>("submissions/create", async (params, { rejectWithValue, getState }) => {
   const { submission } = getState().apply;
 
-  const finalSubmission = { ...submission, email };
+  const finalSubmission = { ...submission, ...params };
 
   const response = await axios.post(
     `${API_HOST}/submissions`,

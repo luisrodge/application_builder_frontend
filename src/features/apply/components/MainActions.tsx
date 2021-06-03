@@ -16,7 +16,9 @@ import {
   setSubmissionAttributes,
 } from "../applySlice";
 import { showModal } from "../../modal/modalSlice";
-import { MODAL_TYPES } from "../../../shared/constants";
+import { DRAWER_TYPES, MODAL_TYPES } from "../../../shared/constants";
+import { showDrawer } from "../../drawer/drawerSlice";
+import { DrawerTypes } from "../../drawer/DrawerRoot";
 
 export const Container = styled.footer`
   padding: 30px;
@@ -42,7 +44,8 @@ export default function MainActions() {
     dispatch(setSubmissionAttributes());
 
     // POST submission in email request modal
-    dispatch(showModal({ modalType: MODAL_TYPES.APPLICANT_EMAIL_REQUEST }));
+    // dispatch(showModal({ modalType: MODAL_TYPES.APPLICANT_EMAIL_REQUEST }));
+    dispatch(showDrawer({ drawerType: DRAWER_TYPES.SIGNATURE_DRAWER }));
   };
 
   return (

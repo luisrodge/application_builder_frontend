@@ -15,7 +15,7 @@ export default function ApplicantEmailRequest() {
 
   const submitApplication = async () => {
     const email = form.getFieldValue("email");
-    const resultAction = await dispatch(CreateSubmission(email));
+    const resultAction = await dispatch(CreateSubmission({ email }));
 
     if (CreateSubmission.fulfilled.match(resultAction)) {
       dispatch(hideModal());
