@@ -9,6 +9,7 @@ import SimpleHome from "../components/SimpleHome";
 import ShortUrlRedirect from "../features/apply/ShortUrlRedirect";
 import PublishSuccess from "../features/apply/PublishSuccess";
 import NotFound from "../components/NotFound";
+import TermsAndPolicies from "../features/applications/TermsAndPolicies";
 
 const Routes = () => (
   <Switch>
@@ -26,6 +27,9 @@ const Routes = () => (
     </Route>
     <Route path="/applications/:applicationSlug/sections/:sectionId" exact>
       <SectionDesigner />
+    </Route>
+    <Route path="/applications/:applicationSlug/terms-and-policies" exact>
+      <TermsAndPolicies />
     </Route>
     <Route path="/:slug/apply" exact>
       <Apply />

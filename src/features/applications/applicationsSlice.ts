@@ -80,6 +80,17 @@ export const applicationsSlice = createSlice({
     ) => {
       state.activeApplication = action.payload;
     },
+    setApplicationTerms: (state, action: PayloadAction<string | undefined>) => {
+      if (state.activeApplication)
+        state.activeApplication.terms = action.payload;
+    },
+    setApplicationPolicies: (
+      state,
+      action: PayloadAction<string | undefined>
+    ) => {
+      if (state.activeApplication)
+        state.activeApplication.policies = action.payload;
+    },
     setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
       state.activeSection = action.payload;
     },
@@ -282,6 +293,8 @@ export const {
   setActiveApplication,
   resetSectionLoadingStatuses,
   resetError,
+  setApplicationTerms,
+  setApplicationPolicies,
 } = applicationsSlice.actions;
 
 export const selectApplications = (state: RootState) =>

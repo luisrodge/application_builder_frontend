@@ -7,6 +7,8 @@ export interface ICreateApplicationAttributes {
 export interface IUpdateApplicationAttributes
   extends ICreateApplicationAttributes {
   id: number;
+  terms?: string;
+  policies?: string;
 }
 
 export interface ICreateSectionAttributes {
@@ -35,6 +37,8 @@ export interface IApplication {
   shortUrl: string;
   title?: string;
   details?: string;
+  terms?: string;
+  policies?: string;
   sections?: number[];
 }
 

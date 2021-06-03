@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import SectionList from "./components/SectionList";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
+  selectActiveApplication,
   selectError,
   selectLoadingStatuses,
   selectSections,
@@ -24,6 +25,7 @@ export default function ApplicationOverview() {
   const { slug } = useParams<{ slug: string }>();
 
   const loadingStatuses = useAppSelector(selectLoadingStatuses);
+  const activeApplication = useAppSelector(selectActiveApplication);
   const sections = useAppSelector(selectSections);
   const error = useAppSelector(selectError);
 
@@ -35,7 +37,7 @@ export default function ApplicationOverview() {
 
   return (
     <Layout>
-      <Sidebar sections={sections} />
+      <Sidebar activeApplication={activeApplication} sections={sections} />
       <Layout className="site-layout" style={{ marginRight: 200 }}>
         <OverviewHeader />
 
