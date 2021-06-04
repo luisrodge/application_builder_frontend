@@ -78,14 +78,14 @@ export default function TermsAndPolicies() {
             <Title level={4}>Terms</Title>
             <ReactQuill
               theme="snow"
-              value={activeApplication?.terms}
+              value={activeApplication?.terms || ""}
               onChange={(values) => dispatch(setApplicationTerms(values))}
             />
             <br />
             <Title level={4}>Policies</Title>
             <ReactQuill
               theme="snow"
-              value={activeApplication?.policies}
+              value={activeApplication?.policies || ""}
               onChange={(values) => dispatch(setApplicationPolicies(values))}
             />
             <br />
