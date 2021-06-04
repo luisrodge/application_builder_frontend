@@ -15,10 +15,8 @@ import {
   setActiveSection,
   setSubmissionAttributes,
 } from "../applySlice";
-import { showModal } from "../../modal/modalSlice";
-import { DRAWER_TYPES, MODAL_TYPES } from "../../../shared/constants";
+import { DRAWER_TYPES } from "../../../shared/constants";
 import { showDrawer } from "../../drawer/drawerSlice";
-import { DrawerTypes } from "../../drawer/DrawerRoot";
 
 export const Container = styled.footer`
   padding: 30px;
