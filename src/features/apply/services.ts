@@ -8,6 +8,7 @@ import {
   IApplication,
   IApplicationWithChildren,
   IColumn,
+  ICreateSubmissionParams,
   IErrorMessage,
   IExpandedShortUrl,
   IInput,
@@ -73,11 +74,6 @@ export const GetApplication = createAsyncThunk<
     } as IErrorMessage);
   }
 });
-
-interface ICreateSubmissionParams {
-  email?: string;
-  signature?: string;
-}
 
 export const CreateSubmission = createAsyncThunk<
   IApplication,

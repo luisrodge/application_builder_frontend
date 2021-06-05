@@ -134,3 +134,8 @@ export interface IErrorMessage {
 export interface IExpandedShortUrl {
   applicationSlug: string;
 }
+
+export interface ICreateSubmissionParams {
+  email?: string;
+  signature?: string;
+}

@@ -32,22 +32,17 @@ export default function ApplicantEmailRequest() {
 
   return (
     <Modal
-      width={400}
+      width={450}
       style={{ top: 40 }}
       visible={isOpen}
-      title="Just one more thing"
+      title="Send in your application"
       okText="Submit Application"
       cancelButtonProps={{ style: { display: "none" } }}
       onOk={submitApplication}
       onCancel={() => dispatch(hideModal())}
       closable={true}
       footer={[
-        <Button
-          key="link"
-          type="primary"
-          onClick={submitApplication}
-          icon={<SendOutlined />}
-        >
+        <Button key="link" type="primary" icon={<SendOutlined />}>
           Submit Application
         </Button>,
       ]}

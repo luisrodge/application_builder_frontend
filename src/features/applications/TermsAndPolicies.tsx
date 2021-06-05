@@ -23,6 +23,7 @@ const Container = styled.div`
   width: 1200px;
   margin: 0 auto;
   margin-top: 120px;
+  padding-bottom: 80px;
 `;
 
 const InnerContainer = styled.div`
