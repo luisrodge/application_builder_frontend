@@ -4,7 +4,7 @@ import { blue } from "@ant-design/colors";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { ISection } from "../applications.interface";
+import { IApplication, ISection } from "../applications.interface";
 
 const { Sider } = Layout;
 
@@ -16,10 +16,14 @@ const MenuLink = styled(Link)`
 `;
 
 interface IProps {
+  activeApplication?: IApplication;
   sections: ISection[];
 }
 
-export default function OverviewSidebar({ sections }: IProps) {
+export default function OverviewSidebar({
+  sections,
+  activeApplication,
+}: IProps) {
   return (
     <Sider
       theme="light"
@@ -53,6 +57,17 @@ export default function OverviewSidebar({ sections }: IProps) {
             </MenuLink>
           </Menu.Item>
         ))}
+        <Menu.Item
+          key="terms-and-policies"
+          style={{ background: blue[6], marginBottom: 0, marginTop: 0 }}
+        >
+          <MenuLink
+            to={`/applications/${activeApplication?.slug}/terms-and-policies`}
+          >
+            <EditOutlined />
+            <span>Terms & Policies</span>
+          </MenuLink>
+        </Menu.Item>
       </Menu>
     </Sider>
   );

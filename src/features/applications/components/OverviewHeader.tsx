@@ -6,6 +6,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
+import { useHistory } from "react-router";
 
 import { DRAWER_TYPES } from "../../../shared/constants";
 import { showDrawer } from "../../drawer/drawerSlice";
@@ -16,7 +17,6 @@ import {
   selectInputs,
 } from "../applicationsSlice";
 import { Publish } from "../services";
-import { useHistory } from "react-router";
 
 const { Header } = Layout;
 const { confirm } = Modal;

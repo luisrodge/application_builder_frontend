@@ -15,8 +15,8 @@ import {
   setActiveSection,
   setSubmissionAttributes,
 } from "../applySlice";
-import { showModal } from "../../modal/modalSlice";
-import { MODAL_TYPES } from "../../../shared/constants";
+import { DRAWER_TYPES } from "../../../shared/constants";
+import { showDrawer } from "../../drawer/drawerSlice";
 
 export const Container = styled.footer`
   padding: 30px;
@@ -37,12 +37,11 @@ export default function MainActions() {
     dispatch(setActiveSection(sections[newStep]));
   };
 
-  const submitApplication = async () => {
+  const submit = async () => {
     // Build out the submission object to POST
     dispatch(setSubmissionAttributes());
 
-    // POST submission in email request modal
-    dispatch(showModal({ modalType: MODAL_TYPES.APPLICANT_EMAIL_REQUEST }));
+    dispatch(showDrawer({ drawerType: DRAWER_TYPES.SIGNATURE_DRAWER }));
   };
 
   return (
@@ -76,20 +75,14 @@ export default function MainActions() {
         </Button>
       )}
       {isFinalStep && (
-        <Popconfirm
-          title="Are you sure？"
-          okText="Yes"
-          cancelText="No"
-          onConfirm={submitApplication}
+        <Button
+          type="primary"
+          style={{ width: 220 }}
+          icon={<CheckCircleOutlined />}
+          onClick={submit}
         >
-          <Button
-            type="primary"
-            style={{ width: 220 }}
-            icon={<CheckCircleOutlined />}
-          >
-            Confirm & Submit
-          </Button>
-        </Popconfirm>
+          Ready to submit
+        </Button>
       )}
     </Container>
   );

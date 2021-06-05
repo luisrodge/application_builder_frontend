@@ -164,7 +164,7 @@ export default function ColumnItem({ span, column, row, disabled }: IProps) {
                   <RemoveInputIcon onClick={() => removeInput(input!.id)} />
                 </Tooltip>
               )}
-              <InputRoot input={input!} />
+              <InputRoot input={input!} designerActive={true} />
             </InputContainer>
           )}
         </InnerContainer>

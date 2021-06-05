@@ -19,13 +19,18 @@ import {
   ISubmissionRowAttributes,
   ISubmissionSectionAttributes,
 } from "./apply.interface";
-import { GetApplication, GetApplicationSlugByShortUrl } from "./services";
+import {
+  CreateSubmission,
+  GetApplication,
+  GetApplicationSlugByShortUrl,
+} from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
 interface ILoadingState {
   sectionLoading: LoadingType;
   applicationLoading: LoadingType;
+  applySubmitLoading: LoadingType;
 }
 
 interface ApplyState {
@@ -67,6 +72,9 @@ const initialState: ApplyState = {
   sectionFields: {},
   currentStep: 0,
   submission: {} as ICreateSubmissionAttributes,
+  activeApplication: undefined,
+  activeSection: undefined,
+  redirectApplicationSlug: "",
 };
 
 export const applySlice = createSlice({
@@ -140,13 +148,13 @@ export const applySlice = createSlice({
             const value =
               field?.value.hasOwnProperty("fileList") &&
               field?.value.fileList.length
-                ? field?.value.fileList[0].name
+                ? field?.value.fileList.slice(-1)[0].name
                 : field?.value;
 
             const file =
               field?.value.hasOwnProperty("fileList") &&
               field?.value.fileList.length
-                ? field?.value.fileList[0]
+                ? field?.value.fileList.slice(-1)[0]
                 : undefined;
 
             const filledInputAttributes = {
@@ -177,6 +185,15 @@ export const applySlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(CreateSubmission.pending, (state) => {
+      state.loadingStatuses.applySubmitLoading = "pending";
+    });
+    builder.addCase(CreateSubmission.fulfilled, (state) => {
+      Object.assign(state, initialState);
+    });
+    builder.addCase(CreateSubmission.rejected, (state) => {
+      state.loadingStatuses.applySubmitLoading = "failed";
+    });
     builder.addCase(GetApplication.pending, (state) => {
       state.loadingStatuses.applicationLoading = "pending";
     });
@@ -286,6 +303,16 @@ export const selectSectionFields = (
   createSelector(
     [(state: RootState) => state.apply.sectionFields],
     (sectionFields: ISectionFields) => sectionFields[sectionId]
+  );
+
+export const selectSectionField = (
+  sectionId: number,
+  name: string
+): Selector<IFieldData | undefined> =>
+  createSelector(
+    [(state: RootState) => state.apply.sectionFields],
+    (fields: ISectionFields) =>
+      fields[sectionId].find((field) => field.name[0] === name)
   );
 
 export default applySlice.reducer;

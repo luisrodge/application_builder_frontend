@@ -13,7 +13,7 @@ const FullViewContainer = styled.div`
 
 const SpinnerContainer = styled.div`
   background: #fff;
-  padding: 12px 50px;
+  padding: 30px 50px;
   border-radius: 4px;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
@@ -26,7 +26,7 @@ const FullViewInnerContainer = styled.div`
   justify-content: center;
   z-index: 1000;
   border-radius: 4;
-  height: 100%;
+  height: 300px;
 `;
 
 interface ISpinnerProps {
@@ -40,12 +40,16 @@ export const Spinner = ({ marginTop = 50, delay = 500 }: ISpinnerProps) => (
   </div>
 );
 
-export const FullViewSpinner = () => (
+interface IFullViewSpinnerProps {
+  text: string;
+}
+
+export const FullViewSpinner = ({ text }: IFullViewSpinnerProps) => (
   <FullViewContainer>
     <FullViewInnerContainer>
       <SpinnerContainer>
         <Spin size="large" />
-        <p style={{ margin: 0 }}>Creating...</p>
+        <p style={{ margin: 0, fontWeight: "bold" }}>{text}</p>
       </SpinnerContainer>
     </FullViewInnerContainer>
   </FullViewContainer>

@@ -39,9 +39,11 @@ export default function ApplicationForm() {
     if (CreateApplication.fulfilled.match(resultAction)) {
       const createdApplication = resultAction.payload;
       dispatch(hideDrawer());
+      form.resetFields();
       message.success("Application created");
       history.push(`/applications/${createdApplication.slug}`);
     } else {
+      form.resetFields();
       if (resultAction.payload) {
         message.error(`Create failed: ${resultAction.payload.message}`);
       } else {
@@ -56,12 +58,15 @@ export default function ApplicationForm() {
     const updateData = { ...applicationUpdateData, id: application!.id };
 
     const resultAction = await dispatch(UpdateApplication(updateData));
+
     if (UpdateApplication.fulfilled.match(resultAction)) {
       const updatedApplication = resultAction.payload;
       dispatch(hideDrawer());
+      form.resetFields();
       message.success("Application updated");
       history.push(`/applications/${updatedApplication.slug}`);
     } else {
+      form.resetFields();
       if (resultAction.payload) {
         message.error(`Update failed: ${resultAction.payload.message}`);
       } else {

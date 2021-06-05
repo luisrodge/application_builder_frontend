@@ -27,6 +27,7 @@ import {
   UpdateSection,
   CreateColumn,
   UpdateRow,
+  Publish,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -38,6 +39,7 @@ interface ILoadingState {
   rowUpdateLoading: LoadingType;
   applicationUpdateLoading: LoadingType;
   applicationLoading: LoadingType;
+  publishLoading: LoadingType;
 }
 
 interface ApplicationState {
@@ -68,6 +70,8 @@ const initialState: ApplicationState = {
   inputs: [],
   error: null,
   loadingStatuses: initialLoadingState,
+  activeApplication: undefined,
+  activeSection: undefined,
 };
 
 export const applicationsSlice = createSlice({
@@ -79,6 +83,24 @@ export const applicationsSlice = createSlice({
       action: PayloadAction<IApplication | undefined>
     ) => {
       state.activeApplication = action.payload;
+    },
+    setApplicationTerms: (state, action: PayloadAction<string | undefined>) => {
+      if (state.activeApplication)
+        state.activeApplication.terms = action.payload;
+    },
+    setApplicationPolicies: (
+      state,
+      action: PayloadAction<string | undefined>
+    ) => {
+      if (state.activeApplication)
+        state.activeApplication.policies = action.payload;
+    },
+    setApplicationSignatureRequired: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      if (state.activeApplication)
+        state.activeApplication.signatureEnabled = action.payload;
     },
     setActiveSection: (state, action: PayloadAction<ISection | undefined>) => {
       state.activeSection = action.payload;
@@ -98,8 +120,17 @@ export const applicationsSlice = createSlice({
     resetError: (state) => {
       state.error = null;
     },
+    resetState: (state) => {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: (builder) => {
+    builder.addCase(Publish.pending, (state) => {
+      state.loadingStatuses.publishLoading = "pending";
+    });
+    builder.addCase(Publish.fulfilled, (state) => {
+      Object.assign(state, initialState);
+    });
     builder.addCase(GetApplications.pending, (state) => {
       state.loadingStatuses.applicationLoading = "pending";
     });
@@ -282,6 +313,10 @@ export const {
   setActiveApplication,
   resetSectionLoadingStatuses,
   resetError,
+  setApplicationTerms,
+  setApplicationPolicies,
+  setApplicationSignatureRequired,
+  resetState,
 } = applicationsSlice.actions;
 
 export const selectApplications = (state: RootState) =>
