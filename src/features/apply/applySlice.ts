@@ -72,6 +72,9 @@ const initialState: ApplyState = {
   sectionFields: {},
   currentStep: 0,
   submission: {} as ICreateSubmissionAttributes,
+  activeApplication: undefined,
+  activeSection: undefined,
+  redirectApplicationSlug: "",
 };
 
 export const applySlice = createSlice({
@@ -186,7 +189,7 @@ export const applySlice = createSlice({
       state.loadingStatuses.applySubmitLoading = "pending";
     });
     builder.addCase(CreateSubmission.fulfilled, (state) => {
-      state.loadingStatuses.applySubmitLoading = "succeeded";
+      Object.assign(state, initialState);
     });
     builder.addCase(CreateSubmission.rejected, (state) => {
       state.loadingStatuses.applySubmitLoading = "failed";

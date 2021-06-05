@@ -27,6 +27,7 @@ import {
   UpdateSection,
   CreateColumn,
   UpdateRow,
+  Publish,
 } from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
@@ -38,6 +39,7 @@ interface ILoadingState {
   rowUpdateLoading: LoadingType;
   applicationUpdateLoading: LoadingType;
   applicationLoading: LoadingType;
+  publishLoading: LoadingType;
 }
 
 interface ApplicationState {
@@ -68,6 +70,8 @@ const initialState: ApplicationState = {
   inputs: [],
   error: null,
   loadingStatuses: initialLoadingState,
+  activeApplication: undefined,
+  activeSection: undefined,
 };
 
 export const applicationsSlice = createSlice({
@@ -116,8 +120,17 @@ export const applicationsSlice = createSlice({
     resetError: (state) => {
       state.error = null;
     },
+    resetState: (state) => {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: (builder) => {
+    builder.addCase(Publish.pending, (state) => {
+      state.loadingStatuses.publishLoading = "pending";
+    });
+    builder.addCase(Publish.fulfilled, (state) => {
+      Object.assign(state, initialState);
+    });
     builder.addCase(GetApplications.pending, (state) => {
       state.loadingStatuses.applicationLoading = "pending";
     });
@@ -303,6 +316,7 @@ export const {
   setApplicationTerms,
   setApplicationPolicies,
   setApplicationSignatureRequired,
+  resetState,
 } = applicationsSlice.actions;
 
 export const selectApplications = (state: RootState) =>
