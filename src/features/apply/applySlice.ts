@@ -148,13 +148,13 @@ export const applySlice = createSlice({
             const value =
               field?.value.hasOwnProperty("fileList") &&
               field?.value.fileList.length
-                ? field?.value.fileList[0].name
+                ? field?.value.fileList.slice(-1)[0].name
                 : field?.value;
 
             const file =
               field?.value.hasOwnProperty("fileList") &&
               field?.value.fileList.length
-                ? field?.value.fileList[0]
+                ? field?.value.fileList.slice(-1)[0]
                 : undefined;
 
             const filledInputAttributes = {
@@ -303,6 +303,16 @@ export const selectSectionFields = (
   createSelector(
     [(state: RootState) => state.apply.sectionFields],
     (sectionFields: ISectionFields) => sectionFields[sectionId]
+  );
+
+export const selectSectionField = (
+  sectionId: number,
+  name: string
+): Selector<IFieldData | undefined> =>
+  createSelector(
+    [(state: RootState) => state.apply.sectionFields],
+    (fields: ISectionFields) =>
+      fields[sectionId].find((field) => field.name[0] === name)
   );
 
 export default applySlice.reducer;
