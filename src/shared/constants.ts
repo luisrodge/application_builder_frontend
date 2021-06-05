@@ -10,10 +10,6 @@ export const DRAWER_TYPES = {
   SIGNATURE_DRAWER: "SIGNATURE_DRAWER",
 };
 
-export const MODAL_TYPES = {
-  APPLICANT_EMAIL_REQUEST: "APPLICANT_EMAIL_REQUEST",
-};
-
 export const INPUT_TYPES = {
   NUMBER_INPUT: "NumberInput",
   TEXT_INPUT: "TextInput",
