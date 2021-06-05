@@ -25,7 +25,7 @@ import {
 import { ApplicationSchema, RowSchema, SectionSchema } from "./schemas";
 
 export const GetApplications = createAsyncThunk(
-  "applications/list",
+  "admin/applications/list",
   async () => {
     const response = await api.get(`admin/applications`);
     return response.data as IApplication[];
@@ -38,7 +38,7 @@ export const GetApplication = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("applications/get", async (slug, thunkApi) => {
+>("admin/applications/get", async (slug, thunkApi) => {
   try {
     const { data } = await api.get(`admin/applications/${slug}`);
 
@@ -95,7 +95,7 @@ export const CreateApplication = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("applications/create", async (application, thunkApi) => {
+>("admin/applications/create", async (application, thunkApi) => {
   const response = await api.post(`admin/applications`, application);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -111,7 +111,7 @@ export const UpdateApplication = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("applications/update", async (application, thunkApi) => {
+>("admin/applications/update", async (application, thunkApi) => {
   const response = await api.put(
     `admin/applications/${application.id}`,
     application
@@ -130,7 +130,7 @@ export const DeleteApplication = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("applications/delete", async (applicationId, thunkApi) => {
+>("admin/applications/delete", async (applicationId, thunkApi) => {
   const response = await api.delete(`admin/applications/${applicationId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -146,7 +146,7 @@ export const CreateSection = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("sections/create", async (section, thunkApi) => {
+>("admin/sections/create", async (section, thunkApi) => {
   const response = await api.post("admin/sections", section);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -162,7 +162,7 @@ export const UpdateSection = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("sections/update", async (section, thunkApi) => {
+>("admin/sections/update", async (section, thunkApi) => {
   const response = await api.put(`admin/sections/${section.id}`, section);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -178,7 +178,7 @@ export const GetSection = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("sections/get", async (id, thunkApi) => {
+>("admin/sections/get", async (id, thunkApi) => {
   try {
     const { data } = await api.get(`admin/sections/${id}`);
 
@@ -230,7 +230,7 @@ export const DeleteSection = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("sections/delete", async (sectionId, thunkApi) => {
+>("admin/sections/delete", async (sectionId, thunkApi) => {
   const response = await api.delete(`admin/sections/${sectionId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -246,7 +246,7 @@ export const CreateRow = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("rows/create", async (newRow, thunkApi) => {
+>("admin/rows/create", async (newRow, thunkApi) => {
   const response = await api.post("admin/rows", { row: newRow });
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -278,7 +278,7 @@ export const UpdateRow = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("rows/update", async (row, thunkApi) => {
+>("admin/rows/update", async (row, thunkApi) => {
   const response = await api.put(`admin/rows/${row.id}`, row);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -294,7 +294,7 @@ export const DeleteRow = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("rows/delete", async (rowId, thunkApi) => {
+>("admin/rows/delete", async (rowId, thunkApi) => {
   const response = await api.delete(`admin/rows/${rowId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -310,7 +310,7 @@ export const DeleteColumn = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("columns/delete", async (column, thunkApi) => {
+>("admin/columns/delete", async (column, thunkApi) => {
   const response = await api.delete(`admin/columns/${column.id}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -326,7 +326,7 @@ export const CreateInput = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("inputs/create", async (input, thunkApi) => {
+>("admin/inputs/create", async (input, thunkApi) => {
   const response = await api.post("admin/inputs", input);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -343,7 +343,7 @@ export const DeleteInput = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("inputs/delete", async (inputId, thunkApi) => {
+>("admin/inputs/delete", async (inputId, thunkApi) => {
   const response = await api.delete(`admin/inputs/${inputId}`);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
@@ -359,7 +359,7 @@ export const Publish = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("applications/publish", async (applicationSlug, thunkApi) => {
+>("admin/applications/publish", async (applicationSlug, thunkApi) => {
   const response = await api.patch(
     `admin/applications/${applicationSlug}/publish`
   );
@@ -377,7 +377,7 @@ export const CreateColumn = createAsyncThunk<
   {
     rejectValue: IErrorMessage;
   }
->("columns/create", async (column, thunkApi) => {
+>("admin/columns/create", async (column, thunkApi) => {
   const response = await api.post("admin/columns", column);
   if (response.status !== 200) {
     return thunkApi.rejectWithValue({
