@@ -19,7 +19,7 @@ const Routes = () => (
     <Route path="/s/:shortUrl" exact>
       <ShortUrlRedirect />
     </Route>
-    <Route path="/applications" exact>
+    <Route path="/todos" exact>
       <ApplicationList />
     </Route>
     <Route path="/applications/:slug" exact>
