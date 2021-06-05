@@ -25,7 +25,10 @@ const DisabledUploadInput = ({ input }: IInputProps) => (
 
 const UploadInput = ({ input }: IInputRootProps) => {
   const field = useAppSelector(selectSectionField(input.sectionId, input.name));
-  const fileList = field?.value.fileList.slice(-1);
+
+  const fileList = field?.value.hasOwnProperty("fileList")
+    ? field?.value.fileList.slice(-1)
+    : [];
 
   return (
     <Form.Item
