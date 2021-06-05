@@ -3,10 +3,10 @@ import { ReactNode } from "react";
 import { INPUT_TYPES } from "../../shared/constants";
 import NumberInput from "./NumberInput";
 import TextInput from "./TextInput";
-import { IInput } from "../../features/applications/applications.interface";
+import { IInputRootProps } from "./inputs.interface";
 import DatePickerInput from "./DatePickerInput";
 import CheckboxInput from "./CheckboxInput";
-import UploadInput from "./UploadInput";
+import RootUploadInput from "./UploadInput";
 import RadioInput from "./RadioInput";
 
 const {
@@ -27,20 +27,25 @@ const INPUT_COMPONENTS = {
   [TEXT_INPUT]: TextInput,
   [DATE_PICKER_INPUT]: DatePickerInput,
   [CHECKBOX_INPUT]: CheckboxInput,
-  [UPLOAD_INPUT]: UploadInput,
+  [UPLOAD_INPUT]: RootUploadInput,
   [RADIO_INPUT]: RadioInput,
 } as IInputComponents;
 
 export const InputTypes = Object.keys(INPUT_COMPONENTS);
 
-interface IProps {
-  input: IInput;
-  disabled?: boolean;
-}
-
-export default function InputRoot({ input, disabled }: IProps) {
+export default function InputRoot({
+  input,
+  disabled,
+  designerActive,
+}: IInputRootProps) {
   if (!input) return null;
 
   const SpecificInput = INPUT_COMPONENTS[input.inputType] as React.ElementType;
-  return <SpecificInput input={input} disabled={disabled} />;
+  return (
+    <SpecificInput
+      input={input}
+      disabled={disabled}
+      designerActive={designerActive}
+    />
+  );
 }
