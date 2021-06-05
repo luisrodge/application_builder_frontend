@@ -75,15 +75,15 @@ export default function Signature() {
       submissionData.signature = signature;
     }
 
+    dispatch(hideDrawers());
+
     const resultAction = await dispatch(CreateSubmission(submissionData));
 
     if (CreateSubmission.fulfilled.match(resultAction)) {
       form.resetFields();
-      dispatch(hideDrawers());
       history.push("/apply/success");
     } else {
       form.resetFields();
-      dispatch(hideDrawers());
       if (resultAction.payload) {
         message.error(`Submission failed: ${resultAction.payload.message}`);
       } else {

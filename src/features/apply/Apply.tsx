@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Spinner } from "../../components/Spinner";
+import { FullViewSpinner, Spinner } from "../../components/Spinner";
 import {
   selectActiveSection,
   selectLoadingStatuses,
@@ -42,7 +42,9 @@ export default function Apply() {
 
   const { slug } = useParams<{ slug: string }>();
 
-  const loadingStatuses = useAppSelector(selectLoadingStatuses);
+  const { applicationLoading, applySubmitLoading } = useAppSelector(
+    selectLoadingStatuses
+  );
   const section = useAppSelector(selectActiveSection);
   const error = useAppSelector(selectError);
 
@@ -50,10 +52,7 @@ export default function Apply() {
     dispatch(GetApplication(slug));
   }, [slug, dispatch]);
 
-  if (
-    loadingStatuses.applicationLoading === "pending" ||
-    loadingStatuses.applicationLoading === "idle"
-  )
+  if (applicationLoading === "pending" || applicationLoading === "idle")
     return <Spinner />;
 
   if (error && error.status === 404) return <NotFound />;
@@ -69,6 +68,9 @@ export default function Apply() {
         </SectionContainer>
       </ApplyContainer>
       <MainActions />
+      {applySubmitLoading === "pending" && (
+        <FullViewSpinner text="Submitting application" />
+      )}
     </Container>
   );
 }

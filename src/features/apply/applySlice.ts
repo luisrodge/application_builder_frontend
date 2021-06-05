@@ -19,13 +19,18 @@ import {
   ISubmissionRowAttributes,
   ISubmissionSectionAttributes,
 } from "./apply.interface";
-import { GetApplication, GetApplicationSlugByShortUrl } from "./services";
+import {
+  CreateSubmission,
+  GetApplication,
+  GetApplicationSlugByShortUrl,
+} from "./services";
 
 type LoadingType = "idle" | "pending" | "succeeded" | "failed";
 
 interface ILoadingState {
   sectionLoading: LoadingType;
   applicationLoading: LoadingType;
+  applySubmitLoading: LoadingType;
 }
 
 interface ApplyState {
@@ -177,6 +182,15 @@ export const applySlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(CreateSubmission.pending, (state) => {
+      state.loadingStatuses.applySubmitLoading = "pending";
+    });
+    builder.addCase(CreateSubmission.fulfilled, (state) => {
+      state.loadingStatuses.applySubmitLoading = "succeeded";
+    });
+    builder.addCase(CreateSubmission.rejected, (state) => {
+      state.loadingStatuses.applySubmitLoading = "failed";
+    });
     builder.addCase(GetApplication.pending, (state) => {
       state.loadingStatuses.applicationLoading = "pending";
     });
