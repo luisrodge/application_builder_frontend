@@ -21,7 +21,7 @@ export default function ApplicationList() {
   return (
     <>
       <Header />
-      <SlimContainer>
+      <SlimContainer style={{ paddingBottom: 50 }}>
         <List
           itemLayout="horizontal"
           dataSource={applications}
@@ -50,7 +50,17 @@ export default function ApplicationList() {
                     {application.title}
                   </Link>
                 }
-                description={application.details}
+                description={
+                  <div>
+                    <p>{application.details}</p>
+                    <p
+                      style={{ margin: 0 }}
+                    >{`${window.location.hostname}/s/${application.shortUrl}`}</p>
+                    <p
+                      style={{ margin: 0 }}
+                    >{`${window.location.hostname}/${application.slug}/apply`}</p>
+                  </div>
+                }
               />
             </List.Item>
           )}
