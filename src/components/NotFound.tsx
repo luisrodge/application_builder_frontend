@@ -25,7 +25,7 @@ export default function NotFound() {
       <div style={{ textAlign: "center", padding: "20px 0" }}>
         <Link to="/" style={{ fontSize: 18 }}>
           <ArrowLeftOutlined style={{ marginRight: 6 }} />
-          Back to Quickapply
+          Back to Quikapply
         </Link>
       </div>
     </>
