@@ -28,7 +28,7 @@ export default function SimpleHome() {
           <span style={{ color: blue.primary }}>Quik</span>apply
         </Title>
         <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
-          Bring your printed <FileTextOutlined /> applications online - the{" "}
+          Bring your printed <FileTextOutlined /> application forms online - the{" "}
           <strong>quik</strong> way!
         </Text>
         <Button
