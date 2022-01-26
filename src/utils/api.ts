@@ -11,7 +11,7 @@ const PROD_API_HOST = "https://api.quikapply.com";
 export const API_HOST =
   CURRENT_HOST === PROD_HOST ? PROD_API_HOST : DEV_API_HOST;
 
-const api = axios.create({ baseURL: API_HOST });
+const api = axios.create({ baseURL: `${API_HOST}/api/v1/` });
 
 // Axios middleware to convert all api responses to camelCase
 api.interceptors.response.use((response: AxiosResponse) => {
