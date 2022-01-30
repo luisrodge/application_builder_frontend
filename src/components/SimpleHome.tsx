@@ -1,50 +1,122 @@
-import { Typography, Button } from "antd";
-import styled from "styled-components";
-import { grey, blue } from "@ant-design/colors";
-import { HeartTwoTone, FileTextOutlined } from "@ant-design/icons";
+import { Typography, Button, Input, Form, message, Row, Col } from "antd";
+import { grey } from "@ant-design/colors";
+import { HeartTwoTone, ArrowRightOutlined } from "@ant-design/icons";
 
-import { useAppDispatch } from "../app/hooks";
-import { showDrawer } from "../features/drawer/drawerSlice";
-import { DRAWER_TYPES } from "../shared/constants";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useHistory } from "react-router-dom";
+import { CreateApplication } from "../features/applications/services";
+import { ICreateApplicationAttributes } from "../features/applications/applications.interface";
+import { selectLoadingStatuses } from "../features/applications/applicationsSlice";
+
+import logo from "../assets/logo.png";
 
 const { Title, Text } = Typography;
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 130px 0;
-  background: #f0f2f5;
-  flex-direction: column;
-`;
-
 export default function SimpleHome() {
+  const history = useHistory();
   const dispatch = useAppDispatch();
+  const [form] = Form.useForm();
+
+  const { applicationLoading } = useAppSelector(selectLoadingStatuses);
+
+  const initialValues = {
+    title: "",
+    details: "",
+    email: "",
+  };
+
+  const createApplication = async (
+    application: ICreateApplicationAttributes
+  ) => {
+    const resultAction = await dispatch(CreateApplication(application));
+    if (CreateApplication.fulfilled.match(resultAction)) {
+      const createdApplication = resultAction.payload;
+      form.resetFields();
+      message.success("Application created");
+      history.push(`/applications/${createdApplication.slug}`);
+    } else {
+      form.resetFields();
+      if (resultAction.payload) {
+        message.error(`Create failed: ${resultAction.payload.message}`);
+      } else {
+        message.error(`Create failed: ${resultAction.error.message}`);
+      }
+    }
+  };
 
   return (
     <>
-      <Container>
-        <Title level={1} style={{ margin: 0, marginBottom: 3 }}>
-          <span style={{ color: blue.primary }}>Quik</span>apply
-        </Title>
-        <Text style={{ margin: 0, color: grey.primary, fontSize: 16 }}>
-          Bring your printed <FileTextOutlined /> application forms online
-        </Text>
-        <Button
-          type="primary"
-          size="large"
-          style={{ marginTop: 30 }}
-          onClick={() =>
-            dispatch(
-              showDrawer({
-                drawerType: DRAWER_TYPES.APPLICATION_FORM_DRAWER,
-              })
-            )
-          }
-        >
-          Design new application
-        </Button>
-      </Container>
+      <header
+        style={{
+          padding: 12,
+          textAlign: "center",
+        }}
+      >
+        <a href="https://quikapply.com/">
+          <img src={logo} width={100} alt="logo" />
+        </a>
+      </header>
+      <main style={{ backgroundColor: "#f8f9fa", padding: "50px 0" }}>
+        <div style={{ textAlign: "center" }}>
+          <Title level={2}>
+            Get started - Create your new application form
+          </Title>
+        </div>
+        <Row>
+          <Col span={8} offset={8}>
+            <Form
+              name="basic"
+              layout="vertical"
+              form={form}
+              onFinish={createApplication}
+              initialValues={initialValues}
+            >
+              <Form.Item
+                label="Title"
+                name="title"
+                rules={[{ required: true, message: "Title is required" }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                tooltip="The email address submissions will be sent to."
+                rules={[
+                  {
+                    required: true,
+                    message: "Email is required",
+                  },
+                  {
+                    message: "Must be a valid email address",
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item label="Details" name="details">
+                <Input.TextArea rows={3} />
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={applicationLoading === "pending"}
+                  icon={<ArrowRightOutlined />}
+                >
+                  {applicationLoading === "pending"
+                    ? "Creating"
+                    : "Start building"}
+                </Button>
+              </Form.Item>
+            </Form>
+          </Col>
+        </Row>
+      </main>
       <footer style={{ padding: 24, textAlign: "center" }}>
         <Text style={{ color: grey.primary }}>
           For you with <HeartTwoTone /> from{" "}
