@@ -4,7 +4,7 @@ import snakecaseKeys from "snakecase-keys";
 
 const CURRENT_HOST = window.location.hostname;
 
-const PROD_HOST = "quikapply-api.herokuapp.com";
+const PROD_HOST = "app.quikapply.com";
 const DEV_API_HOST = "http://localhost:3000";
 const PROD_API_HOST = "https://quikapply-api.herokuapp.com";
 
