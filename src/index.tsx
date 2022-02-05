@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { message } from "antd";
-import "antd/dist/antd.css";
 
+import "antd/dist/antd.css";
 import "./index.css";
 import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./app/store";
 import ScrollToTop from "./components/ScrollToTop";
+import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
 
 message.config({
   maxCount: 1,
@@ -19,8 +20,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ScrollToTop />
-        <App />
+        <Auth0ProviderWithHistory>
+          <ScrollToTop />
+          <App />
+        </Auth0ProviderWithHistory>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

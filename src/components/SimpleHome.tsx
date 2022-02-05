@@ -1,9 +1,10 @@
 import { Typography, Button, Input, Form, message, Row, Col } from "antd";
 import { grey } from "@ant-design/colors";
 import { HeartTwoTone, ArrowRightOutlined } from "@ant-design/icons";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { useHistory } from "react-router-dom";
 import { CreateApplication } from "../features/applications/services";
 import { ICreateApplicationAttributes } from "../features/applications/applications.interface";
 import { selectLoadingStatuses } from "../features/applications/applicationsSlice";
@@ -13,6 +14,8 @@ import logo from "../assets/logo.png";
 const { Title, Text } = Typography;
 
 export default function SimpleHome() {
+  const { user, loginWithRedirect, logout, isLoading, isAuthenticated } =
+    useAuth0();
   const history = useHistory();
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
@@ -61,6 +64,20 @@ export default function SimpleHome() {
           <Title level={2}>
             Get started - Create your new application form
           </Title>
+          <Button type="primary" onClick={() => loginWithRedirect()}>
+            Login
+          </Button>
+          <Button type="primary" onClick={() => logout()}>
+            Logout
+          </Button>
+          {!isLoading && isAuthenticated && user && (
+            <div>
+              <br />
+              <img src={user.picture} alt={user.name} width={50} />
+              <h2>{user.name}</h2>
+              <p>{user.email}</p>
+            </div>
+          )}
         </div>
         <Row>
           <Col span={8} offset={8}>
