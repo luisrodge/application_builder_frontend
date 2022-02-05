@@ -88,7 +88,7 @@ export const CreateSubmission = createAsyncThunk<
   const finalSubmission = { ...submission, ...params };
 
   const response = await axios.post(
-    `${API_HOST}/submissions`,
+    `${API_HOST}/api/v1/submissions`,
     serialize({ submission: finalSubmission })
   );
 
